@@ -1,0 +1,27 @@
+{
+  "ci": {
+    "collect": {
+      "startServerCommand": "npm run start",
+      "startServerReadyPattern": "Ready in",
+      "numberOfRuns": 3,
+      "url": [
+        "http://localhost:3000/",
+        "http://localhost:3000/services/",
+        "http://localhost:3000/contact/"
+      ]
+    },
+    "assert": {
+      "assertions": {
+        "largest-contentful-paint": ["warn", { "maxNumericValue": 2500 }],
+        "cumulative-layout-shift": ["warn", { "maxNumericValue": 0.1 }],
+        "total-blocking-time": ["warn", { "maxNumericValue": 200 }],
+        "resource-summary:script:size": ["warn", { "maxNumericValue": 184320 }],
+        "resource-summary:total:size": ["warn", { "maxNumericValue": 1258291 }],
+        "resource-summary:image:size": ["warn", { "maxNumericValue": 256000 }]
+      }
+    },
+    "upload": {
+      "target": "temporary-public-storage"
+    }
+  }
+}

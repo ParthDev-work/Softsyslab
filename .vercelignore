@@ -1,7 +1,0 @@
-# Keep the deployment to application source.
-# The design reference and the PRD are repository documentation; they are not
-# needed to build the site and should not be served from it.
-design/
-*.pdf
-.data/
-docs/

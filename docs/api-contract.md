@@ -188,23 +188,33 @@ retry cannot create a second lead.
 
 Honest limits, each one a gap against the PRD rather than a design choice:
 
-- **Persistence is not durable.** The lead store appends to a local JSONL file.
-  On Vercel the filesystem is ephemeral, so a saved enquiry does not outlive the
-  instance. The contact page tells the visitor this rather than implying their
-  enquiry has been filed.
-- **Nothing is sent to anyone.** No confirmation email, no internal alert, no CRM
-  sync. The outbox described in section 36 does not exist.
+- **Persistence is durable once `DATABASE_URL` is set.** With it set,
+  `POST /api/contact/` writes through `PostgresLeadStore` to managed Postgres
+  (schema in `prisma/schema.prisma`, setup in `docs/database.md`) — a lead,
+  its submission and three outbox rows commit in one transaction, same as
+  before the rejection path, now backed by a real database instead of a
+  JSONL file. Without `DATABASE_URL` (or with `LEAD_STORE=file` forcing it),
+  the store is still the non-durable local JSONL file described below.
+- **Nothing is sent to anyone yet.** The outbox table (`send_confirmation_email`,
+  `notify_internal`, `crm_sync` rows) fills on every successful submission, but
+  no worker drains it. Section 36's fan-out — confirmation email, internal
+  alert, CRM sync — is a separate process the PRD describes and this build does
+  not implement. A row sitting in `outbox_events` is the honest state: queued,
+  not delivered.
 - **Rate limiting and idempotency are per-instance.** Both use in-memory maps, so
   a serverless deployment enforces them per cold instance. They raise the cost of
-  casual abuse; they are not the distributed controls section 43 describes.
+  casual abuse; they are not the distributed controls section 43 describes. (The
+  in-memory `idempotency_keys` shape matches the `IdempotencyKey` table in
+  `prisma/schema.prisma` exactly, so a Postgres-backed implementation behind the
+  same `lookup`/`remember` functions is a follow-up, not a redesign.)
 - **No bot prevention.** Section 39 lists adaptive controls with an accessible
   fallback as P0. The hook is unbuilt and no token is checked.
 
-### Replacing the lead store
+### The lead store, local file or Postgres
 
-`src/lib/server/leadStore.ts` defines the seam. Implement `LeadStore` against
-PostgreSQL to get the PRD's behaviour, and change the one line in `selectStore`.
-No call site changes.
+`src/lib/server/leadStore.ts` defines the seam described above and still holds
+both implementations plus the selection logic. No call site changed to add the
+second implementation.
 
 ```ts
 interface LeadStore {
@@ -214,10 +224,12 @@ interface LeadStore {
 }
 ```
 
-The Postgres implementation must write the submission, the lead and the outbox
-events **in one transaction** (section 41), and reject rather than resolve if any
-part fails. The route turns a rejection into `503`, so correctness at the
-boundary is already handled.
+`selectStore()` picks `PostgresLeadStore` when `DATABASE_URL` is set and no
+`LEAD_STORE` override is present; `LEAD_STORE=file` or `LEAD_STORE=none`, if
+set, always win over that auto-detection. `PostgresLeadStore` writes the
+submission, the lead and the outbox events **in one transaction** (section 41),
+and rejects rather than resolves if any part fails — the route turns that
+rejection into `503`, unchanged from before this store existed.
 
 ---
 

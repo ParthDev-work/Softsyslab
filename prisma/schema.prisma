@@ -1,0 +1,458 @@
+// SoftSysLab — operational database schema.
+//
+// PRD section 42 ("Database Architecture"), implemented as written:
+// UUID primary keys, timestamptz UTC timestamps, foreign keys, and enums
+// through either checked values (Prisma enum) or reference tables (a plain
+// string column, documented inline where that choice was made).
+//
+// Two connections, matching .env.example's explanation:
+//   url       -> DATABASE_URL        (Supabase transaction pooler, runtime)
+//   directUrl -> DATABASE_DIRECT_URL (Supabase session pooler, migrations)
+//
+// Table and column names are snake_case in Postgres (via @@map / @map) and
+// camelCase in the generated client, matching the rest of this codebase's
+// TypeScript conventions.
+//
+// Prisma major version note: 7 removes `datasource.url`/`directUrl` from
+// this file (moved to a required prisma.config.ts plus a driver adapter) and
+// removes the no-argument `new PrismaClient()` constructor. That breaks the
+// exact shape this schema and src/lib/server/db.ts use, so this project pins
+// the last 6.x release (6.19.3) rather than Prisma's "latest" dist-tag.
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  directUrl = env("DATABASE_DIRECT_URL")
+}
+
+// ---------------------------------------------------------------------------
+// Identity and access
+// ---------------------------------------------------------------------------
+
+/// Staff/internal users. No password column: external identity provider only.
+model User {
+  id                      String    @id @default(uuid()) @db.Uuid
+  identityProviderSubject String?   @unique @map("identity_provider_subject")
+  email                   String    @unique
+  displayName             String    @map("display_name")
+  active                  Boolean   @default(true)
+  lastLoginAt             DateTime? @map("last_login_at") @db.Timestamptz
+  createdAt               DateTime  @default(now()) @map("created_at") @db.Timestamptz
+
+  userRoles            UserRole[]
+  ownedLeads           Lead[]              @relation("LeadOwner")
+  statusChanges        LeadStatusHistory[] @relation("StatusActor")
+  notes                LeadNote[]          @relation("NoteAuthor")
+  assignedApplications Application[]       @relation("AssignedRecruiter")
+  auditLogs            AuditLog[]
+  settingsUpdated      Setting[]
+
+  @@map("users")
+}
+
+model Role {
+  id          String  @id @default(uuid()) @db.Uuid
+  key         String  @unique
+  description String?
+
+  userRoles       UserRole[]
+  rolePermissions RolePermission[]
+
+  @@map("roles")
+}
+
+model Permission {
+  id          String  @id @default(uuid()) @db.Uuid
+  key         String  @unique
+  description String?
+
+  rolePermissions RolePermission[]
+
+  @@map("permissions")
+}
+
+/// users <-> roles, many-to-many.
+model UserRole {
+  userId String @map("user_id") @db.Uuid
+  roleId String @map("role_id") @db.Uuid
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  role Role @relation(fields: [roleId], references: [id], onDelete: Cascade)
+
+  @@id([userId, roleId])
+  @@map("user_roles")
+}
+
+/// roles <-> permissions, many-to-many.
+model RolePermission {
+  roleId       String @map("role_id") @db.Uuid
+  permissionId String @map("permission_id") @db.Uuid
+
+  role       Role       @relation(fields: [roleId], references: [id], onDelete: Cascade)
+  permission Permission @relation(fields: [permissionId], references: [id], onDelete: Cascade)
+
+  @@id([roleId, permissionId])
+  @@map("role_permissions")
+}
+
+// ---------------------------------------------------------------------------
+// Leads and submissions
+// ---------------------------------------------------------------------------
+
+/// `status` is a plain string, not a Prisma enum: lead pipeline stages are
+/// plausibly configurable later (PRD calls this out as a "reference table"
+/// candidate), so the checked set lives in application code rather than in
+/// a migration. Dedup is by idempotency key (see IdempotencyKey), never by a
+/// unique constraint on normalizedEmail — see PostgresLeadStore for how a
+/// submission still gets attached to an existing open lead.
+model Lead {
+  id              String    @id @default(uuid()) @db.Uuid
+  ownerUserId     String?   @map("owner_user_id") @db.Uuid
+  status          String    @default("new")
+  company         String?
+  normalizedEmail String    @map("normalized_email")
+  sourceSummary   String?   @map("source_summary")
+  createdAt       DateTime  @default(now()) @map("created_at") @db.Timestamptz
+  updatedAt       DateTime  @updatedAt @map("updated_at") @db.Timestamptz
+  closedAt        DateTime? @map("closed_at") @db.Timestamptz
+
+  owner         User?               @relation("LeadOwner", fields: [ownerUserId], references: [id])
+  submissions   ContactSubmission[]
+  quoteRequests QuoteRequest[]
+  statusHistory LeadStatusHistory[]
+  notes         LeadNote[]
+
+  @@index([status])
+  @@index([normalizedEmail])
+  @@map("leads")
+}
+
+model ContactSubmission {
+  id               String   @id @default(uuid()) @db.Uuid
+  leadId           String   @map("lead_id") @db.Uuid
+  firstName        String   @map("first_name")
+  lastName         String   @map("last_name")
+  email            String
+  phone            String?
+  company          String
+  website          String?
+  noWebsite        Boolean  @map("no_website")
+  country          String
+  /// Published service ids chosen on the form; JSON array per the PRD.
+  serviceIds       Json     @map("service_ids")
+  budgetCode       String   @map("budget_code")
+  currency         String   @default("USD")
+  timelineCode     String   @map("timeline_code")
+  summary          String   @db.Text
+  /// Not in the PRD's field table, but part of the validated contact input
+  /// (src/lib/validation/contact.ts) and dropped nowhere else, so it is kept
+  /// on the submission it was collected with.
+  productUrl       String?  @map("product_url")
+  preferredContact String   @map("preferred_contact")
+  noticeVersion    String   @map("notice_version")
+  formVersion      String   @map("form_version")
+  acknowledgmentAt DateTime @map("acknowledgment_at") @db.Timestamptz
+
+  /// Source/provenance fields, section 38's allowlisted UTM set plus the
+  /// landing path — flattened rather than nested JSON so each is indexable
+  /// later without a JSON path expression.
+  sourceUtmSource   String? @map("source_utm_source")
+  sourceUtmMedium   String? @map("source_utm_medium")
+  sourceUtmCampaign String? @map("source_utm_campaign")
+  sourceLandingPath String? @map("source_landing_path")
+
+  createdAt DateTime @default(now()) @map("created_at") @db.Timestamptz
+
+  lead          Lead           @relation(fields: [leadId], references: [id])
+  uploadObjects UploadObject[]
+  quoteRequests QuoteRequest[]
+
+  @@index([leadId])
+  @@map("contact_submissions")
+}
+
+/// PRD: "never store an abandoned draft" — a row here only ever represents a
+/// completed, submitted quote flow.
+model QuoteRequest {
+  id           String  @id @default(uuid()) @db.Uuid
+  leadId       String  @map("lead_id") @db.Uuid
+  submissionId String? @map("submission_id") @db.Uuid
+  flowVersion  String  @map("flow_version")
+  productType  String  @map("product_type")
+  stage        String
+  features     Json
+  budgetCode   String  @map("budget_code")
+  currency     String
+  timelineCode String  @map("timeline_code")
+
+  /// "contact fields or FK to contact record" — this store inlines contact
+  /// fields rather than requiring a ContactSubmission, since a quote flow
+  /// can complete without having also gone through the contact form
+  /// (submissionId stays optional for the case where both exist).
+  contactFirstName String  @map("contact_first_name")
+  contactLastName  String  @map("contact_last_name")
+  contactEmail     String  @map("contact_email")
+  contactPhone     String? @map("contact_phone")
+
+  finalSummary  String   @map("final_summary") @db.Text
+  noticeVersion String   @map("notice_version")
+  submittedAt   DateTime @default(now()) @map("submitted_at") @db.Timestamptz
+
+  lead       Lead               @relation(fields: [leadId], references: [id])
+  submission ContactSubmission? @relation(fields: [submissionId], references: [id])
+
+  @@index([leadId])
+  @@map("quote_requests")
+}
+
+/// Append-only. `fromStatus`/`toStatus` stay strings, matching Lead.status.
+model LeadStatusHistory {
+  id          String   @id @default(uuid()) @db.Uuid
+  leadId      String   @map("lead_id") @db.Uuid
+  fromStatus  String?  @map("from_status")
+  toStatus    String   @map("to_status")
+  actorUserId String?  @map("actor_user_id") @db.Uuid
+  reason      String?
+  changedAt   DateTime @default(now()) @map("changed_at") @db.Timestamptz
+
+  lead  Lead  @relation(fields: [leadId], references: [id])
+  actor User? @relation("StatusActor", fields: [actorUserId], references: [id])
+
+  @@index([leadId])
+  @@map("lead_status_history")
+}
+
+/// Access restricted to sales at the application layer — not enforceable in
+/// the schema itself.
+model LeadNote {
+  id            String   @id @default(uuid()) @db.Uuid
+  leadId        String   @map("lead_id") @db.Uuid
+  authorUserId  String   @map("author_user_id") @db.Uuid
+  bodyPlaintext String   @map("body_plaintext") @db.Text
+  createdAt     DateTime @default(now()) @map("created_at") @db.Timestamptz
+
+  lead   Lead @relation(fields: [leadId], references: [id])
+  author User @relation("NoteAuthor", fields: [authorUserId], references: [id])
+
+  @@index([leadId])
+  @@map("lead_notes")
+}
+
+// ---------------------------------------------------------------------------
+// Uploads and applications
+// ---------------------------------------------------------------------------
+
+/// Small, genuinely fixed set of purposes — a Prisma enum per the PRD's own
+/// wording ("purpose enum enquiry/CV").
+enum UploadPurpose {
+  ENQUIRY @map("enquiry")
+  CV      @map("cv")
+}
+
+model UploadObject {
+  id           String        @id @default(uuid()) @db.Uuid
+  /// Nullable until a submission claims it (anonymous upload session).
+  submissionId String?       @map("submission_id") @db.Uuid
+  objectKey    String        @unique @map("object_key")
+  /// Restricted: stored name is sanitized/truncated before this column is
+  /// written, never the raw client-supplied filename.
+  originalName String        @map("original_name")
+  mime         String
+  byteSize     Int           @map("byte_size")
+  checksum     String
+  /// Kept as a string, not an enum: scanning states are an integration
+  /// detail of whichever malware scanner is selected (PRD section 39, not
+  /// yet chosen), and may grow a state the schema shouldn't gate on.
+  scanStatus   String        @default("pending") @map("scan_status")
+  purpose      UploadPurpose
+  expiresAt    DateTime?     @map("expires_at") @db.Timestamptz
+  createdAt    DateTime      @default(now()) @map("created_at") @db.Timestamptz
+
+  submission  ContactSubmission? @relation(fields: [submissionId], references: [id])
+  application Application?
+
+  @@map("upload_objects")
+}
+
+model Application {
+  id                  String   @id @default(uuid()) @db.Uuid
+  cmsJobId            String   @map("cms_job_id")
+  jobVersion          String   @map("job_version")
+  name                String
+  email               String
+  portfolioUrl        String?  @map("portfolio_url")
+  resumeUploadId      String   @unique @map("resume_upload_id") @db.Uuid
+  answers             Json
+  /// Reference-table style, same reasoning as Lead.status.
+  status              String   @default("submitted")
+  assignedRecruiterId String?  @map("assigned_recruiter_id") @db.Uuid
+  noticeVersion       String   @map("notice_version")
+  submittedAt         DateTime @default(now()) @map("submitted_at") @db.Timestamptz
+
+  resumeUpload      UploadObject @relation(fields: [resumeUploadId], references: [id])
+  assignedRecruiter User?        @relation("AssignedRecruiter", fields: [assignedRecruiterId], references: [id])
+
+  @@map("applications")
+}
+
+// ---------------------------------------------------------------------------
+// Newsletter and consent
+// ---------------------------------------------------------------------------
+
+/// PRD gives this set explicitly as "pending/active/unsubscribed" — a
+/// Prisma enum.
+enum NewsletterState {
+  PENDING      @map("pending")
+  ACTIVE       @map("active")
+  UNSUBSCRIBED @map("unsubscribed")
+}
+
+model NewsletterSubscriber {
+  id              String          @id @default(uuid()) @db.Uuid
+  normalizedEmail String          @unique @map("normalized_email")
+  state           NewsletterState @default(PENDING)
+  tokenHash       String          @map("token_hash")
+  tokenExpiresAt  DateTime?       @map("token_expires_at") @db.Timestamptz
+  confirmedAt     DateTime?       @map("confirmed_at") @db.Timestamptz
+  unsubscribedAt  DateTime?       @map("unsubscribed_at") @db.Timestamptz
+  consentVersion  String          @map("consent_version")
+
+  @@map("newsletter_subscribers")
+}
+
+/// No contact identity unless separately approved — intentionally no FK to
+/// User, Lead or ContactSubmission here.
+model ConsentReceipt {
+  id                 String    @id @default(uuid()) @db.Uuid
+  anonymousReceiptId String    @unique @map("anonymous_receipt_id")
+  policyVersion      String    @map("policy_version")
+  categories         Json
+  capturedAt         DateTime  @default(now()) @map("captured_at") @db.Timestamptz
+  expiresAt          DateTime? @map("expires_at") @db.Timestamptz
+
+  @@map("consent_receipts")
+}
+
+// ---------------------------------------------------------------------------
+// Outbox, idempotency and integrations
+// ---------------------------------------------------------------------------
+
+/// A small, closed set of processing states — a Prisma enum per the PRD's
+/// own wording ("outbox status").
+enum OutboxStatus {
+  PENDING    @map("pending")
+  PROCESSING @map("processing")
+  COMPLETED  @map("completed")
+  FAILED     @map("failed")
+}
+
+/// `aggregateId` is a plain string, not a FK: aggregateType varies per row
+/// (lead, application, newsletter_subscriber, ...), so there is no single
+/// table to constrain it against. The PRD is explicit that an outbox event
+/// "refers to its aggregate without embedding unrestricted PII" — no payload
+/// lives here, only `payloadRef`.
+model OutboxEvent {
+  id            String       @id @default(uuid()) @db.Uuid
+  aggregateType String       @map("aggregate_type")
+  aggregateId   String       @map("aggregate_id") @db.Uuid
+  kind          String
+  payloadRef    String?      @map("payload_ref")
+  status        OutboxStatus @default(PENDING)
+  attemptCount  Int          @default(0) @map("attempt_count")
+  nextAttemptAt DateTime?    @map("next_attempt_at") @db.Timestamptz
+  lockedUntil   DateTime?    @map("locked_until") @db.Timestamptz
+  providerId    String?      @map("provider_id")
+  lastErrorCode String?      @map("last_error_code")
+  createdAt     DateTime     @default(now()) @map("created_at") @db.Timestamptz
+
+  /// "Ready jobs" composite index: a worker picks pending rows whose next
+  /// attempt is due, in that order.
+  @@index([status, nextAttemptAt])
+  @@map("outbox_events")
+}
+
+/// `expiresAt` has no DB-level default: the 24-hour TTL is computed by the
+/// caller (now + 24h) at write time, since Prisma defaults cannot express a
+/// relative interval.
+model IdempotencyKey {
+  id              String   @id @default(uuid()) @db.Uuid
+  scope           String
+  key             String
+  requestHash     String   @map("request_hash")
+  resultReference String?  @map("result_reference")
+  responseCode    Int?     @map("response_code")
+  createdAt       DateTime @default(now()) @map("created_at") @db.Timestamptz
+  expiresAt       DateTime @map("expires_at") @db.Timestamptz
+
+  @@unique([scope, key])
+  @@map("idempotency_keys")
+}
+
+/// Bounded payload retention is enforced by application code / a retention
+/// job, not by the schema — `payload` is nullable and expected to be purged
+/// well before the row itself.
+model IntegrationEvent {
+  id               String    @id @default(uuid()) @db.Uuid
+  provider         String
+  externalEventId  String    @map("external_event_id")
+  eventType        String    @map("event_type")
+  payload          Json?
+  receivedAt       DateTime  @default(now()) @map("received_at") @db.Timestamptz
+  processedAt      DateTime? @map("processed_at") @db.Timestamptz
+  processingStatus String    @default("received") @map("processing_status")
+
+  @@unique([provider, externalEventId])
+  @@map("integration_events")
+}
+
+// ---------------------------------------------------------------------------
+// Audit, settings and retention
+// ---------------------------------------------------------------------------
+
+/// Append-only: the application layer never issues UPDATE/DELETE against
+/// this table, only INSERT.
+model AuditLog {
+  id         String   @id @default(uuid()) @db.Uuid
+  actorId    String?  @map("actor_id") @db.Uuid
+  action     String
+  entityType String   @map("entity_type")
+  entityId   String   @map("entity_id")
+  safeDiff   Json     @map("safe_diff")
+  requestId  String   @map("request_id")
+  createdAt  DateTime @default(now()) @map("created_at") @db.Timestamptz
+
+  actor User? @relation(fields: [actorId], references: [id])
+
+  @@index([entityType, entityId])
+  @@map("audit_logs")
+}
+
+/// Operational settings only — not a duplicate of editable corporate
+/// identity content, which lives in the CMS.
+model Setting {
+  key       String  @id
+  value     Json
+  version   Int     @default(1)
+  updatedBy String? @map("updated_by") @db.Uuid
+
+  updatedByUser User? @relation(fields: [updatedBy], references: [id])
+
+  @@map("settings")
+}
+
+model RetentionJob {
+  id          String    @id @default(uuid()) @db.Uuid
+  entityType  String    @map("entity_type")
+  entityId    String    @map("entity_id")
+  dueAt       DateTime  @map("due_at") @db.Timestamptz
+  legalHold   Boolean   @default(false) @map("legal_hold")
+  purgeStatus String    @default("pending") @map("purge_status")
+  completedAt DateTime? @map("completed_at") @db.Timestamptz
+
+  @@index([dueAt])
+  @@map("retention_jobs")
+}
