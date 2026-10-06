@@ -1,0 +1,532 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<title>Custom Software Development and Product Engineering | SoftSysLab</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+<link href="https://fonts.googleapis.com/css2?family=Schibsted+Grotesk:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+html{scroll-behavior:smooth;scroll-padding-top:96px}
+body{margin:0;background:#FFFFFF;color:#0F172A;font-family:'Schibsted Grotesk',system-ui,sans-serif;-webkit-font-smoothing:antialiased}
+*{box-sizing:border-box}
+a{color:#1D4ED8;text-underline-offset:3px}
+a:hover{color:#1E40AF}
+:focus-visible{outline:2px solid #1D4ED8;outline-offset:3px;border-radius:4px}
+summary::-webkit-details-marker{display:none}
+@media (prefers-reduced-motion:reduce){*{transition:none!important;scroll-behavior:auto!important}}
+</style>
+</helmet>
+
+<div style="min-height:100vh;display:flex;flex-direction:column">
+
+<a href="#main" style="position:absolute;left:-9999px;top:8px;background:#0F172A;color:#FFFFFF;padding:12px 16px;z-index:100;border-radius:8px" style-focus="left:16px">Skip to content</a>
+
+<sc-if value="{{ showFactsBanner }}" hint-placeholder-val="{{ true }}">
+<div role="note" style="background:#FFFBEB;color:#92400E;border-bottom:1px solid #FDE68A;font-size:14px;line-height:22px">
+  <div style="max-width:1200px;margin:0 auto;padding:10px clamp(16px,3vw,24px);display:flex;gap:12px;align-items:baseline;flex-wrap:wrap">
+    <span style="font-family:'IBM Plex Mono',monospace;font-size:12px;letter-spacing:.06em;text-transform:uppercase;font-weight:500">Preview build</span>
+    <span>Company identity and contact details are not yet verified. This site is not published.</span>
+  </div>
+</div>
+</sc-if>
+
+<sc-if value="{{ showAnnouncement }}" hint-placeholder-val="{{ true }}">
+<div style="background:#F8FAFC;border-bottom:1px solid #E2E8F0;font-size:15px;line-height:24px;color:#475569">
+  <div style="max-width:1200px;margin:0 auto;padding:12px clamp(16px,3vw,24px);display:flex;gap:8px 12px;justify-content:center;flex-wrap:wrap;text-align:center">
+    <span>Explore how a software project moves from discovery to support.</span>
+    <a href="#process" style="color:#0F172A;font-weight:500">Our process →</a>
+  </div>
+</div>
+</sc-if>
+
+<header style="position:sticky;top:0;z-index:40;background:rgba(255,255,255,.94);backdrop-filter:saturate(1.4) blur(8px);border-bottom:1px solid #E2E8F0">
+  <div style="max-width:1200px;margin:0 auto;padding:0 clamp(16px,3vw,24px);height:{{ headerH }};display:flex;align-items:center;justify-content:space-between;gap:24px">
+    <a href="Home.dc.html" aria-label="SoftSysLab home" style="display:flex;align-items:center;gap:10px;text-decoration:none;color:#0F172A">
+      <span aria-hidden="true" style="display:grid;grid-template-columns:repeat(2,9px);gap:3px">
+        <span style="width:9px;height:9px;background:#0F172A;border-radius:2px"></span>
+        <span style="width:9px;height:9px;border:1.5px solid #0F172A;border-radius:2px"></span>
+        <span style="width:9px;height:9px;border:1.5px solid #0F172A;border-radius:2px"></span>
+        <span style="width:9px;height:9px;background:#1D4ED8;border-radius:2px"></span>
+      </span>
+      <span style="font-weight:700;font-size:19px;letter-spacing:-.01em">SoftSysLab</span>
+    </a>
+    <sc-if value="{{ wide }}" hint-placeholder-val="{{ true }}">
+      <nav aria-label="Main" style="display:flex;align-items:center;gap:4px">
+        <sc-for list="{{ nav }}" as="n" hint-placeholder-count="5">
+          <a href="{{ n.href }}" style="padding:10px 14px;font-size:16px;color:#334155;text-decoration:none;border-radius:8px;transition:background .15s,color .15s" style-hover="background:#F1F5F9;color:#0F172A">{{ n.label }}</a>
+        </sc-for>
+      </nav>
+      <a href="Contact.dc.html" style="display:inline-flex;align-items:center;height:44px;padding:0 18px;background:#0F172A;color:#FFFFFF;border-radius:8px;font-weight:500;font-size:16px;text-decoration:none;transition:background .15s" style-hover="background:#1D4ED8;color:#FFFFFF">Discuss Your Project</a>
+    </sc-if>
+    <sc-if value="{{ narrow }}" hint-placeholder-val="{{ false }}">
+      <button type="button" aria-expanded="{{ menuOpenStr }}" aria-controls="mobile-menu" onClick="{{ toggleMenu }}" style="height:44px;min-width:44px;padding:0 14px;border:1px solid #CBD5E1;background:#FFFFFF;border-radius:8px;font:500 15px 'Schibsted Grotesk',sans-serif;color:#0F172A;cursor:pointer">{{ menuLabel }}</button>
+    </sc-if>
+  </div>
+  <sc-if value="{{ showMobileMenu }}" hint-placeholder-val="{{ false }}">
+    <nav id="mobile-menu" aria-label="Main" style="border-top:1px solid #E2E8F0;background:#FFFFFF;padding:8px clamp(16px,3vw,24px) 20px;display:flex;flex-direction:column">
+      <sc-for list="{{ nav }}" as="n" hint-placeholder-count="5">
+        <a href="{{ n.href }}" onClick="{{ closeMenu }}" style="padding:14px 0;border-bottom:1px solid #F1F5F9;font-size:18px;color:#0F172A;text-decoration:none">{{ n.label }}</a>
+      </sc-for>
+      <a href="Contact.dc.html" style="margin-top:16px;display:flex;align-items:center;justify-content:center;height:48px;background:#0F172A;color:#FFFFFF;border-radius:8px;font-weight:500;text-decoration:none">Discuss Your Project</a>
+    </nav>
+  </sc-if>
+</header>
+
+<main id="main" style="flex:1">
+
+<section aria-labelledby="hero-h" data-screen-label="Hero" style="padding:clamp(56px,9vw,112px) clamp(16px,3vw,24px)">
+  <div style="max-width:1200px;margin:0 auto;display:flex;flex-wrap:wrap;gap:clamp(40px,6vw,72px);align-items:center">
+    <div style="flex:7 1 460px;min-width:0;max-width:620px">
+      <p style="margin:0 0 24px;font-family:'IBM Plex Mono',monospace;font-size:13px;letter-spacing:.08em;text-transform:uppercase;color:#475569">Custom software development</p>
+      <h1 id="hero-h" style="margin:0;font-size:clamp(40px,5.6vw,64px);line-height:1.06;letter-spacing:-.03em;font-weight:600;max-width:11ch;text-wrap:balance">Software built around your business.</h1>
+      <p style="margin:28px 0 0;font-size:clamp(17px,1.5vw,19px);line-height:1.6;color:#475569;text-wrap:pretty">Turn a product idea or a difficult workflow into a clear development plan. Design, build and maintain web, mobile, SaaS and AI-enabled software around your users, systems and commercial priorities.</p>
+      <div style="margin-top:36px;display:flex;flex-wrap:wrap;gap:12px">
+        <a href="Contact.dc.html" style="display:inline-flex;align-items:center;height:52px;padding:0 24px;background:#1D4ED8;color:#FFFFFF;border-radius:8px;font-weight:500;font-size:17px;text-decoration:none;transition:background .15s" style-hover="background:#1E40AF;color:#FFFFFF">Discuss Your Project</a>
+        <a href="#process" style="display:inline-flex;align-items:center;height:52px;padding:0 22px;border:1px solid #CBD5E1;color:#0F172A;border-radius:8px;font-weight:500;font-size:17px;text-decoration:none;transition:border-color .15s,background .15s" style-hover="border-color:#64748B;background:#F8FAFC;color:#0F172A">Explore Our Process</a>
+      </div>
+      <p style="margin:28px 0 0;padding-top:20px;border-top:1px solid #E2E8F0;font-size:15px;line-height:24px;color:#475569;max-width:46ch">Define the scope, delivery responsibilities and next steps before development begins.</p>
+    </div>
+
+    <figure style="flex:5 1 380px;min-width:0;margin:0">
+      <div style="position:relative;padding:0 0 18px 18px">
+        <div aria-hidden="true" style="position:absolute;left:0;bottom:0;right:18px;top:18px;border:1px solid #CBD5E1;border-radius:12px;background:#F8FAFC"></div>
+        <div style="position:relative;background:#FFFFFF;border:1px solid #CBD5E1;border-radius:12px;overflow:hidden;box-shadow:0 8px 24px rgba(15,23,42,.06)">
+          <div style="display:flex;justify-content:space-between;align-items:center;padding:14px 20px;border-bottom:1px solid #E2E8F0;font-family:'IBM Plex Mono',monospace;font-size:12px;color:#475569">
+            <span>project-brief.md</span>
+            <span style="padding:2px 8px;border:1px solid #CBD5E1;border-radius:4px">v0.3 · draft</span>
+          </div>
+          <div style="padding:22px 20px 24px;display:grid;gap:20px">
+            <div>
+              <div style="font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:#64748B;margin-bottom:10px">Users</div>
+              <div style="display:flex;flex-wrap:wrap;gap:6px">
+                <span style="font-size:14px;padding:4px 10px;background:#F1F5F9;border-radius:6px">Operations staff</span>
+                <span style="font-size:14px;padding:4px 10px;background:#F1F5F9;border-radius:6px">Customers</span>
+                <span style="font-size:14px;padding:4px 10px;background:#F1F5F9;border-radius:6px">Administrators</span>
+              </div>
+            </div>
+            <div>
+              <div style="font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:#64748B;margin-bottom:10px">First workflow</div>
+              <div style="display:flex;align-items:center;flex-wrap:wrap;gap:6px;font-size:14px">
+                <span style="padding:6px 10px;border:1px solid #CBD5E1;border-radius:6px">Enquiry</span><span style="color:#94A3B8">→</span>
+                <span style="padding:6px 10px;border:1px solid #CBD5E1;border-radius:6px">Approval</span><span style="color:#94A3B8">→</span>
+                <span style="padding:6px 10px;border:1px solid #1D4ED8;color:#1D4ED8;border-radius:6px">Assignment</span><span style="color:#94A3B8">→</span>
+                <span style="padding:6px 10px;border:1px dashed #CBD5E1;color:#64748B;border-radius:6px">Reporting</span>
+              </div>
+            </div>
+            <div>
+              <div style="font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:#64748B;margin-bottom:10px">Acceptance criteria</div>
+              <div style="display:grid;gap:8px;font-size:14px;line-height:20px">
+                <div style="display:flex;gap:10px"><span style="flex:none;width:16px;height:16px;margin-top:2px;border-radius:4px;background:#0F172A;color:#FFFFFF;font-size:11px;display:grid;place-items:center">✓</span><span>Staff can approve or return an enquiry with a reason</span></div>
+                <div style="display:flex;gap:10px"><span style="flex:none;width:16px;height:16px;margin-top:2px;border-radius:4px;background:#0F172A;color:#FFFFFF;font-size:11px;display:grid;place-items:center">✓</span><span>Assignment respects role permissions</span></div>
+                <div style="display:flex;gap:10px"><span style="flex:none;width:16px;height:16px;margin-top:2px;border-radius:4px;border:1.5px solid #94A3B8"></span><span style="color:#475569">Report export format — open decision</span></div>
+              </div>
+            </div>
+            <div style="display:flex;justify-content:space-between;gap:12px;padding-top:16px;border-top:1px solid #E2E8F0;font-size:13px;color:#475569">
+              <span>2 integrations · 1 open decision</span>
+              <span style="color:#0F766E">Ready for review</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <figcaption style="margin-top:14px;font-family:'IBM Plex Mono',monospace;font-size:12px;color:#64748B">Illustrative — not delivered client work</figcaption>
+    </figure>
+  </div>
+</section>
+
+<section id="capabilities" aria-labelledby="cap-h" data-screen-label="Capabilities" style="padding:0 clamp(16px,3vw,24px) clamp(48px,7vw,88px)">
+  <div style="max-width:1200px;margin:0 auto;border-top:1px solid #0F172A;padding-top:32px;display:flex;flex-wrap:wrap;gap:24px 48px">
+    <div style="flex:1 1 280px;max-width:380px">
+      <h2 id="cap-h" style="margin:0;font-size:clamp(22px,2vw,24px);line-height:1.3;font-weight:600;letter-spacing:-.01em">From product decisions to production software.</h2>
+      <p style="margin:12px 0 0;font-size:16px;line-height:26px;color:#475569">Choose a starting point based on the problem you need to solve.</p>
+    </div>
+    <ul style="flex:2 1 520px;list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,220px),1fr));gap:0 24px">
+      <sc-for list="{{ capabilities }}" as="c" hint-placeholder-count="6">
+        <li style="border-bottom:1px solid #E2E8F0">
+          <a href="#services" style="display:flex;align-items:center;justify-content:space-between;gap:12px;padding:16px 0;color:#0F172A;text-decoration:none;font-size:17px;font-weight:500;transition:color .15s" style-hover="color:#1D4ED8">
+            <span style="display:flex;gap:14px;align-items:baseline"><span style="font-family:'IBM Plex Mono',monospace;font-size:12px;color:#94A3B8;font-weight:400">{{ c.n }}</span>{{ c.label }}</span>
+            <span aria-hidden="true" style="color:#94A3B8">↗</span>
+          </a>
+        </li>
+      </sc-for>
+    </ul>
+  </div>
+</section>
+
+<section aria-labelledby="val-h" data-screen-label="Value" style="background:#F8FAFC;border-top:1px solid #E2E8F0;border-bottom:1px solid #E2E8F0;padding:clamp(48px,8vw,88px) clamp(16px,3vw,24px)">
+  <div style="max-width:1200px;margin:0 auto;display:flex;flex-wrap:wrap;gap:48px 64px">
+    <div style="flex:5 1 340px;min-width:0">
+      <h2 id="val-h" style="margin:0;font-size:clamp(28px,3.4vw,40px);line-height:1.18;letter-spacing:-.02em;font-weight:600;text-wrap:balance">Make the important decisions before they become expensive changes.</h2>
+      <p style="margin:24px 0 0;font-size:18px;line-height:28px;color:#475569;text-wrap:pretty">Clarify who will use the software, which workflows matter first, and how the system will connect to the tools you already use. A documented plan makes scope, trade-offs and acceptance criteria easier to discuss.</p>
+      <a href="Contact.dc.html" style="margin-top:32px;display:inline-flex;align-items:center;height:48px;padding:0 20px;border:1px solid #0F172A;color:#0F172A;border-radius:8px;font-weight:500;text-decoration:none;transition:background .15s,color .15s" style-hover="background:#0F172A;color:#FFFFFF">Plan Product Discovery</a>
+    </div>
+    <div style="flex:7 1 440px;min-width:0;display:grid;gap:12px">
+      <sc-for list="{{ panels }}" as="p" hint-placeholder-count="3">
+        <div style="background:#FFFFFF;border:1px solid #E2E8F0;border-radius:12px;padding:24px 28px;display:grid;grid-template-columns:minmax(0,140px) minmax(0,1fr);gap:8px 24px">
+          <h3 style="margin:0;font-size:20px;line-height:28px;font-weight:600">{{ p.title }}</h3>
+          <p style="margin:0;font-size:16px;line-height:26px;color:#475569">{{ p.body }}</p>
+        </div>
+      </sc-for>
+    </div>
+  </div>
+</section>
+
+<section id="services" aria-labelledby="svc-h" data-screen-label="Services" style="padding:clamp(48px,8vw,88px) clamp(16px,3vw,24px)">
+  <div style="max-width:1200px;margin:0 auto">
+    <div style="display:flex;flex-wrap:wrap;justify-content:space-between;align-items:end;gap:16px 48px;margin-bottom:40px">
+      <h2 id="svc-h" style="margin:0;font-size:clamp(28px,3.4vw,40px);line-height:1.18;letter-spacing:-.02em;font-weight:600;max-width:16ch">Choose the support your project needs.</h2>
+      <p style="margin:0;font-size:16px;line-height:26px;color:#475569;max-width:40ch">Five service groups, each with its own scope, deliverables and boundaries.</p>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,320px),1fr));gap:24px">
+      <sc-for list="{{ groups }}" as="g" hint-placeholder-count="5">
+        <a href="Contact.dc.html" style="display:flex;flex-direction:column;gap:16px;min-height:220px;padding:28px;border:1px solid #CBD5E1;border-radius:12px;color:#0F172A;text-decoration:none;background:#FFFFFF;transition:box-shadow .18s,border-color .18s,transform .18s" style-hover="box-shadow:0 8px 24px rgba(15,23,42,.08);border-color:#94A3B8;transform:translateY(-2px);color:#0F172A">
+          <span style="font-family:'IBM Plex Mono',monospace;font-size:12px;color:#64748B">{{ g.n }}</span>
+          <span style="font-size:22px;line-height:30px;font-weight:600;letter-spacing:-.01em">{{ g.title }}</span>
+          <span style="font-size:16px;line-height:26px;color:#475569;flex:1">{{ g.body }}</span>
+          <span style="font-size:15px;font-weight:500;color:#1D4ED8">Discuss {{ g.short }} →</span>
+        </a>
+      </sc-for>
+    </div>
+  </div>
+</section>
+
+<section id="process" aria-labelledby="proc-h" data-screen-label="Delivery method" style="padding:clamp(48px,8vw,88px) clamp(16px,3vw,24px);border-top:1px solid #E2E8F0">
+  <div style="max-width:1200px;margin:0 auto">
+    <div style="display:flex;flex-wrap:wrap;gap:24px 64px;margin-bottom:48px">
+      <h2 id="proc-h" style="flex:1 1 360px;margin:0;font-size:clamp(28px,3.4vw,40px);line-height:1.18;letter-spacing:-.02em;font-weight:600;max-width:15ch">A clear path from discovery to release.</h2>
+      <p style="flex:1 1 360px;margin:0;font-size:18px;line-height:28px;color:#475569;max-width:52ch;align-self:end">Each stage should produce something you can review, from the initial brief to tested software and operating documentation.</p>
+    </div>
+    <ol style="list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,320px),1fr));border-top:1px solid #CBD5E1;border-left:1px solid #CBD5E1">
+      <sc-for list="{{ stages }}" as="s" hint-placeholder-count="9">
+        <li style="padding:28px 28px 32px;border-right:1px solid #CBD5E1;border-bottom:1px solid #CBD5E1;display:grid;gap:10px;align-content:start">
+          <span style="font-family:'IBM Plex Mono',monospace;font-size:13px;color:#1D4ED8">{{ s.n }}</span>
+          <h3 style="margin:0;font-size:22px;line-height:30px;font-weight:600">{{ s.title }}</h3>
+          <p style="margin:0;font-size:15px;line-height:24px;color:#475569"><span style="color:#64748B">Artifact — </span><span style="color:#0F172A">{{ s.artifact }}</span></p>
+        </li>
+      </sc-for>
+    </ol>
+    <a href="#journey" style="margin-top:32px;display:inline-flex;align-items:center;gap:8px;font-weight:500;font-size:17px">See How We Work →</a>
+  </div>
+</section>
+
+<section aria-labelledby="tech-h" data-screen-label="Technology" style="padding:clamp(48px,8vw,88px) clamp(16px,3vw,24px);background:#F8FAFC;border-top:1px solid #E2E8F0;border-bottom:1px solid #E2E8F0">
+  <div style="max-width:1200px;margin:0 auto;display:flex;flex-wrap:wrap;gap:40px 64px">
+    <div style="flex:5 1 340px;min-width:0">
+      <h2 id="tech-h" style="margin:0;font-size:clamp(28px,3.4vw,40px);line-height:1.18;letter-spacing:-.02em;font-weight:600">Choose technology for the job.</h2>
+      <p style="margin:24px 0 0;font-size:18px;line-height:28px;color:#475569;text-wrap:pretty">The right stack depends on the product, your existing systems, the team maintaining it and the cost of operating it. Review the options and trade-offs before committing.</p>
+    </div>
+    <div style="flex:7 1 440px;min-width:0">
+      <dl style="margin:0;display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,240px),1fr));gap:0 32px">
+        <sc-for list="{{ criteria }}" as="c" hint-placeholder-count="4">
+          <div style="padding:20px 0;border-top:1px solid #CBD5E1">
+            <dt style="font-size:17px;font-weight:600;line-height:26px">{{ c.q }}</dt>
+            <dd style="margin:6px 0 0;font-size:15px;line-height:24px;color:#475569">{{ c.a }}</dd>
+          </div>
+        </sc-for>
+      </dl>
+      <div style="margin-top:24px;display:flex;flex-wrap:wrap;gap:8px;align-items:center">
+        <span style="font-size:14px;color:#475569;margin-right:4px">Layers we evaluate:</span>
+        <sc-for list="{{ layers }}" as="l" hint-placeholder-count="7">
+          <span style="font-size:14px;padding:4px 12px;border:1px solid #CBD5E1;border-radius:999px;background:#FFFFFF">{{ l }}</span>
+        </sc-for>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="engagement" aria-labelledby="eng-h" data-screen-label="Engagement" style="padding:clamp(48px,8vw,88px) clamp(16px,3vw,24px)">
+  <div style="max-width:1200px;margin:0 auto">
+    <div style="display:flex;flex-wrap:wrap;gap:24px 64px;margin-bottom:40px">
+      <h2 id="eng-h" style="flex:1 1 360px;margin:0;font-size:clamp(28px,3.4vw,40px);line-height:1.18;letter-spacing:-.02em;font-weight:600;max-width:15ch">A commercial model that fits the work.</h2>
+      <p style="flex:1 1 360px;margin:0;font-size:18px;line-height:28px;color:#475569;max-width:52ch;align-self:end">A defined scope, an evolving backlog and an ongoing support need require different agreements. Compare how scope, billing and changes are handled.</p>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,320px),1fr));gap:24px">
+      <sc-for list="{{ models }}" as="m" hint-placeholder-count="6">
+        <div style="padding:24px 28px;border:1px solid #E2E8F0;border-radius:12px;display:grid;gap:14px;align-content:start">
+          <h3 style="margin:0;font-size:20px;line-height:28px;font-weight:600">{{ m.title }}</h3>
+          <p style="margin:0;font-size:15px;line-height:24px;color:#475569">{{ m.fit }}</p>
+          <dl style="margin:0;display:grid;grid-template-columns:auto minmax(0,1fr);gap:6px 14px;font-size:14px;line-height:22px;padding-top:14px;border-top:1px solid #F1F5F9">
+            <dt style="color:#64748B">Scope</dt><dd style="margin:0">{{ m.scope }}</dd>
+            <dt style="color:#64748B">Billing</dt><dd style="margin:0">{{ m.billing }}</dd>
+          </dl>
+        </div>
+      </sc-for>
+    </div>
+    <a href="Contact.dc.html" style="margin-top:32px;display:inline-flex;align-items:center;gap:8px;font-weight:500;font-size:17px">Compare Engagement Models →</a>
+  </div>
+</section>
+
+<section aria-labelledby="prin-h" data-screen-label="Principles" style="padding:clamp(48px,8vw,88px) clamp(16px,3vw,24px);border-top:1px solid #E2E8F0">
+  <div style="max-width:1200px;margin:0 auto;display:flex;flex-wrap:wrap;gap:32px 64px">
+    <div style="flex:4 1 300px;min-width:0">
+      <h2 id="prin-h" style="margin:0;font-size:clamp(28px,3.4vw,40px);line-height:1.18;letter-spacing:-.02em;font-weight:600;position:sticky;top:120px">Know what you are reviewing and receiving.</h2>
+    </div>
+    <div style="flex:8 1 500px;min-width:0">
+      <sc-for list="{{ principles }}" as="p" hint-placeholder-count="4">
+        <div style="display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.3fr);gap:8px 32px;padding:28px 0;border-top:1px solid #CBD5E1">
+          <h3 style="margin:0;font-size:22px;line-height:30px;font-weight:600">{{ p.title }}</h3>
+          <p style="margin:0;font-size:17px;line-height:27px;color:#475569">{{ p.body }}</p>
+        </div>
+      </sc-for>
+      <div style="border-top:1px solid #CBD5E1;padding-top:24px">
+        <a href="#journey" style="font-weight:500;font-size:17px">Explore Delivery Responsibilities →</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="security" aria-labelledby="sec-h" data-screen-label="Security" style="background:#0F172A;color:#F8FAFC;padding:clamp(56px,9vw,112px) clamp(16px,3vw,24px)">
+  <div style="max-width:1200px;margin:0 auto;display:flex;flex-wrap:wrap;gap:48px 72px;align-items:center">
+    <div style="flex:1 1 380px;min-width:0">
+      <p style="margin:0 0 20px;font-family:'IBM Plex Mono',monospace;font-size:13px;letter-spacing:.08em;text-transform:uppercase;color:#94A3B8">Security and quality</p>
+      <h2 id="sec-h" style="margin:0;font-size:clamp(28px,3.4vw,40px);line-height:1.18;letter-spacing:-.02em;font-weight:600;max-width:16ch">Make security part of the engineering plan.</h2>
+      <p style="margin:24px 0 0;font-size:18px;line-height:28px;color:#CBD5E1;max-width:50ch">Discuss access, data handling, dependencies, backups and monitoring alongside features. The controls and evidence required for your project should be defined in its scope.</p>
+      <a href="Contact.dc.html" style="margin-top:32px;display:inline-flex;align-items:center;height:48px;padding:0 20px;border:1px solid #64748B;color:#F8FAFC;border-radius:8px;font-weight:500;text-decoration:none;transition:border-color .15s,background .15s" style-hover="border-color:#F8FAFC;background:#1E293B;color:#FFFFFF">Read Our Security Approach</a>
+    </div>
+    <figure style="flex:1 1 420px;min-width:0;margin:0">
+      <div style="border:1px solid #334155;border-radius:12px;padding:24px;font-family:'IBM Plex Mono',monospace;font-size:13px;line-height:20px">
+        <div style="display:flex;gap:12px;align-items:center;flex-wrap:wrap">
+          <span style="padding:8px 12px;border:1px solid #475569;border-radius:6px;color:#E2E8F0">Users</span>
+          <span style="color:#64748B;flex:1;min-width:24px;border-top:1px dashed #475569"></span>
+          <span style="color:#94A3B8">authenticated · least privilege</span>
+        </div>
+        <div style="margin-top:16px;border:1px dashed #64748B;border-radius:10px;padding:20px 16px 16px;position:relative">
+          <span style="position:absolute;top:-10px;left:14px;background:#0F172A;padding:0 8px;color:#94A3B8;font-size:11px;letter-spacing:.08em;text-transform:uppercase">Application boundary</span>
+          <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(110px,1fr));gap:10px">
+            <div style="padding:12px;background:#1E293B;border-radius:6px;color:#F8FAFC">Web app<div style="color:#94A3B8;font-size:11px;margin-top:4px">output encoding</div></div>
+            <div style="padding:12px;background:#1E293B;border-radius:6px;color:#F8FAFC">API<div style="color:#94A3B8;font-size:11px;margin-top:4px">authz per resource</div></div>
+            <div style="padding:12px;background:#1E293B;border-radius:6px;color:#F8FAFC">Data store<div style="color:#94A3B8;font-size:11px;margin-top:4px">encrypted · backed up</div></div>
+          </div>
+          <div style="margin-top:12px;padding:10px 12px;border:1px solid #334155;border-radius:6px;color:#94A3B8;display:flex;justify-content:space-between;gap:8px;flex-wrap:wrap"><span>Logs &amp; monitoring</span><span>dependency review</span></div>
+        </div>
+        <div style="display:flex;gap:12px;align-items:center;margin-top:16px;flex-wrap:wrap">
+          <span style="color:#94A3B8">scoped credentials</span>
+          <span style="flex:1;min-width:24px;border-top:1px dashed #475569"></span>
+          <span style="padding:8px 12px;border:1px solid #475569;border-radius:6px;color:#E2E8F0">External services</span>
+        </div>
+      </div>
+      <figcaption style="margin-top:14px;font-family:'IBM Plex Mono',monospace;font-size:12px;color:#94A3B8">Illustrative boundary — controls are agreed per project</figcaption>
+    </figure>
+  </div>
+</section>
+
+<section id="journey" aria-labelledby="jr-h" data-screen-label="Client journey" style="padding:clamp(48px,8vw,88px) clamp(16px,3vw,24px)">
+  <div style="max-width:1200px;margin:0 auto">
+    <div style="display:flex;flex-wrap:wrap;gap:24px 64px;margin-bottom:40px">
+      <h2 id="jr-h" style="flex:1 1 360px;margin:0;font-size:clamp(28px,3.4vw,40px);line-height:1.18;letter-spacing:-.02em;font-weight:600;max-width:15ch">What happens after you get in touch.</h2>
+      <p style="flex:1 1 360px;margin:0;font-size:18px;line-height:28px;color:#475569;max-width:52ch;align-self:end">Sending an enquiry does not create a development contract. Work begins only after a proposal is agreed and signed.</p>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,440px),1fr));gap:24px">
+      <sc-for list="{{ journey }}" as="j" hint-placeholder-count="4">
+        <div style="padding:28px;background:#F8FAFC;border:1px solid #E2E8F0;border-radius:12px">
+          <div style="display:flex;justify-content:space-between;align-items:baseline;gap:12px;margin-bottom:20px">
+            <h3 style="margin:0;font-size:22px;line-height:30px;font-weight:600">{{ j.title }}</h3>
+            <span style="font-family:'IBM Plex Mono',monospace;font-size:12px;color:#64748B">{{ j.range }}</span>
+          </div>
+          <ol style="list-style:none;margin:0;padding:0;display:grid;gap:12px">
+            <sc-for list="{{ j.steps }}" as="st" hint-placeholder-count="2">
+              <li style="display:grid;grid-template-columns:32px minmax(0,1fr);gap:12px;align-items:baseline">
+                <span style="font-family:'IBM Plex Mono',monospace;font-size:13px;color:#1D4ED8">{{ st.n }}</span>
+                <span style="font-size:16px;line-height:25px"><strong style="font-weight:600">{{ st.t }}</strong><span style="color:#475569"> — {{ st.d }}</span></span>
+              </li>
+            </sc-for>
+          </ol>
+        </div>
+      </sc-for>
+    </div>
+    <a href="Contact.dc.html" style="margin-top:32px;display:inline-flex;align-items:center;height:48px;padding:0 20px;background:#0F172A;color:#FFFFFF;border-radius:8px;font-weight:500;text-decoration:none;transition:background .15s" style-hover="background:#1D4ED8;color:#FFFFFF">Submit a Project Inquiry</a>
+  </div>
+</section>
+
+<section id="faq" aria-labelledby="faq-h" data-screen-label="FAQ" style="padding:clamp(48px,8vw,88px) clamp(16px,3vw,24px);border-top:1px solid #E2E8F0">
+  <div style="max-width:1200px;margin:0 auto;display:flex;flex-wrap:wrap;gap:32px 64px">
+    <div style="flex:4 1 280px;min-width:0">
+      <h2 id="faq-h" style="margin:0;font-size:clamp(28px,3.4vw,40px);line-height:1.18;letter-spacing:-.02em;font-weight:600">Frequently asked questions</h2>
+      <p style="margin:16px 0 0;font-size:16px;line-height:26px;color:#475569;max-width:32ch">Short answers to what most people ask before the first call.</p>
+    </div>
+    <div style="flex:8 1 520px;min-width:0;max-width:800px;border-top:1px solid #CBD5E1">
+      <sc-for list="{{ faqs }}" as="f" hint-placeholder-count="8">
+        <details onToggle="{{ f.onToggle }}" style="border-bottom:1px solid #CBD5E1">
+          <summary style="list-style:none;cursor:pointer;display:flex;justify-content:space-between;align-items:center;gap:24px;padding:22px 0;font-size:19px;line-height:28px;font-weight:500">
+            <span>{{ f.q }}</span>
+            <span aria-hidden="true" style="flex:none;width:28px;height:28px;border:1px solid #CBD5E1;border-radius:6px;display:grid;place-items:center;font-size:18px;color:#475569">{{ f.icon }}</span>
+          </summary>
+          <p style="margin:0;padding:0 56px 24px 0;font-size:17px;line-height:27px;color:#475569">{{ f.a }}</p>
+        </details>
+      </sc-for>
+    </div>
+  </div>
+</section>
+
+<section aria-labelledby="cta-h" data-screen-label="Final CTA" style="padding:0 clamp(16px,3vw,24px) clamp(48px,8vw,88px)">
+  <div style="max-width:1200px;margin:0 auto;background:#F8FAFC;border:1px solid #E2E8F0;border-radius:12px;padding:clamp(48px,7vw,80px) clamp(24px,5vw,48px)">
+    <div style="max-width:800px;margin:0 auto;text-align:{{ ctaAlign }}">
+      <h2 id="cta-h" style="margin:0;font-size:clamp(32px,4.4vw,52px);line-height:1.1;letter-spacing:-.025em;font-weight:600">Tell us what you’re building.</h2>
+      <p style="margin:24px auto 0;font-size:18px;line-height:28px;color:#475569;max-width:60ch;text-wrap:pretty">Share the problem, the stage of your project and any important constraints. Start with a short summary; confidential files can wait until an appropriate sharing arrangement is in place.</p>
+      <a href="Contact.dc.html" style="margin-top:32px;display:inline-flex;align-items:center;justify-content:center;height:52px;padding:0 28px;background:#1D4ED8;color:#FFFFFF;border-radius:8px;font-weight:500;font-size:17px;text-decoration:none;transition:background .15s" style-hover="background:#1E40AF;color:#FFFFFF">Discuss Your Project</a>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer style="border-top:1px solid #E2E8F0;padding:clamp(40px,6vw,64px) clamp(16px,3vw,24px) 24px;background:#FFFFFF">
+  <div style="max-width:1200px;margin:0 auto">
+    <div style="display:flex;flex-wrap:wrap;gap:40px 64px">
+      <div style="flex:2 1 260px;min-width:0">
+        <div style="font-weight:700;font-size:19px">SoftSysLab</div>
+        <p style="margin:12px 0 0;font-size:15px;line-height:24px;color:#475569;max-width:34ch">Custom software, web, mobile and SaaS development — planned before it is built.</p>
+      </div>
+      <sc-for list="{{ footerCols }}" as="col" hint-placeholder-count="3">
+        <nav aria-label="{{ col.title }}" style="flex:1 1 160px;min-width:0">
+          <h2 style="margin:0 0 14px;font-size:13px;font-family:'IBM Plex Mono',monospace;font-weight:500;letter-spacing:.06em;text-transform:uppercase;color:#64748B">{{ col.title }}</h2>
+          <ul style="list-style:none;margin:0;padding:0;display:grid;gap:4px">
+            <sc-for list="{{ col.links }}" as="l" hint-placeholder-count="4">
+              <li><a href="{{ l.href }}" style="display:inline-block;padding:6px 0;font-size:15px;color:#0F172A;text-decoration:none" style-hover="color:#1D4ED8;text-decoration:underline">{{ l.label }}</a></li>
+            </sc-for>
+          </ul>
+        </nav>
+      </sc-for>
+    </div>
+    <div style="margin-top:48px;padding-top:20px;border-top:1px solid #E2E8F0;display:flex;flex-wrap:wrap;justify-content:space-between;gap:12px 24px;font-size:14px;line-height:22px;color:#475569">
+      <span>Legal entity, jurisdiction and registered address pending verification.</span>
+      <button type="button" onClick="{{ reopenConsent }}" style="background:none;border:0;padding:0;font:inherit;color:#0F172A;text-decoration:underline;text-underline-offset:3px;cursor:pointer;min-height:24px">Cookie preferences</button>
+    </div>
+  </div>
+</footer>
+
+<sc-if value="{{ showConsent }}" hint-placeholder-val="{{ false }}">
+  <div role="region" aria-label="Cookie preferences" style="position:fixed;left:16px;bottom:16px;z-index:60;width:min(420px,calc(100vw - 32px));background:#FFFFFF;border:1px solid #CBD5E1;border-radius:12px;box-shadow:0 12px 32px rgba(15,23,42,.14);padding:24px">
+    <h2 style="margin:0;font-size:18px;line-height:26px;font-weight:600">Cookies on this site</h2>
+    <p style="margin:8px 0 0;font-size:15px;line-height:24px;color:#475569">We use necessary cookies to run the site. Optional analytics stay off unless you allow them.</p>
+    <sc-if value="{{ managing }}" hint-placeholder-val="{{ false }}">
+      <div style="margin-top:16px;display:grid;gap:10px;font-size:15px">
+        <label style="display:flex;gap:12px;align-items:center;padding:10px 12px;border:1px solid #E2E8F0;border-radius:8px;color:#475569"><input type="checkbox" checked="" disabled="" style="width:18px;height:18px"><span>Necessary — always on</span></label>
+        <label style="display:flex;gap:12px;align-items:center;padding:10px 12px;border:1px solid #CBD5E1;border-radius:8px;cursor:pointer"><input type="checkbox" checked="{{ analytics }}" onChange="{{ toggleAnalytics }}" style="width:18px;height:18px;accent-color:#1D4ED8"><span>Analytics</span></label>
+      </div>
+    </sc-if>
+    <div style="margin-top:18px;display:grid;grid-template-columns:repeat(auto-fit,minmax(110px,1fr));gap:8px">
+      <button type="button" onClick="{{ acceptAll }}" style="height:44px;border:1px solid #0F172A;background:#0F172A;color:#FFFFFF;border-radius:8px;font:500 15px 'Schibsted Grotesk',sans-serif;cursor:pointer">Accept all</button>
+      <button type="button" onClick="{{ rejectAll }}" style="height:44px;border:1px solid #0F172A;background:#FFFFFF;color:#0F172A;border-radius:8px;font:500 15px 'Schibsted Grotesk',sans-serif;cursor:pointer">Reject optional</button>
+      <button type="button" onClick="{{ manageAction }}" style="height:44px;border:1px solid #0F172A;background:#FFFFFF;color:#0F172A;border-radius:8px;font:500 15px 'Schibsted Grotesk',sans-serif;cursor:pointer">{{ manageLabel }}</button>
+    </div>
+  </div>
+</sc-if>
+
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;showFactsBanner&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Truth surfaces&quot;},&quot;showAnnouncement&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Truth surfaces&quot;},&quot;showConsent&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Truth surfaces&quot;}}">
+class Component extends DCLogic {
+  state = { w: typeof window !== 'undefined' ? window.innerWidth : 1280, menuOpen: false, faqOpen: {}, consent: null, managing: false, analytics: false };
+  componentDidMount() {
+    this.onResize = () => this.setState({ w: window.innerWidth });
+    window.addEventListener('resize', this.onResize);
+    try { const c = localStorage.getItem('ssl-consent-v1'); if (c) this.setState({ consent: JSON.parse(c) }); } catch (e) {}
+  }
+  componentWillUnmount() { window.removeEventListener('resize', this.onResize); }
+  saveConsent(analytics) {
+    const c = { version: 1, analytics, savedAt: new Date().toISOString() };
+    try { localStorage.setItem('ssl-consent-v1', JSON.stringify(c)); } catch (e) {}
+    this.setState({ consent: c, managing: false });
+  }
+  renderVals() {
+    const p = this.props, s = this.state;
+    const wide = s.w >= 960;
+    const faqs = [
+      ['Where should a project start?', 'Start with the users, workflows and constraints; discovery can turn these into a scoped backlog.'],
+      ['Can an existing product be improved?', 'Begin with access, architecture and dependency review before deciding what to replace.'],
+      ['How is cost estimated?', 'Scope, integrations, delivery capacity and risk inform the proposal.'],
+      ['Who owns the software?', 'Ownership, pre-existing components and third-party licences must be set out in the signed agreement.'],
+      ['How are changes handled?', 'Record the request, assess time and cost, and approve changes before work proceeds.'],
+      ['Can you sign an NDA?', 'Raise confidentiality requirements before sharing restricted materials; availability and wording must be agreed.'],
+      ['What happens after launch?', 'The agreement defines handover, any defect period and ongoing maintenance.'],
+      ['How do we start?', 'Send a short project summary and your preferred contact method.']
+    ].map(([q, a], i) => ({ q, a, icon: s.faqOpen[i] ? '−' : '+', onToggle: e => { const open = e.currentTarget.open; this.setState(st => ({ faqOpen: { ...st.faqOpen, [i]: open } })); } }));
+    return {
+      wide, narrow: !wide,
+      headerH: s.w >= 768 ? '80px' : '64px',
+      ctaAlign: s.w >= 768 ? 'center' : 'left',
+      showFactsBanner: p.showFactsBanner ?? true,
+      showAnnouncement: p.showAnnouncement ?? true,
+      showMobileMenu: !wide && s.menuOpen,
+      menuOpenStr: s.menuOpen ? 'true' : 'false',
+      menuLabel: s.menuOpen ? 'Close' : 'Menu',
+      toggleMenu: () => this.setState({ menuOpen: !s.menuOpen }),
+      closeMenu: () => this.setState({ menuOpen: false }),
+      nav: [
+        { label: 'Services', href: '#services' }, { label: 'Process', href: '#process' },
+        { label: 'Engagement', href: '#engagement' }, { label: 'Security', href: '#security' },
+        { label: 'FAQ', href: '#faq' }
+      ],
+      capabilities: ['Web Applications', 'Mobile Products', 'SaaS Platforms', 'AI and Automation', 'Cloud and DevOps', 'Product Design'].map((label, i) => ({ label, n: '0' + (i + 1) })),
+      panels: [
+        { title: 'Scope', body: 'Agree the users, first workflows and acceptance criteria — and what is explicitly out of scope.' },
+        { title: 'Architecture', body: 'Decide data ownership, integration boundaries and how the system will be operated before code is written.' },
+        { title: 'Delivery', body: 'Set milestones, review points and change procedures so progress can be checked against the plan.' }
+      ],
+      groups: [
+        { title: 'Strategy and design', short: 'strategy', body: 'Translate user needs into a prioritized product plan.' },
+        { title: 'Application engineering', short: 'engineering', body: 'Build the interfaces, services and data model.' },
+        { title: 'AI and integration', short: 'integration', body: 'Connect systems and introduce evaluated automation.' },
+        { title: 'Cloud and modernization', short: 'modernization', body: 'Plan releases, infrastructure and system change.' },
+        { title: 'Quality and support', short: 'support', body: 'Test, maintain and extend the software.' }
+      ].map((g, i) => ({ ...g, n: '0' + (i + 1) })),
+      stages: [
+        ['Discovery', 'Discovery brief'], ['Planning', 'Prioritized backlog'], ['UX/UI', 'Reviewable prototype'],
+        ['Architecture', 'Architecture decision record'], ['Development', 'Reviewed increments'], ['Testing', 'Acceptance evidence'],
+        ['Deployment', 'Release runbook'], ['Monitoring', 'Alerting and dashboards'], ['Improvement', 'Prioritized change log']
+      ].map(([title, artifact], i) => ({ title, artifact, n: '0' + (i + 1) })),
+      criteria: [
+        { q: 'The product', a: 'What the software must do, for whom, and how often it will change.' },
+        { q: 'Existing systems', a: 'Which tools, data and identity providers it must connect to.' },
+        { q: 'The maintaining team', a: 'Who will run and extend it after handover, and their skills.' },
+        { q: 'Operating cost', a: 'Hosting, licences and support effort over the life of the system.' }
+      ],
+      layers: ['Frontend', 'Backend', 'Mobile', 'Data', 'Cloud', 'AI', 'DevOps'],
+      models: [
+        { title: 'Fixed Scope', fit: 'A well-defined release with stable requirements.', scope: 'Agreed up front', billing: 'Per milestone' },
+        { title: 'Time and Materials', fit: 'An evolving backlog where priorities shift.', scope: 'Prioritized per sprint', billing: 'Time spent' },
+        { title: 'Dedicated Team', fit: 'Ongoing product work needing a stable team.', scope: 'Roadmap-led', billing: 'Per team, monthly' },
+        { title: 'Staff Augmentation', fit: 'Adding specific skills to your existing team.', scope: 'Directed by you', billing: 'Per person' },
+        { title: 'Discovery Sprint', fit: 'Turning an idea or problem into a scoped plan.', scope: 'Fixed, short', billing: 'Fixed fee' },
+        { title: 'Maintenance', fit: 'Keeping live software secure and current.', scope: 'Agreed service levels', billing: 'Recurring' }
+      ],
+      principles: [
+        { title: 'A written scope', body: 'Agree what is included — and what is not — before development begins.' },
+        { title: 'Visible progress', body: 'Review completed work against the backlog at agreed intervals.' },
+        { title: 'A tested release', body: 'Examine acceptance evidence before a release is approved.' },
+        { title: 'A planned handover', body: 'Identify repositories, accounts and operating documentation you will receive.' }
+      ],
+      journey: [
+        { title: 'Inquiry and discovery call', range: '01–02', steps: [{ n: '01', t: 'Inquiry', d: 'a short summary of the problem' }, { n: '02', t: 'Discovery call', d: 'users, constraints and fit' }] },
+        { title: 'Requirements and proposal', range: '03–04', steps: [{ n: '03', t: 'Requirements', d: 'workflows, integrations, priorities' }, { n: '04', t: 'Proposal', d: 'scope, assumptions and milestones' }] },
+        { title: 'Agreement and kickoff', range: '05–06', steps: [{ n: '05', t: 'Agreement', d: 'ownership, billing and change terms' }, { n: '06', t: 'Kickoff', d: 'access, roles and first sprint' }] },
+        { title: 'Development to support', range: '07–10', steps: [{ n: '07', t: 'Development', d: 'reviewed increments' }, { n: '08', t: 'QA', d: 'acceptance testing' }, { n: '09', t: 'Launch', d: 'release and handover' }, { n: '10', t: 'Support', d: 'as defined in the agreement' }] }
+      ],
+      faqs,
+      footerCols: [
+        { title: 'Services', links: [{ label: 'Strategy and design', href: '#services' }, { label: 'Application engineering', href: '#services' }, { label: 'AI and integration', href: '#services' }, { label: 'Quality and support', href: '#services' }] },
+        { title: 'Company', links: [{ label: 'How we work', href: '#process' }, { label: 'Engagement models', href: '#engagement' }, { label: 'Security', href: '#security' }, { label: 'Contact', href: 'Contact.dc.html' }] },
+        { title: 'Help', links: [{ label: 'What happens next', href: '#journey' }, { label: 'FAQ', href: '#faq' }] }
+      ],
+      showConsent: (p.showConsent ?? true) && !s.consent,
+      managing: s.managing,
+      analytics: s.analytics,
+      toggleAnalytics: e => this.setState({ analytics: e.target.checked }),
+      acceptAll: () => this.saveConsent(true),
+      rejectAll: () => this.saveConsent(false),
+      manageLabel: s.managing ? 'Save choices' : 'Manage',
+      manageAction: () => s.managing ? this.saveConsent(s.analytics) : this.setState({ managing: true }),
+      reopenConsent: () => { try { localStorage.removeItem('ssl-consent-v1'); } catch (e) {} this.setState({ consent: null, managing: true }); }
+    };
+  }
+}
+</script>
+</body>
+</html>

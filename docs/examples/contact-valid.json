@@ -1,0 +1,19 @@
+{
+  "services": ["web-development", "api-development-integration"],
+  "budgetCode": "25k-75k",
+  "timelineCode": "1-3-months",
+  "summary": "Our operations team tracks job requests in spreadsheets. We want a web application where customers submit requests and staff approve and assign them, integrated with the accounting system we already run.",
+  "productUrl": "",
+  "firstName": "Ada",
+  "lastName": "Lovelace",
+  "email": "ada@analytical-engines.invalid",
+  "phone": "",
+  "company": "Analytical Engines Ltd",
+  "country": "United Kingdom",
+  "website": "https://analytical-engines.invalid",
+  "noWebsite": false,
+  "preferredContact": "email",
+  "privacyAcknowledged": true,
+  "noticeVersion": "2026-10-06.1",
+  "formVersion": "contact.v1"
+}

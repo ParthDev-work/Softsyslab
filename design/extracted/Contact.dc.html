@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<title>Discuss Your Software Project | SoftSysLab</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+<link href="https://fonts.googleapis.com/css2?family=Schibsted+Grotesk:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+body{margin:0;background:#FFFFFF;color:#0F172A;font-family:'Schibsted Grotesk',system-ui,sans-serif;-webkit-font-smoothing:antialiased}
+*{box-sizing:border-box}
+a{color:#1D4ED8;text-underline-offset:3px}
+a:hover{color:#1E40AF}
+:focus-visible{outline:2px solid #1D4ED8;outline-offset:3px;border-radius:4px}
+input,select,textarea,button{font-family:inherit}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+</helmet>
+
+<div style="min-height:100vh;display:flex;flex-direction:column">
+
+<div role="note" style="background:#FFFBEB;color:#92400E;border-bottom:1px solid #FDE68A;font-size:14px;line-height:22px">
+  <div style="max-width:1200px;margin:0 auto;padding:10px clamp(16px,3vw,24px);display:flex;gap:12px;align-items:baseline;flex-wrap:wrap">
+    <span style="font-family:'IBM Plex Mono',monospace;font-size:12px;letter-spacing:.06em;text-transform:uppercase;font-weight:500">Preview build</span>
+    <span>Company identity and contact details are not yet verified. Enquiries here are stored locally for testing only.</span>
+  </div>
+</div>
+
+<header style="position:sticky;top:0;z-index:40;background:rgba(255,255,255,.94);backdrop-filter:saturate(1.4) blur(8px);border-bottom:1px solid #E2E8F0">
+  <div style="max-width:1200px;margin:0 auto;padding:0 clamp(16px,3vw,24px);height:72px;display:flex;align-items:center;justify-content:space-between;gap:24px">
+    <a href="Home.dc.html" aria-label="SoftSysLab home" style="display:flex;align-items:center;gap:10px;text-decoration:none;color:#0F172A">
+      <span aria-hidden="true" style="display:grid;grid-template-columns:repeat(2,9px);gap:3px">
+        <span style="width:9px;height:9px;background:#0F172A;border-radius:2px"></span>
+        <span style="width:9px;height:9px;border:1.5px solid #0F172A;border-radius:2px"></span>
+        <span style="width:9px;height:9px;border:1.5px solid #0F172A;border-radius:2px"></span>
+        <span style="width:9px;height:9px;background:#1D4ED8;border-radius:2px"></span>
+      </span>
+      <span style="font-weight:700;font-size:19px;letter-spacing:-.01em">SoftSysLab</span>
+    </a>
+    <a href="Home.dc.html" style="display:inline-flex;align-items:center;height:44px;padding:0 14px;color:#334155;text-decoration:none;border-radius:8px;font-size:16px" style-hover="background:#F1F5F9;color:#0F172A">← Back to home</a>
+  </div>
+</header>
+
+<main id="main" style="flex:1;padding:clamp(40px,6vw,72px) clamp(16px,3vw,24px) clamp(48px,8vw,88px)">
+  <div style="max-width:1200px;margin:0 auto">
+    <nav aria-label="Breadcrumb" style="font-size:14px;color:#475569;margin-bottom:24px;display:flex;gap:8px">
+      <a href="Home.dc.html" style="color:#475569">Home</a><span aria-hidden="true">/</span><span aria-current="page" style="color:#0F172A">Contact</span>
+    </nav>
+    <h1 style="margin:0;font-size:clamp(36px,5vw,56px);line-height:1.1;letter-spacing:-.03em;font-weight:600;max-width:14ch">Tell us about your project.</h1>
+    <p style="margin:20px 0 0;font-size:clamp(17px,1.5vw,19px);line-height:1.6;color:#475569;max-width:62ch;text-wrap:pretty">Share the problem you want to solve, the stage of your project and any important constraints. A short summary is enough to begin. Please do not send passwords, payment details or confidential customer data.</p>
+
+    <div style="margin-top:clamp(40px,5vw,56px);display:flex;flex-wrap:wrap;gap:48px 64px;align-items:flex-start">
+
+      <div style="flex:8 1 560px;min-width:0">
+      <sc-if value="{{ success }}" hint-placeholder-val="{{ false }}">
+        <div role="status" tabindex="-1" ref="{{ successRef }}" style="border:1px solid #BBF7D0;background:#F0FDF4;border-radius:12px;padding:clamp(24px,4vw,40px)">
+          <p style="margin:0;font-family:'IBM Plex Mono',monospace;font-size:13px;letter-spacing:.06em;text-transform:uppercase;color:#166534">✓ Enquiry received</p>
+          <h2 style="margin:12px 0 0;font-size:28px;line-height:36px;font-weight:600">Your enquiry has been received.</h2>
+          <p style="margin:12px 0 0;font-size:17px;line-height:27px;color:#334155">Reference: <span style="font-family:'IBM Plex Mono',monospace;font-weight:500;color:#0F172A">{{ reference }}</span>. We will review the information and contact you using your preferred method.</p>
+          <ol style="margin:28px 0 0;padding:0;list-style:none;display:grid;gap:0;border-top:1px solid #BBF7D0">
+            <li style="display:grid;grid-template-columns:40px minmax(0,1fr);padding:14px 0;border-bottom:1px solid #BBF7D0;font-size:16px"><span style="font-family:'IBM Plex Mono',monospace;color:#166534">01</span><span>We review whether the project fits our services.</span></li>
+            <li style="display:grid;grid-template-columns:40px minmax(0,1fr);padding:14px 0;border-bottom:1px solid #BBF7D0;font-size:16px"><span style="font-family:'IBM Plex Mono',monospace;color:#166534">02</span><span>We clarify requirements with any questions.</span></li>
+            <li style="display:grid;grid-template-columns:40px minmax(0,1fr);padding:14px 0;border-bottom:1px solid #BBF7D0;font-size:16px"><span style="font-family:'IBM Plex Mono',monospace;color:#166534">03</span><span>We agree the next discussion together.</span></li>
+          </ol>
+          <div style="margin-top:28px;display:flex;flex-wrap:wrap;gap:12px">
+            <a href="Home.dc.html" style="display:inline-flex;align-items:center;height:48px;padding:0 20px;background:#0F172A;color:#FFFFFF;border-radius:8px;font-weight:500;text-decoration:none">Return to home</a>
+            <button type="button" onClick="{{ reset }}" style="height:48px;padding:0 20px;border:1px solid #64748B;background:#FFFFFF;border-radius:8px;font-size:16px;font-weight:500;cursor:pointer;color:#0F172A">Send another enquiry</button>
+          </div>
+        </div>
+      </sc-if>
+
+      <sc-if value="{{ showForm }}" hint-placeholder-val="{{ true }}">
+      <form noValidate="" onSubmit="{{ submit }}" style="display:grid;gap:48px">
+
+        <sc-if value="{{ hasErrors }}" hint-placeholder-val="{{ false }}">
+          <div role="alert" tabindex="-1" ref="{{ summaryRef }}" style="border:1px solid #FECACA;background:#FEF2F2;border-radius:12px;padding:20px 24px;color:#B91C1C">
+            <h2 style="margin:0;font-size:18px;line-height:26px;font-weight:600">⚠ Please fix {{ errorCount }} before sending</h2>
+            <ul style="margin:10px 0 0;padding-left:20px;display:grid;gap:4px;font-size:15px;line-height:24px">
+              <sc-for list="{{ errorList }}" as="e" hint-placeholder-count="2">
+                <li><a href="{{ e.href }}" style="color:#B91C1C">{{ e.msg }}</a></li>
+              </sc-for>
+            </ul>
+          </div>
+        </sc-if>
+
+        <sc-if value="{{ storeError }}" hint-placeholder-val="{{ false }}">
+          <div role="alert" style="border:1px solid #FECACA;background:#FEF2F2;border-radius:12px;padding:20px 24px;color:#B91C1C;font-size:16px;line-height:25px">⚠ Your enquiry could not be saved. Nothing was sent and your answers are still here — please try again.</div>
+        </sc-if>
+
+        <fieldset style="border:0;margin:0;padding:0;display:grid;gap:24px;min-width:0">
+          <legend style="padding:0;margin-bottom:24px;display:flex;gap:14px;align-items:baseline;font-size:24px;line-height:32px;font-weight:600"><span style="font-family:'IBM Plex Mono',monospace;font-size:13px;font-weight:400;color:#1D4ED8">01</span>Project details</legend>
+
+          <div style="display:grid;gap:8px">
+            <span id="services-label" style="font-size:16px;font-weight:500">Service needed <span style="color:#475569;font-weight:400">— choose up to 5</span></span>
+            <div id="f-services" role="group" aria-labelledby="services-label" style="display:flex;flex-wrap:wrap;gap:8px">
+              <sc-for list="{{ serviceOpts }}" as="o" hint-placeholder-count="8">
+                <button type="button" aria-pressed="{{ o.pressed }}" disabled="{{ o.disabled }}" onClick="{{ o.toggle }}" style="min-height:44px;padding:0 16px;border-radius:8px;border:1px solid {{ o.border }};background:{{ o.bg }};color:{{ o.color }};font-size:15px;cursor:pointer;opacity:{{ o.opacity }};transition:background .12s,border-color .12s">{{ o.label }}</button>
+              </sc-for>
+            </div>
+            <sc-if value="{{ err.services }}" hint-placeholder-val="{{ false }}"><span style="font-size:14px;color:#B91C1C">⚠ {{ err.services }}</span></sc-if>
+          </div>
+
+          <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,240px),1fr));gap:24px">
+            <label style="display:grid;gap:8px">
+              <span style="font-size:16px;font-weight:500">Budget</span>
+              <select id="f-budget" value="{{ v.budget }}" onChange="{{ on.budget }}" aria-invalid="{{ inv.budget }}" style="height:52px;padding:0 14px;border:1px solid {{ bd.budget }};border-radius:8px;font-size:16px;background:#FFFFFF;color:#0F172A">
+                <option value="">Select a range</option>
+                <option>Under USD 25,000</option>
+                <option>USD 25,000 – 75,000</option>
+                <option>USD 75,000 – 150,000</option>
+                <option>Over USD 150,000</option>
+                <option>Need guidance</option>
+              </select>
+              <sc-if value="{{ err.budget }}" hint-placeholder-val="{{ false }}"><span style="font-size:14px;color:#B91C1C">⚠ {{ err.budget }}</span></sc-if>
+            </label>
+            <label style="display:grid;gap:8px">
+              <span style="font-size:16px;font-weight:500">Expected timeline</span>
+              <select id="f-timeline" value="{{ v.timeline }}" onChange="{{ on.timeline }}" aria-invalid="{{ inv.timeline }}" style="height:52px;padding:0 14px;border:1px solid {{ bd.timeline }};border-radius:8px;font-size:16px;background:#FFFFFF;color:#0F172A">
+                <option value="">Select a timeline</option>
+                <option>Start within a month</option>
+                <option>Start in 1–3 months</option>
+                <option>Start in 3–6 months</option>
+                <option>Flexible</option>
+              </select>
+              <sc-if value="{{ err.timeline }}" hint-placeholder-val="{{ false }}"><span style="font-size:14px;color:#B91C1C">⚠ {{ err.timeline }}</span></sc-if>
+            </label>
+          </div>
+
+          <label style="display:grid;gap:8px">
+            <span style="display:flex;justify-content:space-between;gap:12px;font-size:16px;font-weight:500"><span>Project summary</span><span style="font-weight:400;font-size:14px;color:#475569;font-family:'IBM Plex Mono',monospace">{{ summaryCount }}</span></span>
+            <span style="font-size:14px;line-height:22px;color:#475569">Who will use it, what it should do first, and any systems it must connect to.</span>
+            <textarea id="f-summary" value="{{ v.summary }}" onChange="{{ on.summary }}" aria-invalid="{{ inv.summary }}" maxLength="5000" rows="6" placeholder="e.g. Our operations team tracks job requests in spreadsheets. We want a web app where customers submit requests and staff approve and assign them." style="min-height:160px;padding:14px;border:1px solid {{ bd.summary }};border-radius:8px;font-size:16px;line-height:26px;resize:vertical;color:#0F172A"></textarea>
+            <sc-if value="{{ err.summary }}" hint-placeholder-val="{{ false }}"><span style="font-size:14px;color:#B91C1C">⚠ {{ err.summary }}</span></sc-if>
+          </label>
+
+          <label style="display:grid;gap:8px">
+            <span style="font-size:16px;font-weight:500">Existing product URL <span style="color:#475569;font-weight:400">— optional</span></span>
+            <input id="f-product" type="url" value="{{ v.product }}" onChange="{{ on.product }}" placeholder="https://" style="height:52px;padding:0 14px;border:1px solid {{ bd.product }};border-radius:8px;font-size:16px;color:#0F172A">
+            <sc-if value="{{ err.product }}" hint-placeholder-val="{{ false }}"><span style="font-size:14px;color:#B91C1C">⚠ {{ err.product }}</span></sc-if>
+          </label>
+        </fieldset>
+
+        <fieldset style="border:0;margin:0;padding:32px 0 0;border-top:1px solid #E2E8F0;display:grid;gap:24px;min-width:0">
+          <legend style="padding:0;float:left;width:100%;margin-bottom:0;display:flex;gap:14px;align-items:baseline;font-size:24px;line-height:32px;font-weight:600"><span style="font-family:'IBM Plex Mono',monospace;font-size:13px;font-weight:400;color:#1D4ED8">02</span>Your contact details</legend>
+
+          <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,240px),1fr));gap:24px">
+            <label style="display:grid;gap:8px">
+              <span style="font-size:16px;font-weight:500">First name</span>
+              <input id="f-first" autoComplete="given-name" value="{{ v.first }}" onChange="{{ on.first }}" aria-invalid="{{ inv.first }}" style="height:52px;padding:0 14px;border:1px solid {{ bd.first }};border-radius:8px;font-size:16px;color:#0F172A">
+              <sc-if value="{{ err.first }}" hint-placeholder-val="{{ false }}"><span style="font-size:14px;color:#B91C1C">⚠ {{ err.first }}</span></sc-if>
+            </label>
+            <label style="display:grid;gap:8px">
+              <span style="font-size:16px;font-weight:500">Last name</span>
+              <input id="f-last" autoComplete="family-name" value="{{ v.last }}" onChange="{{ on.last }}" aria-invalid="{{ inv.last }}" style="height:52px;padding:0 14px;border:1px solid {{ bd.last }};border-radius:8px;font-size:16px;color:#0F172A">
+              <sc-if value="{{ err.last }}" hint-placeholder-val="{{ false }}"><span style="font-size:14px;color:#B91C1C">⚠ {{ err.last }}</span></sc-if>
+            </label>
+            <label style="display:grid;gap:8px">
+              <span style="font-size:16px;font-weight:500">Business email</span>
+              <input id="f-email" type="email" autoComplete="email" value="{{ v.email }}" onChange="{{ on.email }}" aria-invalid="{{ inv.email }}" style="height:52px;padding:0 14px;border:1px solid {{ bd.email }};border-radius:8px;font-size:16px;color:#0F172A">
+              <span style="font-size:13px;color:#475569">Personal addresses are fine.</span>
+              <sc-if value="{{ err.email }}" hint-placeholder-val="{{ false }}"><span style="font-size:14px;color:#B91C1C">⚠ {{ err.email }}</span></sc-if>
+            </label>
+            <label style="display:grid;gap:8px">
+              <span style="font-size:16px;font-weight:500">Phone <span style="color:#475569;font-weight:400">— optional</span></span>
+              <input id="f-phone" type="tel" autoComplete="tel" maxLength="32" value="{{ v.phone }}" onChange="{{ on.phone }}" placeholder="+1 555 000 0000" style="height:52px;padding:0 14px;border:1px solid #64748B;border-radius:8px;font-size:16px;color:#0F172A">
+              <span style="font-size:13px;color:#475569">Include your country prefix.</span>
+            </label>
+            <label style="display:grid;gap:8px">
+              <span style="font-size:16px;font-weight:500">Company</span>
+              <input id="f-company" autoComplete="organization" value="{{ v.company }}" onChange="{{ on.company }}" aria-invalid="{{ inv.company }}" style="height:52px;padding:0 14px;border:1px solid {{ bd.company }};border-radius:8px;font-size:16px;color:#0F172A">
+              <span style="font-size:13px;color:#475569">Not formed yet? Write “Pre-launch”.</span>
+              <sc-if value="{{ err.company }}" hint-placeholder-val="{{ false }}"><span style="font-size:14px;color:#B91C1C">⚠ {{ err.company }}</span></sc-if>
+            </label>
+            <label style="display:grid;gap:8px">
+              <span style="font-size:16px;font-weight:500">Country</span>
+              <select id="f-country" value="{{ v.country }}" onChange="{{ on.country }}" aria-invalid="{{ inv.country }}" style="height:52px;padding:0 14px;border:1px solid {{ bd.country }};border-radius:8px;font-size:16px;background:#FFFFFF;color:#0F172A">
+                <option value="">Select a country</option>
+                <sc-for list="{{ countries }}" as="c" hint-placeholder-count="0"><option>{{ c }}</option></sc-for>
+              </select>
+              <sc-if value="{{ err.country }}" hint-placeholder-val="{{ false }}"><span style="font-size:14px;color:#B91C1C">⚠ {{ err.country }}</span></sc-if>
+            </label>
+          </div>
+
+          <div style="display:grid;gap:8px">
+            <label for="f-website" style="font-size:16px;font-weight:500">Company website</label>
+            <input id="f-website" type="url" value="{{ v.website }}" onChange="{{ on.website }}" disabled="{{ v.noWebsite }}" aria-invalid="{{ inv.website }}" placeholder="https://" style="height:52px;padding:0 14px;border:1px solid {{ bd.website }};border-radius:8px;font-size:16px;color:#0F172A;background:{{ websiteBg }}">
+            <label style="display:flex;gap:10px;align-items:center;min-height:44px;font-size:15px;cursor:pointer;width:fit-content"><input type="checkbox" checked="{{ v.noWebsite }}" onChange="{{ on.noWebsite }}" style="width:20px;height:20px;accent-color:#1D4ED8">No website yet</label>
+            <sc-if value="{{ err.website }}" hint-placeholder-val="{{ false }}"><span style="font-size:14px;color:#B91C1C">⚠ {{ err.website }}</span></sc-if>
+          </div>
+
+          <div role="radiogroup" aria-labelledby="pref-label" style="display:grid;gap:8px">
+            <span id="pref-label" style="font-size:16px;font-weight:500">Preferred contact method</span>
+            <div style="display:flex;flex-wrap:wrap;gap:8px">
+              <label style="display:flex;gap:10px;align-items:center;min-height:48px;padding:0 16px;border:1px solid #CBD5E1;border-radius:8px;cursor:pointer;font-size:15px"><input type="radio" name="pref" value="email" checked="{{ prefEmail }}" onChange="{{ on.pref }}" style="width:18px;height:18px;accent-color:#1D4ED8">Email</label>
+              <label style="display:flex;gap:10px;align-items:center;min-height:48px;padding:0 16px;border:1px solid #CBD5E1;border-radius:8px;cursor:pointer;font-size:15px"><input id="f-pref" type="radio" name="pref" value="phone" checked="{{ prefPhone }}" onChange="{{ on.pref }}" style="width:18px;height:18px;accent-color:#1D4ED8">Phone</label>
+            </div>
+            <sc-if value="{{ err.pref }}" hint-placeholder-val="{{ false }}"><span style="font-size:14px;color:#B91C1C">⚠ {{ err.pref }}</span></sc-if>
+          </div>
+        </fieldset>
+
+        <div style="padding-top:32px;border-top:1px solid #E2E8F0;display:grid;gap:20px">
+          <label style="display:flex;gap:12px;align-items:flex-start;font-size:16px;line-height:25px;cursor:pointer">
+            <input id="f-privacy" type="checkbox" checked="{{ v.privacy }}" onChange="{{ on.privacy }}" aria-invalid="{{ inv.privacy }}" style="flex:none;width:20px;height:20px;margin-top:3px;accent-color:#1D4ED8">
+            <span>I have read the <a href="#privacy">Privacy Policy</a> and understand how my enquiry will be handled.</span>
+          </label>
+          <sc-if value="{{ err.privacy }}" hint-placeholder-val="{{ false }}"><span style="font-size:14px;color:#B91C1C;margin-top:-8px">⚠ {{ err.privacy }}</span></sc-if>
+          <div style="display:flex;flex-wrap:wrap;gap:16px;align-items:center">
+            <button type="submit" disabled="{{ submitting }}" style="height:52px;padding:0 28px;border:0;border-radius:8px;background:{{ submitBg }};color:#FFFFFF;font-size:17px;font-weight:500;cursor:pointer;display:inline-flex;align-items:center;gap:10px;transition:background .15s">{{ submitLabel }}</button>
+            <span style="font-size:14px;color:#475569;max-width:44ch">Sending an enquiry does not create a contract or commitment on either side.</span>
+          </div>
+        </div>
+      </form>
+      </sc-if>
+      </div>
+
+      <aside style="flex:4 1 300px;min-width:0;display:grid;gap:24px;position:sticky;top:104px">
+        <div style="border:1px solid #E2E8F0;border-radius:12px;padding:28px;background:#F8FAFC">
+          <h2 style="margin:0 0 20px;font-size:20px;line-height:28px;font-weight:600">What happens next</h2>
+          <ol style="margin:0;padding:0;list-style:none;display:grid;gap:18px">
+            <li style="display:grid;grid-template-columns:32px minmax(0,1fr);font-size:15px;line-height:24px"><span style="font-family:'IBM Plex Mono',monospace;color:#1D4ED8">01</span><span><strong style="font-weight:600">Review fit.</strong> <span style="color:#475569">We read your summary and check whether we can help.</span></span></li>
+            <li style="display:grid;grid-template-columns:32px minmax(0,1fr);font-size:15px;line-height:24px"><span style="font-family:'IBM Plex Mono',monospace;color:#1D4ED8">02</span><span><strong style="font-weight:600">Clarify requirements.</strong> <span style="color:#475569">We may ask a few questions about users, systems and constraints.</span></span></li>
+            <li style="display:grid;grid-template-columns:32px minmax(0,1fr);font-size:15px;line-height:24px"><span style="font-family:'IBM Plex Mono',monospace;color:#1D4ED8">03</span><span><strong style="font-weight:600">Agree next discussion.</strong> <span style="color:#475569">A call or written follow-up, using the method you prefer.</span></span></li>
+          </ol>
+        </div>
+        <div style="border:1px solid #E2E8F0;border-radius:12px;padding:28px">
+          <h2 style="margin:0 0 12px;font-size:20px;line-height:28px;font-weight:600">Other ways to reach us</h2>
+          <p style="margin:0;font-size:15px;line-height:24px;color:#475569">Business email, phone and address will appear here once verified.</p>
+        </div>
+        <div style="display:grid;gap:4px;font-size:15px">
+          <a href="Home.dc.html#engagement" style="padding:6px 0">Engagement models →</a>
+          <a href="Home.dc.html#process" style="padding:6px 0">How we work →</a>
+          <a href="Home.dc.html#security" style="padding:6px 0">Security approach →</a>
+        </div>
+      </aside>
+    </div>
+  </div>
+</main>
+
+<footer style="border-top:1px solid #E2E8F0;padding:24px clamp(16px,3vw,24px)">
+  <div style="max-width:1200px;margin:0 auto;display:flex;flex-wrap:wrap;justify-content:space-between;gap:12px 24px;font-size:14px;line-height:22px;color:#475569">
+    <span><strong style="color:#0F172A">SoftSysLab</strong> · Legal entity, jurisdiction and registered address pending verification.</span>
+    <a href="Home.dc.html" style="color:#0F172A">Home</a>
+  </div>
+</footer>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;simulateStoreFailure&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:false,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Testing&quot;}}">
+class Component extends DCLogic {
+  blank = { first: '', last: '', email: '', phone: '', company: '', website: '', noWebsite: false, country: '', services: [], budget: '', timeline: '', summary: '', product: '', pref: 'email', privacy: false };
+  state = { v: { ...this.blank }, err: {}, submitting: false, success: false, reference: '', storeError: false, attempted: false };
+  summaryRef = React.createRef();
+  successRef = React.createRef();
+  validate(v) {
+    const e = {}, len = s => [...s.trim()].length, https = s => { try { return new URL(s).protocol === 'https:'; } catch (x) { return false; } };
+    if (!v.services.length) e.services = 'Choose at least one service, or “Not sure”';
+    if (!v.budget) e.budget = 'Choose a budget range, or “Need guidance”';
+    if (!v.timeline) e.timeline = 'Choose a timeline, or “Flexible”';
+    const sl = len(v.summary);
+    if (sl < 30) e.summary = sl ? `Project summary needs at least 30 characters (${sl} so far)` : 'Enter a short project summary';
+    if (v.product && (!https(v.product) || v.product.length > 2048)) e.product = 'Existing product URL must start with https://';
+    if (!len(v.first) || len(v.first) > 100) e.first = 'Enter your first name';
+    if (!len(v.last) || len(v.last) > 100) e.last = 'Enter your last name';
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v.email.trim()) || v.email.length > 254) e.email = 'Enter a valid email address, like name@example.com';
+    if (!len(v.company) || len(v.company) > 160) e.company = 'Enter your company name, or “Pre-launch”';
+    if (!v.country) e.country = 'Choose your country';
+    if (!v.noWebsite && !https(v.website)) e.website = 'Enter an https:// website, or tick “No website yet”';
+    if (v.pref === 'phone' && !v.phone.trim()) e.pref = 'Add a phone number to be contacted by phone';
+    if (!v.privacy) e.privacy = 'Confirm you have read the Privacy Policy';
+    return e;
+  }
+  set(k, val) {
+    this.setState(s => { const v = { ...s.v, [k]: val }; return { v, err: s.attempted ? this.validate(v) : s.err, storeError: false }; });
+  }
+  submit = ev => {
+    ev.preventDefault();
+    if (this.state.submitting) return;
+    const err = this.validate(this.state.v);
+    if (Object.keys(err).length) {
+      this.setState({ err, attempted: true }, () => this.summaryRef.current && this.summaryRef.current.focus());
+      return;
+    }
+    this.setState({ err: {}, submitting: true, storeError: false });
+    setTimeout(() => {
+      if (this.props.simulateStoreFailure) { this.setState({ submitting: false, storeError: true }); return; }
+      const ref = 'ENQ-' + Math.random().toString(36).slice(2, 6).toUpperCase() + '-' + Math.random().toString(36).slice(2, 6).toUpperCase();
+      this.setState({ submitting: false, success: true, reference: ref }, () => { window.scrollTo({ top: 0 }); this.successRef.current && this.successRef.current.focus(); });
+    }, 1100);
+  };
+  renderVals() {
+    const { v, err, submitting } = this.state;
+    const keys = ['services', 'budget', 'timeline', 'summary', 'product', 'first', 'last', 'email', 'company', 'country', 'website', 'pref', 'privacy'];
+    const on = {}, bd = {}, inv = {};
+    keys.concat(['phone', 'noWebsite']).forEach(k => {
+      on[k] = e => this.set(k, e.target.type === 'checkbox' ? e.target.checked : e.target.value);
+      bd[k] = err[k] ? '#B91C1C' : '#64748B';
+      inv[k] = err[k] ? 'true' : 'false';
+    });
+    const errorList = keys.filter(k => err[k]).map(k => ({ msg: err[k], href: '#f-' + k }));
+    const opts = ['Custom software', 'Web application', 'Mobile app', 'SaaS product', 'MVP', 'API & integration', 'UI/UX design', 'QA & testing', 'Maintenance', 'Dedicated team', 'Not sure'];
+    const serviceOpts = opts.map(label => {
+      const on_ = v.services.includes(label), full = v.services.length >= 5 && !on_;
+      return {
+        label, pressed: on_ ? 'true' : 'false', disabled: full,
+        border: on_ ? '#0F172A' : (err.services ? '#B91C1C' : '#CBD5E1'), bg: on_ ? '#0F172A' : '#FFFFFF', color: on_ ? '#FFFFFF' : '#0F172A', opacity: full ? .45 : 1,
+        toggle: () => this.set('services', on_ ? v.services.filter(x => x !== label) : (label === 'Not sure' ? ['Not sure'] : [...v.services.filter(x => x !== 'Not sure'), label]).slice(0, 5))
+      };
+    });
+    const n = errorList.length;
+    return {
+      v, err, on, bd, inv, serviceOpts, errorList,
+      hasErrors: n > 0, errorCount: n === 1 ? '1 field' : n + ' fields',
+      summaryCount: [...v.summary].length + ' / 5000',
+      websiteBg: v.noWebsite ? '#F1F5F9' : '#FFFFFF',
+      prefEmail: v.pref === 'email', prefPhone: v.pref === 'phone',
+      countries: ['Australia', 'Canada', 'France', 'Germany', 'India', 'Ireland', 'Netherlands', 'Singapore', 'United Arab Emirates', 'United Kingdom', 'United States', 'Other'],
+      submit: this.submit, submitting,
+      submitLabel: submitting ? 'Submitting enquiry…' : 'Submit Project Inquiry',
+      submitBg: submitting ? '#475569' : '#1D4ED8',
+      storeError: this.state.storeError,
+      success: this.state.success, showForm: !this.state.success, reference: this.state.reference,
+      summaryRef: this.summaryRef, successRef: this.successRef,
+      reset: () => this.setState({ v: { ...this.blank }, err: {}, success: false, attempted: false })
+    };
+  }
+}
+</script>
+</body>
+</html>

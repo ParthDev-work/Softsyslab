@@ -1,0 +1,233 @@
+@import "tailwindcss";
+
+/*
+ * Design tokens.
+ *
+ * Colour, radius and elevation come from PRD section 29. Typography, the
+ * hairline/strong border split, the mono accent voice and the fluid heading
+ * scale come from the supplied design (design/Home.dc.html, Contact.dc.html),
+ * which refines section 29 rather than contradicting it.
+ *
+ * Components reference tokens. No raw hex appears in component code.
+ */
+@theme {
+  /* --- Brand ------------------------------------------------------------ */
+  --color-brand: #1d4ed8;
+  --color-brand-hover: #1e40af;
+  --color-anchor: #0f172a;
+  --color-accent: #0f766e;
+
+  /* --- Surfaces and text ------------------------------------------------ */
+  --color-canvas: #ffffff;
+  --color-surface: #f8fafc;
+  --color-tint: #f1f5f9;
+  --color-text: #0f172a;
+  --color-nav: #334155;
+  --color-muted: #475569;
+  --color-dim: #64748b;
+  --color-faint: #94a3b8;
+
+  /* Two border weights: hairline for rhythm, line for structure. */
+  --color-hairline: #e2e8f0;
+  --color-line: #cbd5e1;
+  --color-field: #64748b;
+
+  /* Dark section (homepage security module, PRD section 13 module 13). */
+  --color-ink: #0f172a;
+  --color-ink-raised: #1e293b;
+  --color-ink-border: #334155;
+  --color-ink-line: #475569;
+
+  /* --- Semantic states -------------------------------------------------- */
+  --color-success: #166534;
+  --color-success-bg: #f0fdf4;
+  --color-success-line: #bbf7d0;
+  --color-warning: #92400e;
+  --color-warning-bg: #fffbeb;
+  --color-warning-line: #fde68a;
+  --color-danger: #b91c1c;
+  --color-danger-bg: #fef2f2;
+  --color-danger-line: #fecaca;
+  --color-info: #1e40af;
+  --color-info-bg: #eff6ff;
+
+  /* --- Typography ------------------------------------------------------- */
+  --font-sans: var(--font-grotesk), system-ui, -apple-system, "Segoe UI", Roboto,
+    Helvetica, Arial, sans-serif;
+  --font-mono: var(--font-plex-mono), ui-monospace, SFMono-Regular, Menlo,
+    Consolas, monospace;
+
+  --text-eyebrow: 0.8125rem;
+  --text-eyebrow--line-height: 1.25rem;
+  --text-xs: 0.875rem;
+  --text-xs--line-height: 1.375rem;
+  --text-small: 0.9375rem;
+  --text-small--line-height: 1.5rem;
+  --text-body: 1rem;
+  --text-body--line-height: 1.625rem;
+  --text-body-lg: 1.125rem;
+  --text-body-lg--line-height: 1.75rem;
+  --text-h4: 1.25rem;
+  --text-h4--line-height: 1.75rem;
+  --text-h3: 1.375rem;
+  --text-h3--line-height: 1.875rem;
+
+  /* --- Layout ----------------------------------------------------------- */
+  --container-page: 1200px;
+  --container-prose: 720px;
+  --container-quote: 800px;
+
+  /* --- Shape ------------------------------------------------------------ */
+  --radius-chip: 6px;
+  --radius-control: 8px;
+  --radius-card: 12px;
+
+  /* --- Elevation -------------------------------------------------------- */
+  --shadow-raised: 0 8px 24px rgba(15, 23, 42, 0.08);
+  --shadow-soft: 0 8px 24px rgba(15, 23, 42, 0.06);
+  --shadow-dialog: 0 -8px 32px rgba(15, 23, 42, 0.12);
+}
+
+@layer base {
+  html {
+    -webkit-text-size-adjust: 100%;
+    scroll-behavior: smooth;
+    /* Section 32: a focused anchor must clear the sticky header. The header
+       sticks at 64px (mobile) and 125px (desktop, two rows); the announcement
+       bar scrolls away rather than adding to it. 9rem clears the taller case
+       with room to spare, which matters because an anchor that lands under
+       the header is also a focus that lands under it. */
+    scroll-padding-top: 9rem;
+  }
+
+  body {
+    background-color: var(--color-canvas);
+    color: var(--color-text);
+    font-family: var(--font-sans);
+    font-size: var(--text-body);
+    line-height: var(--text-body--line-height);
+    -webkit-font-smoothing: antialiased;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4 {
+    color: var(--color-anchor);
+    font-weight: 600;
+    text-wrap: balance;
+  }
+
+  /* Section 29: visible 2px outline at 3px offset, never removed. */
+  :focus-visible {
+    outline: 2px solid var(--color-brand);
+    outline-offset: 3px;
+    border-radius: 4px;
+  }
+
+  [id] {
+    scroll-margin-top: 9rem;
+  }
+
+  /* Long email addresses and URLs must wrap at 320px (section 31). */
+  a,
+  p,
+  li,
+  dd {
+    overflow-wrap: break-word;
+  }
+
+  summary::-webkit-details-marker {
+    display: none;
+  }
+
+  ::selection {
+    background-color: var(--color-info-bg);
+    color: var(--color-anchor);
+  }
+}
+
+@layer components {
+  /*
+   * The design's recurring type shapes. Fluid so that 320px and 1920px both
+   * read well without a fixed step at every breakpoint (section 31).
+   */
+  .type-display {
+    font-size: clamp(2.25rem, 5.6vw, 4rem);
+    line-height: 1.06;
+    letter-spacing: -0.03em;
+    font-weight: 600;
+  }
+
+  .type-h1 {
+    font-size: clamp(2.25rem, 5vw, 3.5rem);
+    line-height: 1.1;
+    letter-spacing: -0.03em;
+    font-weight: 600;
+  }
+
+  .type-h2 {
+    font-size: clamp(1.75rem, 3.4vw, 2.5rem);
+    line-height: 1.18;
+    letter-spacing: -0.02em;
+    font-weight: 600;
+  }
+
+  .type-lead {
+    font-size: clamp(1.0625rem, 1.5vw, 1.1875rem);
+    line-height: 1.6;
+    color: var(--color-muted);
+    text-wrap: pretty;
+  }
+
+  /* The mono accent voice: section labels, counters, metadata. */
+  .type-eyebrow {
+    font-family: var(--font-mono);
+    font-size: var(--text-eyebrow);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    font-weight: 400;
+    color: var(--color-muted);
+  }
+
+  .type-meta {
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    font-weight: 500;
+  }
+
+  /* 1200px container with the design's fluid gutters. */
+  .container-page {
+    width: 100%;
+    max-width: var(--container-page);
+    margin-inline: auto;
+    padding-inline: clamp(1rem, 3vw, 1.5rem);
+  }
+
+  /* Section rhythm: 48px mobile to 88px desktop, 56-112px for major ones. */
+  .section-y {
+    padding-block: clamp(3rem, 8vw, 5.5rem);
+  }
+
+  .section-y-lg {
+    padding-block: clamp(3.5rem, 9vw, 7rem);
+  }
+}
+
+/* Section 29: reduced motion removes non-essential transitions. */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
