@@ -18,7 +18,8 @@ export type ButtonVariant =
   | "dark"
   | "outline"
   | "onDark"
-  | "ghost";
+  | "ghost"
+  | "accent";
 export type ButtonSize = "sm" | "md" | "lg";
 
 const base =
@@ -53,6 +54,13 @@ const variants: Record<ButtonVariant, string> = {
   ghost:
     "bg-transparent text-anchor border border-transparent " +
     "hover:bg-tint active:bg-line/50",
+  /* The secondary/alternate CTA: wires the --color-accent token (already
+     defined in globals.css but previously unused by any component) into an
+     actual variant, parallel to how `primary` uses brand/brand-hover. */
+  accent:
+    "bg-accent text-white border border-accent " +
+    "hover:bg-accent-hover hover:border-accent-hover " +
+    "active:bg-accent-hover active:border-accent-hover",
 };
 
 const disabledStyles =

@@ -7,6 +7,7 @@ import {
   siteSettings,
 } from "@/lib/settings/siteSettings";
 import { ConsentPreferencesLink } from "@/components/layout/ConsentControls";
+import { SocialIcon } from "@/components/layout/SocialIcon";
 
 /**
  * PRD section 12 and section 13 module 19, in the design's layout: an identity
@@ -68,8 +69,9 @@ export function Footer() {
                     <a
                       href={social.url}
                       rel="noopener noreferrer"
-                      className="text-small text-anchor underline underline-offset-4 hover:text-brand"
+                      className="inline-flex items-center gap-1.5 text-small text-anchor underline underline-offset-4 hover:text-brand"
                     >
+                      <SocialIcon label={social.label} />
                       {social.label}
                     </a>
                   </li>

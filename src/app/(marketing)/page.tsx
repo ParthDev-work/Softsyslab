@@ -22,6 +22,7 @@ import {
   ProjectBriefFigure,
   SecurityBoundaryFigure,
 } from "@/components/blocks/Figure";
+import { Reveal } from "@/components/ui/Reveal";
 import { buildMetadata } from "@/lib/seo/metadata";
 import {
   capabilitySummary,
@@ -55,8 +56,11 @@ export const metadata: Metadata = buildMetadata(homepageSeo, "/");
 export default function HomePage() {
   return (
     <>
-      {/* Module 3 — hero */}
-      <section aria-labelledby="hero-h" className="section-y-lg">
+      {/* Module 3 — hero. A subtle tint-to-canvas wash (section 29's tokens
+          only, nothing new) replaces the flat canvas background; the figure
+          beside it is markup, not a photo, so there is no image to clash
+          with. */}
+      <section aria-labelledby="hero-h" className="section-y-lg hero-wash">
         <Container>
           <div className="flex flex-wrap items-center gap-x-[clamp(2.5rem,6vw,4.5rem)] gap-y-10">
             <div className="min-w-0 max-w-155 flex-7 basis-115">
@@ -98,7 +102,7 @@ export default function HomePage() {
         className="pb-[clamp(3rem,7vw,5.5rem)]"
       >
         <Container>
-          <div className="flex flex-wrap gap-x-12 gap-y-6 border-t border-anchor pt-8">
+          <Reveal className="flex flex-wrap gap-x-12 gap-y-6 border-t border-anchor pt-8">
             <div className="max-w-95 flex-1 basis-70">
               <h2
                 id="cap-h"
@@ -139,13 +143,13 @@ export default function HomePage() {
                 </li>
               ))}
             </ul>
-          </div>
+          </Reveal>
         </Container>
       </section>
 
       {/* Module 5 — value proposition */}
       <Section tone="surface" labelledBy="val-h">
-        <div className="flex flex-wrap gap-x-16 gap-y-12">
+        <Reveal className="flex flex-wrap gap-x-16 gap-y-12">
           <div className="min-w-0 flex-5 basis-85">
             <SectionHeading id="val-h">
               {valueProposition.heading}
@@ -172,7 +176,7 @@ export default function HomePage() {
               </li>
             ))}
           </ul>
-        </div>
+        </Reveal>
       </Section>
 
       {/* Module 6 — service groups */}
@@ -182,22 +186,25 @@ export default function HomePage() {
           heading="Choose the support your project needs."
           support="Five service groups, each with its own scope, deliverables and boundaries. Every service page states when it is the wrong choice as well as when it is the right one."
         />
-        <CardGrid min="20rem">
-          {serviceGroupCards.map((group, index) => (
-            <CardGridItem key={group.href}>
-              <LinkCard
-                href={group.href}
-                index={String(index + 1).padStart(2, "0")}
-                title={group.title}
-                body={group.body}
-                action="Explore"
-              />
-            </CardGridItem>
-          ))}
-        </CardGrid>
+        <Reveal>
+          <CardGrid min="20rem">
+            {serviceGroupCards.map((group, index) => (
+              <CardGridItem key={group.href}>
+                <LinkCard
+                  href={group.href}
+                  index={String(index + 1).padStart(2, "0")}
+                  title={group.title}
+                  body={group.body}
+                  action="Explore"
+                />
+              </CardGridItem>
+            ))}
+          </CardGrid>
+        </Reveal>
       </Section>
 
-      {/* Module 7 — delivery method */}
+      {/* Module 7 — delivery method. Each stage reveals in sequence rather
+          than all at once, via a per-index transition-delay (section 10). */}
       <Section id="process" labelledBy="proc-h" divider>
         <SectionHeader
           id="proc-h"
@@ -208,17 +215,19 @@ export default function HomePage() {
         <RuledGrid min="20rem">
           {deliveryMethod.stages.map((stage, index) => (
             <RuledCell key={stage.name}>
-              <span
-                aria-hidden="true"
-                className="font-mono text-eyebrow text-brand"
-              >
-                {String(index + 1).padStart(2, "0")}
-              </span>
-              <h3 className="text-h3 font-semibold">{stage.name}</h3>
-              <p className="text-small text-muted">
-                <span className="text-dim">Artifact — </span>
-                <span className="text-anchor">{stage.artifact}</span>
-              </p>
+              <Reveal delay={index * 60} className="grid content-start gap-2.5">
+                <span
+                  aria-hidden="true"
+                  className="font-mono text-eyebrow text-brand"
+                >
+                  {String(index + 1).padStart(2, "0")}
+                </span>
+                <h3 className="text-h3 font-semibold">{stage.name}</h3>
+                <p className="text-small text-muted">
+                  <span className="text-dim">Artifact — </span>
+                  <span className="text-anchor">{stage.artifact}</span>
+                </p>
+              </Reveal>
             </RuledCell>
           ))}
         </RuledGrid>
@@ -230,7 +239,7 @@ export default function HomePage() {
       {/* Module 9 — technology choices. Copy publishes; the capability list
           does not, because no record has passed the section 17 review gate. */}
       <Section tone="surface" labelledBy="tech-h">
-        <div className="flex flex-wrap gap-x-16 gap-y-10">
+        <Reveal className="flex flex-wrap gap-x-16 gap-y-10">
           <div className="min-w-0 flex-5 basis-85">
             <SectionHeading id="tech-h">
               {technologyChoices.heading}
@@ -263,7 +272,7 @@ export default function HomePage() {
               </div>
             )}
           </div>
-        </div>
+        </Reveal>
       </Section>
 
       {/* Module 10 — workflow shapes, framed as examples rather than sectors */}
@@ -273,16 +282,18 @@ export default function HomePage() {
           heading={workflowExamples.heading}
           support={workflowExamples.intro}
         />
-        <CardGrid min="17rem">
-          {workflowExamples.cards.map((card) => (
-            <CardGridItem key={card.title}>
-              <Card className="w-full">
-                <h3 className="text-h4 font-semibold">{card.title}</h3>
-                <p className="mt-2 text-body text-muted">{card.body}</p>
-              </Card>
-            </CardGridItem>
-          ))}
-        </CardGrid>
+        <Reveal>
+          <CardGrid min="17rem">
+            {workflowExamples.cards.map((card) => (
+              <CardGridItem key={card.title}>
+                <Card className="w-full">
+                  <h3 className="text-h4 font-semibold">{card.title}</h3>
+                  <p className="mt-2 text-body text-muted">{card.body}</p>
+                </Card>
+              </CardGridItem>
+            ))}
+          </CardGrid>
+        </Reveal>
         <ArrowLink href={workflowExamples.cta.href} className="mt-8">
           {workflowExamples.cta.label}
         </ArrowLink>
@@ -295,15 +306,17 @@ export default function HomePage() {
           heading={engagementCards.heading}
           support={engagementCards.body}
         />
-        <CardGrid min="17rem">
-          {engagementCards.models.map((model) => (
-            <CardGridItem key={model}>
-              <Card className="w-full">
-                <h3 className="text-h4 font-semibold">{model}</h3>
-              </Card>
-            </CardGridItem>
-          ))}
-        </CardGrid>
+        <Reveal>
+          <CardGrid min="17rem">
+            {engagementCards.models.map((model) => (
+              <CardGridItem key={model}>
+                <Card className="w-full">
+                  <h3 className="text-h4 font-semibold">{model}</h3>
+                </Card>
+              </CardGridItem>
+            ))}
+          </CardGrid>
+        </Reveal>
         <ArrowLink href={engagementCards.cta.href} className="mt-8">
           {engagementCards.cta.label}
         </ArrowLink>
@@ -312,7 +325,7 @@ export default function HomePage() {
       {/* Module 12 — delivery principles, framed as what any agreement
           should set out, since section 13 marks them pending owner signoff. */}
       <Section labelledBy="prin-h" divider>
-        <div className="flex flex-wrap gap-x-16 gap-y-8">
+        <Reveal className="flex flex-wrap gap-x-16 gap-y-8">
           <div className="min-w-0 flex-4 basis-75">
             <SectionHeading id="prin-h" className="lg:sticky lg:top-36">
               {deliveryPrinciples.heading}
@@ -339,12 +352,12 @@ export default function HomePage() {
               </ArrowLink>
             </div>
           </div>
-        </div>
+        </Reveal>
       </Section>
 
       {/* Module 13 — security and quality */}
       <Section id="security" tone="ink" size="large" labelledBy="sec-h">
-        <div className="flex flex-wrap items-center gap-x-18 gap-y-12">
+        <Reveal className="flex flex-wrap items-center gap-x-18 gap-y-12">
           <div className="min-w-0 flex-1 basis-95">
             <Eyebrow className="text-faint">Security and quality</Eyebrow>
             <SectionHeading
@@ -365,7 +378,7 @@ export default function HomePage() {
             </LinkButton>
           </div>
           <SecurityBoundaryFigure caption="Illustrative boundary — controls are agreed per project" />
-        </div>
+        </Reveal>
       </Section>
 
       {/* Module 14 — client journey */}
@@ -375,38 +388,40 @@ export default function HomePage() {
           heading={clientJourney.heading}
           support={clientJourney.note}
         />
-        <ul
-          className="grid list-none gap-6 p-0"
-          style={{
-            gridTemplateColumns:
-              "repeat(auto-fit, minmax(min(100%, 27.5rem), 1fr))",
-          }}
-        >
-          {clientJourney.groups.map((group, groupIndex) => (
-            <li
-              key={group.title}
-              className="rounded-card border border-hairline bg-surface p-7"
-            >
-              <h3 className="mb-5 text-h3 font-semibold">{group.title}</h3>
-              <ol className="grid list-none gap-3 p-0">
-                {group.steps.map((step, stepIndex) => (
-                  <li
-                    key={step}
-                    className="grid grid-cols-[2rem_minmax(0,1fr)] items-baseline gap-3 text-body"
-                  >
-                    <span
-                      aria-hidden="true"
-                      className="font-mono text-eyebrow text-brand"
+        <Reveal>
+          <ul
+            className="grid list-none gap-6 p-0"
+            style={{
+              gridTemplateColumns:
+                "repeat(auto-fit, minmax(min(100%, 27.5rem), 1fr))",
+            }}
+          >
+            {clientJourney.groups.map((group, groupIndex) => (
+              <li
+                key={group.title}
+                className="rounded-card border border-hairline bg-surface p-7"
+              >
+                <h3 className="mb-5 text-h3 font-semibold">{group.title}</h3>
+                <ol className="grid list-none gap-3 p-0">
+                  {group.steps.map((step, stepIndex) => (
+                    <li
+                      key={step}
+                      className="grid grid-cols-[2rem_minmax(0,1fr)] items-baseline gap-3 text-body"
                     >
-                      {String(groupIndex * 3 + stepIndex + 1).padStart(2, "0")}
-                    </span>
-                    <span className="text-muted">{step}</span>
-                  </li>
-                ))}
-              </ol>
-            </li>
-          ))}
-        </ul>
+                      <span
+                        aria-hidden="true"
+                        className="font-mono text-eyebrow text-brand"
+                      >
+                        {String(groupIndex * 3 + stepIndex + 1).padStart(2, "0")}
+                      </span>
+                      <span className="text-muted">{step}</span>
+                    </li>
+                  ))}
+                </ol>
+              </li>
+            ))}
+          </ul>
+        </Reveal>
         <LinkButton
           href={clientJourney.cta.href}
           variant="dark"

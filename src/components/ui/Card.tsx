@@ -101,7 +101,7 @@ export function CardGrid({
 }) {
   return (
     <ul
-      className={cn("grid list-none gap-6 p-0", className)}
+      className={cn("grid list-none gap-5 p-0", className)}
       style={{
         gridTemplateColumns: `repeat(auto-fit, minmax(min(100%, ${min}), 1fr))`,
       }}
