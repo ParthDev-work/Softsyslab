@@ -154,9 +154,9 @@
    * read well without a fixed step at every breakpoint (section 31).
    */
   .type-display {
-    font-size: clamp(2.25rem, 5.6vw, 4rem);
-    line-height: 1.06;
-    letter-spacing: -0.03em;
+    font-size: clamp(2.875rem, 6.6vw, 5.5rem);
+    line-height: 0.98;
+    letter-spacing: -0.04em;
     font-weight: 600;
   }
 

@@ -53,6 +53,19 @@ export const metadata: Metadata = buildMetadata(homepageSeo, "/");
  * says a module with no verified content is omitted, and section 26 says to
  * block placeholder publication rather than hide text in CSS.
  */
+/* The design's emphasis treatment for the hero headline: the final two
+   words carry the brand accent colour. Derived from the content string
+   rather than hardcoded so the copy in content/homepage.ts stays the only
+   source of truth for the words themselves. */
+const heroHeadingAccentWords = 2;
+const heroHeadingWords = hero.h1.split(" ");
+const heroHeadingLead = heroHeadingWords
+  .slice(0, -heroHeadingAccentWords)
+  .join(" ");
+const heroHeadingAccent = heroHeadingWords
+  .slice(-heroHeadingAccentWords)
+  .join(" ");
+
 export default function HomePage() {
   return (
     <>
@@ -62,11 +75,18 @@ export default function HomePage() {
           with. */}
       <section aria-labelledby="hero-h" className="section-y-lg hero-wash">
         <Container>
-          <div className="flex flex-wrap items-center gap-x-[clamp(2.5rem,6vw,4.5rem)] gap-y-10">
+          <div className="flex flex-wrap items-center gap-x-[clamp(2.5rem,6vw,6rem)] gap-y-10">
             <div className="min-w-0 max-w-155 flex-7 basis-115">
-              <Eyebrow>Custom software development</Eyebrow>
-              <h1 id="hero-h" className="type-display mt-6 max-w-[11ch]">
-                {hero.h1}
+              <p className="type-eyebrow m-0 inline-flex items-center gap-2.5 rounded-full border border-hairline bg-canvas px-3 py-1.5">
+                <span
+                  aria-hidden="true"
+                  className="size-1.5 shrink-0 rounded-full bg-brand animate-pulse motion-reduce:animate-none"
+                />
+                Custom software development
+              </p>
+              <h1 id="hero-h" className="type-display mt-7">
+                {heroHeadingLead}{" "}
+                <span className="text-brand">{heroHeadingAccent}</span>
               </h1>
               <p className="type-lead mt-7">{hero.body}</p>
 
