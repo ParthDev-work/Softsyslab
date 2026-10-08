@@ -4,6 +4,8 @@ import { caseStudyRecords } from "@/content/case-studies";
 import { jobRecords } from "@/content/jobs";
 import { corporatePages } from "@/content/pages";
 import { policyPages } from "@/content/legal";
+import { isCmsConfigured } from "@/lib/content/sanityClient";
+import { sanityContentSource } from "@/lib/content/sanitySource";
 import type {
   CaseStudy,
   CorporatePage,
@@ -81,7 +83,17 @@ const localContentSource: ContentSource = {
   },
 };
 
-export const content: ContentSource = localContentSource;
+/**
+ * `CMS_PROJECT_ID`/`CMS_DATASET`/`CMS_READ_TOKEN` being set switches every
+ * page to the Sanity-backed source, exactly as DATABASE_URL switches
+ * leadStore.ts from the JSONL fallback to Postgres. No other flag — set all
+ * three (see studio/ and .env.example) and the swap is automatic.
+ */
+function selectContentSource(): ContentSource {
+  return isCmsConfigured() ? sanityContentSource : localContentSource;
+}
+
+export const content: ContentSource = selectContentSource();
 
 export type {
   CaseStudy,

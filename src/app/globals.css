@@ -217,25 +217,6 @@
   }
 
   /*
-   * Scroll-reveal, built so a visitor with JS disabled (or on first paint,
-   * before hydration) always sees content fully visible — see Reveal.tsx.
-   * `.reveal` alone is the resting, visible state; `.reveal-hidden` is added
-   * by the client only, right before the element is observed, and removed
-   * once it crosses the viewport. The transition is a plain utility covered
-   * by the global reduced-motion block above, so it falls out for free.
-   */
-  .reveal {
-    opacity: 1;
-    transform: none;
-    transition: opacity 500ms ease, transform 500ms ease;
-  }
-
-  .reveal-hidden {
-    opacity: 0;
-    transform: translateY(16px);
-  }
-
-  /*
    * Hero wash — a soft brand-tint gradient built from existing tokens only
    * (no new colour introduced). Replaces the hero's flat canvas background
    * with a subtle directional fade back to canvas.

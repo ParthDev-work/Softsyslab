@@ -3,11 +3,12 @@
 Reference for every endpoint in PRD section 43 — what this build implements, and
 what the remaining endpoints must look like when they are built.
 
-One endpoint is live: `POST /api/contact/`. Everything else in section 43 is
-specified below but **not implemented**, because it depends on the database, CMS,
-object storage, upload scanning or staff authentication that this build
-deliberately does not have. Each is listed with its contract so that building it
-later is an implementation task rather than a design task.
+Three endpoints are live: `POST /api/contact/`, `GET /api/health/` and
+`POST /api/webhooks/cms/`. Everything else in section 43 is specified below but
+**not implemented**, because it depends on object storage, upload scanning or
+staff authentication that this build deliberately does not have. Each is listed
+with its contract so that building it later is an implementation task rather
+than a design task.
 
 ---
 
@@ -295,15 +296,21 @@ must verify authorisation before returning any private project detail.
 *Blocked on:* a monitored support channel and staff authentication. Section 19's
 support fields are all unverified.
 
-### `POST /api/webhooks/cms`
+### `POST /api/webhooks/cms` — implemented
 
-Signed event id, timestamp, record id and action. Signature verification **plus**
-replay protection; queues cache invalidation for the affected page, hub, sitemap
-and search index.
+Signed event id, timestamp, record id and action. Signature verification
+(`@sanity/webhook`'s `isValidSignature`) plus replay protection (the
+`IntegrationEvent` table's unique `(provider, externalEventId)` constraint
+rejects a redelivered event rather than reprocessing it), then
+`revalidateTag` for exactly the tags the affected document's queries were
+cached under — see src/app/api/webhooks/cms/route.ts for the exact webhook
+projection to configure in Sanity.
 
-*Blocked on:* CMS selection. Section 34 requires procurement to verify roles,
-revisions, draft preview, auditability, export, data region and webhook support
-before a vendor is chosen.
+Vendor: Sanity (`studio/` holds the schema; src/lib/content/sanitySource.ts
+is the `ContentSource` implementation — see PRD section 34's seam in
+src/lib/content/index.ts). No search index exists in this build, so that part
+of section 43's original wording does not apply yet; add it to this route's
+tag set if one is built later.
 
 ### `POST /api/webhooks/email`
 
