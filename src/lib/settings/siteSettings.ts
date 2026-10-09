@@ -53,9 +53,9 @@ export const siteSettings: SiteSettings = {
   canonicalOrigin:
     process.env.NEXT_PUBLIC_SITE_ORIGIN?.replace(/\/+$/, "") ??
     "http://localhost:3000",
-  businessEmail: null,
-  supportEmail: null,
-  securityEmail: null,
+  businessEmail: "admin@softsyslab.com",
+  supportEmail: "admin@softsyslab.com",
+  securityEmail: "admin@softsyslab.com",
   phone: null,
   supportHours: null,
   socialUrls: [],

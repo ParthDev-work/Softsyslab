@@ -1,0 +1,118 @@
+name: CI
+
+# PRD section 48: build artifact -> staging deployment -> smoke tests ->
+# production release. Every job below is wired and runnable once the
+# VERCEL_* secrets exist (see .env.example's "CI/CD secrets" block for where
+# each one comes from) — until then, `verify` and `lighthouse` still run on
+# every push/PR with no secrets needed, and the deploy jobs simply won't fire.
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  verify:
+    name: Verify & build
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+      - run: npm ci
+      - run: npm run verify
+      - run: npm run build
+
+  lighthouse:
+    name: Lighthouse CI (target, non-blocking)
+    runs-on: ubuntu-latest
+    needs: verify
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+      - run: npm ci
+      - run: npm run build
+      # lighthouserc.json scores every assertion as "warn" — this step reports
+      # the numbers in the job log without failing the pipeline. Flip the
+      # assertions to "error" in lighthouserc.json once you want it to gate.
+      - run: npx -y @lhci/cli@0.14.x autorun
+        continue-on-error: true
+
+  # --- Everything below needs VERCEL_TOKEN / VERCEL_ORG_ID / VERCEL_PROJECT_ID
+  # as GitHub repo secrets (Settings -> Secrets and variables -> Actions).
+  # Without them these jobs are skipped (`if:` guards below), not broken.
+
+  deploy-staging:
+    name: Deploy to staging
+    runs-on: ubuntu-latest
+    needs: verify
+    if: github.event_name == 'pull_request' && vars.VERCEL_DEPLOY_ENABLED == 'true'
+    environment: staging
+    outputs:
+      url: ${{ steps.deploy.outputs.url }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+      - run: npm ci
+      - run: npx vercel pull --yes --environment=preview --token=${{ secrets.VERCEL_TOKEN }}
+      - run: npx vercel build --token=${{ secrets.VERCEL_TOKEN }}
+      - id: deploy
+        run: |
+          url=$(npx vercel deploy --prebuilt --token=${{ secrets.VERCEL_TOKEN }})
+          echo "url=$url" >> "$GITHUB_OUTPUT"
+        env:
+          VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
+          VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
+
+  smoke-test:
+    name: Smoke test staging
+    runs-on: ubuntu-latest
+    needs: deploy-staging
+    if: needs.deploy-staging.result == 'success'
+    steps:
+      - name: Hit /api/health on the staging deployment
+        run: |
+          status=$(curl -s -o /dev/null -w "%{http_code}" "${{ needs.deploy-staging.outputs.url }}/api/health")
+          if [ "$status" != "200" ]; then
+            echo "Staging health check returned $status"
+            exit 1
+          fi
+
+  deploy-production:
+    name: Deploy to production
+    runs-on: ubuntu-latest
+    needs: smoke-test
+    if: github.ref == 'refs/heads/main' && github.event_name == 'push' && vars.VERCEL_DEPLOY_ENABLED == 'true'
+    # A GitHub Environment named "production" with required reviewers turns
+    # this into a manual-approval gate — configure that under
+    # Settings -> Environments once the repo exists on GitHub.
+    environment: production
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+      - run: npm ci
+      - run: npx vercel pull --yes --environment=production --token=${{ secrets.VERCEL_TOKEN }}
+      - run: npx vercel build --prod --token=${{ secrets.VERCEL_TOKEN }}
+      - run: npx vercel deploy --prebuilt --prod --token=${{ secrets.VERCEL_TOKEN }}
+        env:
+          VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
+          VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}

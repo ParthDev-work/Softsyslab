@@ -1,0 +1,3108 @@
+Software Development
+Company Website
+Product Requirements Document
+Version 1.0 | 4 October 2026
+This document defines a substantial corporate website for a custom software development and digital
+product engineering company. It provides the scope, content, interaction rules, data contracts,
+publishing controls and release tests needed to design, build and operate the website. The
+recommended implementation is a modular Next.js website with a managed editorial CMS and a
+separate, small operational database for enquiries. The planned information architecture contains 79
+named routes or reusable detail templates. Publication depends on genuine capabilities and approved
+content, not a page-count target.
+The business owner supplies and approves the company facts identified in brackets. Proposed
+operating practices and sample copy become publishable only after the responsible owner confirms
+that the company actually follows them. A professional website supports transparent evaluation; it
+does not guarantee bank, payment-provider or vendor approval.
+
+-- 1 of 68 --
+
+Software Development Company Website | PRD v1.0 2
+Contents
+5	1 Document Overview
+5	2 Executive Summary
+5	3 Business Context
+6	4 Product Vision
+6	5 Website Objectives
+7	6 Target Audience
+7	7 Buyer Personas
+9	8 Brand Positioning
+10	9 Value Proposition
+10	10 Information Architecture
+10	11 Full Sitemap
+12	12 Navigation Architecture
+12	13 Homepage Specification
+16	14 Service Page Specifications
+22	15 Solutions Pages
+23	16 Industry Pages
+25	17 Technology Pages
+26	18 Case Study System
+27	19 Company Pages
+29	20 Contact and Lead Generation
+30	21 Quote and Estimation Flow
+31	22 Resource Center
+32	23 Careers
+32	24 Trust and Security
+
+-- 2 of 68 --
+
+Software Development Company Website | PRD v1.0 3
+33	25 Legal and Compliance
+34	26 Content Strategy
+34	27 SEO Strategy
+35	28 Design Direction
+37	29 Design System
+38	30 Component Library
+39	31 Responsive Design
+39	32 Accessibility
+40	33 Functional Requirements
+41	34 CMS
+41	35 Admin Dashboard
+42	36 CRM and Lead Flow
+43	37 Email Architecture
+44	38 Analytics
+45	39 Integrations
+45	40 Frontend Architecture
+46	41 Backend Architecture
+46	42 Database Architecture
+48	43 API Design
+49	44 Security Requirements
+50	45 Privacy Requirements
+51	46 Performance Requirements
+51	47 SEO Technical Requirements
+52	48 DevOps
+52	49 Deployment
+
+-- 3 of 68 --
+
+Software Development Company Website | PRD v1.0 4
+52	50 Monitoring
+53	51 Backup and Recovery
+54	52 Testing Strategy
+54	53 Browser Compatibility
+55	54 Wireframes
+57	55 User Stories
+58	56 Acceptance Criteria
+61	57 Edge Cases
+62	58 Error States
+62	59 Development Roadmap
+63	60 Launch Checklist
+64	61 Post Launch Checklist
+65	62 Documentation Requirements
+65	63 Website Due Diligence Readiness Checklist
+66	64 Content Required From Business Owner
+67	65 Final Developer Handoff Checklist
+
+-- 4 of 68 --
+
+Software Development Company Website | PRD v1.0 5
+1 Document Overview
+Audience: business owner, product manager, designer, frontend and backend engineers, content
+editor, SEO specialist, QA engineer, security reviewer and operations owner.
+Status: implementation specification with business-fact dependencies. The document recommends
+product decisions; it does not establish that any particular legal entity, service capability, certification,
+employee or customer exists.
+Document conventions: MUST is a launch acceptance requirement when its feature is in scope;
+SHOULD is the recommended implementation; MAY is optional. P0 means required for launch, P1
+means the next planned release and P2 means a separately funded future feature. A P0 conditional
+feature is required only when the corresponding business activity is offered. REQ identifiers and AC
+identifiers support ticket and test traceability.
+Approvals: product owner approves scope; engineering lead approves architecture; design lead
+approves accessible layouts; business owner verifies claims; counsel approves applicable policies;
+security lead approves controls; QA owns release evidence. One person may fill several roles, but
+each responsibility must have a named owner.
+Change control: maintain a versioned decision log with decision, date, owner, rationale, affected
+requirements and acceptance tests. Changes to public company information, tracking, uploads,
+authentication or commercial terms require the relevant owner to review the change before
+publication.
+2 Executive Summary
+Build a website that lets a buyer answer three questions: can this company handle my problem, how
+will the work be delivered, and what happens if I start a conversation? Organize the offer into product
+strategy and design; application engineering; AI and integration; cloud and modernization; and
+quality, support and teams.
+Prioritize substantive service pages, transparent engagement terms, an understandable development
+process and reliable enquiry handling. Use real project evidence where available. When evidence is
+absent, explain deliverables and decisions using clearly labelled illustrative diagrams rather than
+invented client outcomes.
+P0 includes the full reusable design system, core corporate and policy pages, approved service pages,
+content management, contact flow, security, accessibility and monitoring. The 79-route plan is the
+supported target architecture, not a requirement to publish unsupported capabilities. P1 adds the
+guided enquiry, richer editorial search and additional verified sector content. P2 includes the client
+portal and multilingual content.
+3 Business Context
+Business definition: [BRAND NAME] provides [VERIFIED SOFTWARE SERVICES] through [ACTUAL
+DELIVERY MODEL]. The contracting entity is [LEGAL COMPANY NAME], registered in [JURISDICTION].
+Its public operating locations, registered address and delivery coverage must be distinguished
+explicitly.
+Software engagements are typically evaluated across business fit, architecture, commercial risk and
+support. The website must therefore serve early research as well as detailed procurement review. A
+
+-- 5 of 68 --
+
+Software Development Company Website | PRD v1.0 6
+visually complete site without a working intake process or supported claims fails the product
+objective.
+Assumptions: English first; B2B enquiries; no public checkout; no automatic project prices; no
+customer login at launch; a small marketing team maintains content; clients receive proposals and
+contracts outside the marketing website. These are recommendations and may be changed through
+the decision log.
+Exclusions: payment processing, customer banking, resale of third-party subscriptions, self-service
+SaaS billing, public AI chat, authenticated client collaboration and promises about regulated-sector
+compliance. Any actual additional business activities must be disclosed accurately rather than hidden
+to change how the company is classified.
+4 Product Vision
+Create a dependable reference point for understanding the company and starting an informed
+software project. Buyers should leave with a clearer view of scope, delivery decisions, responsibilities,
+ownership and ongoing costs.
+The interface should feel composed and technically literate: readable typography, original diagrams,
+real screenshots, generous space and useful answers. Visual sophistication must come from design
+quality and content depth rather than exaggerated scale or manufactured social proof.
+5 Website Objectives
+Objective Measurement Launch or operating criterion
+Explain the offer Moderated task test At least 4 of 5 representative participants
+identify services and next step without
+coaching
+Explain engineering Process and technology task test CTO participant finds testing, deployment
+and ownership information within three
+navigation choices
+Generate leads Valid enquiries and qualified enquiries Establish first 30-day baseline; set growth
+targets only after measuring traffic quality
+Enable evaluation Engagement and service content coverage Every published commercial page states
+deliverables, boundaries and CTA
+Support due diligence Identity and policy audit No conflicting legal name, contact, location
+or billing information
+Enable organic discovery Indexable page quality and search
+reporting
+All intended pages crawlable, self-canonical
+and included in sitemap; no ranking promise
+Metric definitions: enquiry conversion = unique accepted project enquiries divided by measurable
+eligible sessions in the same period; qualified rate = enquiries meeting approved service, budget and
+timing criteria divided by reviewed non-spam enquiries. Report consent-related measurement gaps.
+Count enquiries from operational records even when analytics is disabled; do not use those records to
+bypass tracking consent.
+
+-- 6 of 68 --
+
+Software Development Company Website | PRD v1.0 7
+6 Target Audience
+Primary audiences are founders, product owners and technology leaders with a concrete software
+initiative. Secondary audiences include operations, marketing technology, procurement, job seekers
+and delivery partners. Initial service and industry priorities must follow actual sales demand and staff
+capability.
+Primary journeys: problem → solution → service → process → enquiry; technical evaluation →
+technology → security → case evidence → technical discussion; commercial evaluation → engagement
+models → ownership and support → enquiry; due diligence → company identity → policies → contact;
+candidate → careers → genuine vacancy → application.
+7 Buyer Personas
+Startup founder
+Problem: uncertain scope, constrained runway and limited technical capacity. Motivation: validate a
+useful first release before committing to a large build. Objections: scope inflation, lock-in and unclear
+ownership. Decision criteria: discovery outputs, staged investment and maintainability. Expected
+information: what an MVP includes, exclusions, founder responsibilities and handover. CTA: “Plan Your
+MVP.” Confidence content: sample discovery agenda, acceptance checklist and a real early-stage
+project when available.
+SaaS founder
+Problem: subscriptions, onboarding, tenancy and product iteration compete for attention. Motivation:
+launch or improve a recurring-use product. Objections: unreliable billing, weak tenant isolation and
+growing infrastructure costs. Criteria: entitlement design, migration approach and release process.
+Expected information: architecture options, integrations, maintenance and operational costs. CTA:
+“Discuss Your SaaS Product.” Confidence content: tenancy decision guide and verified SaaS
+architecture narrative.
+Small business owner
+Problem: disconnected tools and recurring manual work. Motivation: make one important workflow
+easier. Objections: custom software cost and dependence on a supplier. Criteria: build-versus-buy
+advice, understandable scope and ongoing costs. Expected information: practical examples, training,
+support and who owns accounts. CTA: “Discuss Your Workflow.” Confidence content: workflow map
+and plain-English engagement explanation.
+SME decision maker
+Problem: departments use inconsistent data and undocumented processes. Motivation: improve
+coordination while protecting day-to-day operations. Objections: migration disruption and employee
+adoption. Criteria: phased rollout, permissions and training. Expected information: integration
+planning, milestones and stakeholder participation. CTA: “Plan a Business System.” Confidence
+content: migration checklist and acceptance workshop outline.
+
+-- 7 of 68 --
+
+Software Development Company Website | PRD v1.0 8
+Enterprise technology team
+Problem: dependencies, vendor governance and integration complexity. Motivation: add delivery
+capacity for a defined initiative. Objections: procurement friction, data exposure and unsupported
+architecture. Criteria: documented interfaces, testing evidence and auditability. Expected information:
+delivery governance, security practices and contractual responsibilities. CTA: “Discuss Enterprise
+Delivery.” Confidence content: example documentation contents and security contact.
+CTO
+Problem: architecture trade-offs and technical debt under delivery pressure. Motivation: obtain sound
+engineering decisions and an accountable partner. Objections: opaque code quality and technology
+hype. Criteria: architecture rationale, review process and maintainability. Expected information: stack
+selection, CI/CD, observability and ownership. CTA: “Discuss the Architecture.” Confidence content:
+annotated reference architecture clearly identified as illustrative.
+CIO
+Problem: portfolio cost, supplier risk and fragmented systems. Motivation: create a manageable
+modernization programme. Objections: business interruption and incomplete governance. Criteria:
+phased investment, operational ownership and risk management. Expected information: delivery
+model, business continuity and escalation. CTA: “Plan a Modernization Discussion.” Confidence
+content: dependency map and change governance example.
+Head of engineering
+Problem: hiring constraints, release bottlenecks and inconsistent contributions. Motivation: strengthen
+delivery without losing technical control. Objections: onboarding overhead and quality variance.
+Criteria: verified skills, review standards and availability. Expected information: team structure,
+overlap hours and replacement process. CTA: “Discuss Team Capacity.” Confidence content:
+onboarding plan and actual role profiles.
+Product manager
+Problem: stakeholder disagreement and unclear acceptance criteria. Motivation: turn user needs into
+a sequenced release. Objections: missed requirements and late design changes. Criteria: discovery,
+backlog clarity and feedback cadence. Expected information: user stories, demos, UAT and change
+handling. CTA: “Plan Product Discovery.” Confidence content: sample story and release acceptance
+template.
+Digital transformation manager
+Problem: legacy processes resist organization-wide change. Motivation: modernize a measurable
+business workflow. Objections: technology-first proposals and poor adoption. Criteria: process
+research, incremental deployment and training. Expected information: current-state mapping,
+stakeholder plan and migration controls. CTA: “Map Your Transformation.” Confidence content:
+roadmap example with business dependencies.
+
+-- 8 of 68 --
+
+Software Development Company Website | PRD v1.0 9
+Marketing technology team
+Problem: fragmented CRM, forms, attribution and content systems. Motivation: connect tools and
+improve reliable data flow. Objections: tracking compliance and broken campaigns. Criteria:
+integration ownership, consent-aware events and reconciliation. Expected information: API limitations,
+analytics design and rollback. CTA: “Discuss Your Integrations.” Confidence content: integration
+contract and event dictionary examples.
+Operations team
+Problem: repetitive entry, exception queues and spreadsheet dependence. Motivation: reduce
+avoidable manual handling. Objections: automation failures and loss of control. Criteria: approvals,
+human fallback and audit logs. Expected information: triggers, failure handling and access rules. CTA:
+“Review an Operational Workflow.” Confidence content: exception-handling flow and administrator
+screen concept.
+White-label agency
+Problem: client commitments exceed engineering capacity. Motivation: obtain dependable delivery
+under agreed branding. Objections: confidentiality, client ownership and inconsistent communications.
+Criteria: non-solicitation terms if agreed, escalation and handover standards. Expected information:
+collaboration model, contracting entity and boundaries. CTA: “Discuss Delivery Partnership.”
+Confidence content: sample roles and responsibilities matrix; no fictional partnership logos.
+Buyer of dedicated developers
+Problem: sustained capacity gap. Motivation: add specific skills without building an entire local team.
+Objections: hidden subcontracting, unverified CVs and turnover. Criteria: actual experience,
+availability and transparent management. Expected information: interview process, replacement
+notice and billing basis. CTA: “Discuss Developer Requirements.” Confidence content: verified profiles
+only and onboarding checklist.
+Legacy software owner
+Problem: fragile releases, unsupported dependencies and inaccessible business logic. Motivation:
+improve the system while keeping it operational. Objections: big-bang rewrites and data loss. Criteria:
+assessment quality, incremental migration and reversibility. Expected information: discovery access,
+test strategy and cutover planning. CTA: “Review Your Existing System.” Confidence content:
+modernization decision tree and rollback plan example.
+8 Brand Positioning
+Positioning: Custom Software Development & Digital Product Engineering Partner.
+Core statement: “Software built around your business.” Supporting copy: “Plan, design and develop
+software around the work your users need to do. From a first product release to an existing platform,
+define the scope, engineering decisions and support model before development begins.”
+This copy is usable without fabricated scale claims. Statements that use “we” to describe delivery
+practices require business approval. Prefer concrete verbs: map, design, implement, test, release and
+maintain. Avoid “world-class,” “best,” “guaranteed,” arbitrary client counts and unsupported
+“enterprise-grade” claims.
+
+-- 9 of 68 --
+
+Software Development Company Website | PRD v1.0 10
+The five service groups are Strategy and Product Design; Application Engineering; AI and Connected
+Workflows; Cloud and Modernization; Quality and Delivery Capacity. Use these groups in navigation
+and homepage cards while preserving the individual service URLs.
+9 Value Proposition
+Recommended copy: “Start with the problem, make the trade-offs visible, and build a product your
+team can operate.” Explain scope, dependencies, responsibilities and acceptance criteria together.
+Present maintainability as a design objective, not an outcome guarantee.
+Proposed differentiators must correspond to operating artifacts: discovery produces a prioritized brief;
+architecture review records decisions; sprint reviews demonstrate completed work; testing produces
+release evidence; handover includes repositories, environment documentation and known limitations.
+If an artifact is not provided in the engagement, remove the associated promise.
+10 Information Architecture
+Services describe work the company performs. Solutions describe systems buyers need. Industries
+describe sector-specific workflows and constraints. Technologies explain implementation choices.
+These must not become near-identical pages with substituted keywords.
+Use 14 principal templates: homepage, category hub, service, solution, industry, technology category,
+case-study listing, case-study detail, corporate/process, conversion form, resource listing,
+article/guide, careers/job and policy/trust. Jobs and applications share a page shell but separate
+validation. Reuse components without forcing every page into the same visual rhythm.
+Every published page must have a useful onward path: parent hub, relevant related page and
+contextual contact CTA. Critical policy pages must remain reachable directly from the footer.
+Breadcrumbs show canonical hierarchy, not a visitor’s click history.
+11 Full Sitemap
+The following inventory contains 79 planned routes or detail-template slots. Dynamic collections can
+later create more URLs. Anchors and redirects are not additional pages. P0 service entries remain
+subject to verification; if fewer capabilities are real, reduce published scope rather than inventing
+them.
+IDs Routes or template slots Priority
+01-02 / ; /services/ P0
+03-07 /services/custom-software-development/ ;
+/services/web-development/ ;
+/services/mobile-app-development/ ;
+/services/saas-development/ ;
+/services/mvp-development/
+P0 if offered
+08-12 /services/ai-development/ ;
+/services/ai-integration/ ;
+/services/automation-development/ ;
+/services/cloud-development/ ;
+/services/devops/
+P1; promote verified core offers
+
+-- 10 of 68 --
+
+Software Development Company Website | PRD v1.0 11
+IDs Routes or template slots Priority
+13-17 /services/api-development-integration/ ;
+/services/dedicated-teams/ ;
+/services/ui-ux-design/ ;
+/services/qa-testing/ ;
+/services/software-maintenance/
+P0 if offered
+18-21 /services/legacy-modernization/ ;
+/services/ecommerce-development/ ;
+/services/enterprise-software/ ;
+/services/technical-consulting/
+P1; promote verified core offers
+22 /solutions/ P0
+23-28 /solutions/startup-products/ ;
+/solutions/digital-transformation/ ;
+/solutions/business-automation/ ;
+/solutions/customer-portals/ ;
+/solutions/internal-tools/ ; /solutions/crm/
+P1
+29-34 /solutions/erp/ ; /solutions/saas-platforms/ ;
+/solutions/marketplaces/ ;
+/solutions/ai-applications/ ;
+/solutions/analytics-dashboards/ ;
+/solutions/workflow-automation/
+P1
+35 /industries/ P0 if meaningful sectors verified
+36-42 /industries/technology/ ; /industries/saas/ ;
+/industries/ecommerce/ ;
+/industries/professional-services/ ;
+/industries/fintech/ ; /industries/education/ ;
+/industries/healthcare-technology/
+P1, sector review required
+43-48 /industries/real-estate/ ;
+/industries/logistics/ ; /industries/travel/ ;
+/industries/media/ ; /industries/retail/ ;
+/industries/manufacturing/
+P1
+49-53 /technologies/ ; /technologies/frontend/ ;
+/technologies/backend/ ;
+/technologies/mobile/ ;
+/technologies/databases/
+Hub P0; categories P1
+54-58 /technologies/cloud/ ;
+/technologies/devops/ ; /technologies/ai-ml/
+; /technologies/automation/ ;
+/technologies/integrations/
+P1
+59-60 /case-studies/ ; /case-studies/{slug}/ P0 templates; publish only real approved
+work
+61-65 /how-we-work/ ; /engagement-models/ ;
+/support/ ; /company/ ;
+/company/business-information/
+P0
+66-70 /contact/ ; /request-a-quote/ ; /resources/ ;
+/blog/ ; /blog/{slug}/
+Quote P1; other templates P0, listings gated
+
+-- 11 of 68 --
+
+Software Development Company Website | PRD v1.0 12
+IDs Routes or template slots Priority
+71-74 /careers/ ; /careers/{slug}/ ; /trust/ ;
+/security/
+Careers P0 truthful empty state; job
+conditional; trust P1; security P0
+75-79 /privacy/ ; /terms/ ; /cookies/ ; /accessibility/
+; /data-processing/
+P0 applicable policies; data processing P1
+unless needed at launch
+Guides, engineering articles and glossary entries use the resource taxonomy and article template
+rather than creating thin duplicate hubs. FAQ lives at /resources/#faq and on contextual pages. Team,
+mission and history live at /company/#team and related anchors. Contract, IP, cancellation and
+third-party cost explanations live at /engagement-models/ with policy links. An AUP becomes an
+additional P2 policy route only if operating services require it. Search, thank-you, 404 and error states
+are utility surfaces outside the marketing route count. /company/about/ redirects to /company/;
+/company/careers/ redirects to /careers/.
+12 Navigation Architecture
+Desktop navigation uses two visual levels to accommodate the requested architecture. Main row: logo
+to Home, Services, Solutions, Industries, Technologies, Work and Resources; primary button “Discuss
+Your Project” to /contact/. Utility row: How We Work, Company, Careers and Contact. Company
+dropdown includes Business Information, Engagement Models, Support and Security. A secondary
+“View Our Work” link appears only if approved work exists; otherwise use “Explore Our Process.”
+At narrower laptop widths collapse to a menu before labels wrap. All eleven requested navigation
+destinations remain accessible in mobile navigation; never place an unavailable destination in the
+menu. Mega menus have a category heading, two or three short groups and a “View all” link. Click
+and keyboard activation are supported; hover is an enhancement. Escape closes and restores focus;
+Tab follows normal document order. Do not assign application-menu ARIA roles to ordinary site
+navigation.
+Footer groups: Company, Services, Solutions, Industries and Technologies, Resources, Legal, Contact.
+Show full legal name and accurate address label, business email, supported phone, copyright year
+and verified active social URLs. Use real text links, not icon-only contact methods. On mobile, link
+groups may be accordions with accessible buttons; identity, contact and legal links stay readily
+visible.
+13 Homepage Specification
+The homepage defines 19 modules. Modules with no verified content are omitted entirely; do not
+publish bracketed placeholders. The prototype may show labelled content slots. Use a 1200px
+maximum container, 24px desktop gutters and 16px mobile gutters. Unless specified, section padding
+is 88px desktop, 64px tablet and 48px mobile, with 24px card gaps. Visuals labelled “Illustrative
+product interface” must not be presented as delivered work.
+1 Announcement bar
+Copy: “Explore how a software project moves from discovery to support.” Link: “Our process.”
+Full-width background, centered container, one text row on desktop and wrapping text on mobile.
+12px vertical padding. Optional; do not show a fake launch, event or availability notice.
+
+-- 12 of 68 --
+
+Software Development Company Website | PRD v1.0 13
+2 Header
+Use the navigation specified above. Main row 80px desktop and 64px mobile, with a restrained sticky
+background. Sticky UI must not hide anchors or keyboard focus. Logo has an accessible brand label.
+The menu button announces expanded state.
+3 Hero
+H1: “Software built around your business.” Copy: “Turn a product idea or a difficult workflow into a
+clear development plan. Design, build and maintain web, mobile, SaaS and AI-enabled software
+around your users, systems and commercial priorities.” Publish the capability list only after
+verification. Primary CTA: “Discuss Your Project.” Secondary: “Explore Our Process,” replaced by
+“View Our Work” when work is approved. Supporting line: “Define the scope, delivery responsibilities
+and next steps before development begins.”
+Desktop: 7/5-column split, heading limited to approximately 18 characters per line, text width 620px,
+original static workflow or product interface on the right. Mobile: copy and buttons first, visual
+beneath; no autoplay video. 112px top and bottom desktop, 56px mobile. The hero image is optimized
+and not lazy-loaded when it is the LCP candidate.
+4 Capability summary
+Heading: “From product decisions to production software.” Six labelled links: Web Applications; Mobile
+Products; SaaS Platforms; AI and Automation; Cloud and DevOps; Product Design. Intro: “Choose a
+starting point based on the problem you need to solve.” Desktop six compact items or 3×2 grid;
+mobile 2×3, switching to one column if text truncates at 320px. Use outline icons plus text, never
+unlabeled logos.
+5 Value proposition
+Heading: “Make the important decisions before they become expensive changes.” Copy: “Clarify who
+will use the software, which workflows matter first, and how the system will connect to the tools you
+already use. A documented plan makes scope, trade-offs and acceptance criteria easier to discuss.”
+Desktop 5/7 split: explanatory text and three short panels titled Scope, Architecture and Delivery.
+Mobile stacked. CTA: “Plan Product Discovery.”
+6 Service groups
+Heading: “Choose the support your project needs.” Five cards: “Strategy and design - Translate user
+needs into a prioritized product plan”; “Application engineering - Build the interfaces, services and
+data model”; “AI and integration - Connect systems and introduce evaluated automation”; “Cloud and
+modernization - Plan releases, infrastructure and system change”; “Quality and support - Test,
+maintain and extend the software.” Desktop 3+2 grid; mobile one column. Cards have one primary
+link, descriptive labels and no nested clickable controls.
+7 Delivery method
+Heading: “A clear path from discovery to release.” Intro: “Each stage should produce something you
+can review, from the initial brief to tested software and operating documentation.” Show Discovery,
+Planning, UX/UI, Architecture, Development, Testing, Deployment, Monitoring and Improvement.
+Desktop 3×3 numbered grid; mobile vertical list. Each stage has one concrete artifact. CTA: “See How
+We Work.” Avoid a nine-node horizontal diagram.
+
+-- 13 of 68 --
+
+Software Development Company Website | PRD v1.0 14
+8 Featured projects
+Heading: “Work you can examine.” Two featured cards on desktop, one on mobile; each includes
+approved name or anonymized description, industry, problem, approach, stack, duration and verified
+outcome. CTA: “Read the Case Study.” CMS placeholder: [ADD REAL CASE STUDY]. Hide section and
+Work CTA if none exist. Do not substitute fictional customer screenshots. Images use a consistent
+16:10 ratio and accurate alt text.
+9 Technology choices
+Heading: “Choose technology for the job.” Copy: “The right stack depends on the product, your
+existing systems, the team maintaining it and the cost of operating it. Review the options and
+trade-offs before committing.” Group verified items into Frontend, Backend, Mobile, Data, Cloud, AI
+and DevOps. Desktop text beside grouped chips, mobile stacked groups. CTA: “Explore Our
+Technology Approach.” Logo approval does not imply vendor partnership.
+10 Industries
+Heading: “Software shaped by the workflow.” Example cards: “SaaS - onboarding, permissions and
+subscription operations”; “Professional services - client intake, approvals and reporting”;
+“E-commerce - product, inventory and order workflows.” Use only relevant sectors. Desktop three
+cards, mobile single stack. CTA: “Explore Industry Solutions.” Regulated sectors require the section 16
+review gate.
+11 Engagement models
+Heading: “A commercial model that fits the work.” Copy: “A defined scope, an evolving backlog and
+an ongoing support need require different agreements. Compare how scope, billing and changes are
+handled.” Six compact cards: Fixed Scope, Time and Materials, Dedicated Team, Staff Augmentation,
+Discovery Sprint and Maintenance. Desktop 3×2; mobile stacked. CTA: “Compare Engagement
+Models.” No invented price ranges.
+12 Delivery principles
+Heading: “Know what you are reviewing and receiving.” Four rows: “A written scope - agree what is
+included”; “Visible progress - review completed work against the backlog”; “A tested release -
+examine acceptance evidence”; “A planned handover - identify repositories, accounts and operating
+documentation.” These are proposed commitments requiring owner signoff. Desktop 4/8 heading and
+rows; mobile stacked. CTA: “Explore Delivery Responsibilities.”
+13 Security and quality
+Heading: “Make security part of the engineering plan.” Copy: “Discuss access, data handling,
+dependencies, backups and monitoring alongside features. The controls and evidence required for
+your project should be defined in its scope.” Display verified practices only. Desktop two columns of
+text and a simple boundary diagram; mobile text first. CTA: “Read Our Security Approach.” No
+certification badges without evidence.
+
+-- 14 of 68 --
+
+Software Development Company Website | PRD v1.0 15
+14 Client journey
+Heading: “What happens after you get in touch.” Four groups contain the ten steps: Inquiry and
+Discovery Call; Requirements and Proposal; Agreement and Kickoff; Development, QA, Launch and
+Support. Explain that sending an enquiry creates no development contract. Desktop 2×2 panels;
+mobile vertical. CTA: “Submit a Project Inquiry.” This section describes buying and onboarding,
+distinct from the engineering method in module 7.
+15 Testimonials
+CMS slot: [ADD VERIFIED CLIENT TESTIMONIAL]. Require quoted text, permission, name or approved
+attribution, role, company and date. Prefer a static quotation over an autoplay carousel. Desktop
+readable 800px text width; mobile full container. Omit the entire section without approved content.
+Do not show “[VERIFIED TESTIMONIAL REQUIRED]” publicly.
+16 Insights
+Heading: “Practical notes for your next software decision.” Show three to six published articles with
+category, title, excerpt and accurate reading time. Desktop three columns, mobile one. CTA: “Explore
+Resources.” Hide the module until three useful articles are approved. Publication dates reflect actual
+publication.
+17 Frequently asked questions
+Eight questions and proposed answers: “Where should a project start? Start with the users, workflows
+and constraints; discovery can turn these into a scoped backlog.” “Can an existing product be
+improved? Begin with access, architecture and dependency review before deciding what to replace.”
+“How is cost estimated? Scope, integrations, delivery capacity and risk inform the proposal.” “Who
+owns the software? Ownership, pre-existing components and third-party licences must be set out in
+the signed agreement.” “How are changes handled? Record the request, assess time and cost, and
+approve changes before work proceeds.” “Can you sign an NDA? Raise confidentiality requirements
+before sharing restricted materials; availability and wording must be agreed.” “What happens after
+launch? The agreement defines handover, any defect period and ongoing maintenance.” “How do we
+start? Send a short project summary and your preferred contact method.”
+Use native accessible disclosure or tested accordion, 800px width, one or several open items without
+forced auto-close. All answer text remains accessible in rendered HTML. FAQs help readers; no Google
+rich-result promise.
+18 Final call to action
+Heading: “Tell us what you’re building.” Copy: “Share the problem, the stage of your project and any
+important constraints. Start with a short summary; confidential files can wait until an appropriate
+sharing arrangement is in place.” CTA: “Discuss Your Project.” Single centered 800px block; mobile
+left-aligned with full-width button. 80px desktop and 48px mobile padding.
+19 Footer
+Use section 12 footer. Desktop up to six columns in the 1200px container, with a separate identity
+row. Mobile collapsible navigation plus visible legal/contact links. 64px top and 24px bottom desktop;
+40px and 24px mobile. Every visible URL must resolve to approved content.
+Homepage SEO: title “Custom Software Development and Product Engineering | [BRAND]”.
+Description: “Explore custom software, web, mobile and SaaS development, delivery methods and
+
+-- 15 of 68 --
+
+Software Development Company Website | PRD v1.0 16
+engagement options. Discuss the scope of your next product.” Remove unsupported service terms
+before publication.
+14 Service Page Specifications
+Shared service contract
+Each service page contains: breadcrumb; H1 and 50-90-word lead; business problems; buyer fit and
+poor-fit cases; capabilities; illustrative applications; delivery artifacts; process; verified technologies;
+architecture decisions; security and data considerations; integrations; schedule drivers; engagement
+model; example workflow; verified evidence if available; four to six FAQs; related services; final CTA.
+Target approximately 900-1500 useful words when supported, never pad to meet a word count.
+Sample shared copy: “A useful scope describes the users, workflows, integrations and acceptance
+criteria together. Before development, identify what must be delivered, which decisions remain open
+and what your team needs to provide.” Timeline copy: “Delivery timing depends on scope, access to
+existing systems, integration readiness and review turnaround. A proposal should state assumptions,
+milestones and change procedures.” No universal completion promise.
+Each service inherits shared navigation, related process/engagement/security links and the contact
+destination with a non-sensitive service ID preselected. In the following specifications, H1 is also the
+default SEO title with “ | [BRAND]”; the meta description is separately supplied. Technology names are
+examples requiring verification. Illustrative workflows are not case studies.
+Custom Software Development
+Opening: “Build software around the work your business actually does. Start with the users, decisions
+and information flows, then define an application that fits your operations and can evolve with them.”
+Sections: When custom software is justified; Workflow discovery; Application boundaries; Delivery and
+handover. Specify domain models, role matrices, integrations, data migration and operating
+documentation. Compare configuration of an existing tool with custom development before
+recommending a build. Example workflow: enquiry → approval → job assignment → reporting.
+Architecture decisions: modular monolith versus separate services, data ownership and audit
+requirements. Security: least privilege and sensitive-field handling. Deliverables: specification, UI,
+code, tests, deployment guide and agreed training. FAQs: build or buy; changing scope; source-code
+ownership; support. CTA: “Discuss Your Software Project.” Related: Web Development, API
+Integration, Technical Consulting. Meta: “Plan custom business software around your workflows, users
+and integrations. Review delivery stages, ownership and support options.”
+
+-- 16 of 68 --
+
+Software Development Company Website | PRD v1.0 17
+Web Application Development
+Opening: “Create a browser-based product that lets customers or staff complete real tasks. Plan the
+interface, permissions, business logic and integrations as one system.” Sections: User journeys;
+Frontend and backend responsibilities; Integration boundaries; Release readiness. Include
+authenticated applications, role-based dashboards, customer workspaces and admin tools. Distinguish
+marketing websites from operational web applications. Architecture: server rendering versus client
+interaction, session management, caching and API boundaries. Security: CSRF where relevant,
+authorization on every resource and output encoding. Example: account setup → task submission →
+staff review → status tracking. Deliverables: responsive application, API contracts, tests and handover.
+FAQs: mobile browser support; offline needs; existing system integration; hosting ownership. CTA:
+“Discuss Your Web Application.” Related: UI/UX, API Integration, QA. Meta: “Explore web application
+development for customer portals, dashboards and business workflows, including architecture, testing
+and deployment.”
+Mobile App Development
+Opening: “Design a mobile product around the situations in which people use it. Decide which device
+features, network conditions and platform requirements matter before selecting an implementation
+approach.” Sections: Mobile journeys; Platform choice; Device and offline behavior; Store release
+preparation. Specify iOS/Android scope, push permissions, deep links, accessibility and backend
+dependencies. Compare native and cross-platform options using actual team capability. Example:
+capture task offline → synchronize → resolve conflict → notify assignee. Security: secure device
+storage and token lifecycle. Deliverables: app source, device test matrix, store assets and submission
+support if contracted. Store approval remains outside supplier control. FAQs: native versus
+cross-platform; offline behavior; store accounts; updates. CTA: “Plan Your Mobile Product.” Related:
+Backend/API, UI/UX, Maintenance. Meta: “Plan mobile app development around user journeys, device
+features, backend integrations, testing and release responsibilities.”
+SaaS Development
+Opening: “Build a subscription product with a clear model for accounts, organizations, access and
+billing. Treat onboarding and daily operations as part of the product, not additions after launch.”
+Sections: Tenant model; Subscription lifecycle; Product administration; Operating costs. Cover
+invitations, entitlements, billing provider events, plans, support and exports. Architecture: tenant
+isolation, idempotent webhooks, data partitioning and migration. Example: trial → invite team → select
+plan → entitlement change → cancellation. Security: tenant-specific access tests and support-user
+permissions. Deliverables: tenancy ADR, subscription state model, application and operator guide.
+FAQs: billing provider; data export; tenancy; recurring costs. CTA: “Discuss Your SaaS Product.”
+Related: Web Development, Cloud, QA. Meta: “Explore SaaS product development, including tenancy,
+subscriptions, onboarding, integrations and the operational work needed after launch.”
+
+-- 17 of 68 --
+
+Software Development Company Website | PRD v1.0 18
+MVP Development
+Opening: “Turn the most important product assumption into a focused first release. Define what users
+need to accomplish, which evidence will guide the next decision and what can wait.” Sections:
+Hypothesis and audience; Minimum useful scope; Learning plan; Next release decisions. Cover
+prototype versus production MVP, must-have workflows, validation and technical shortcuts recorded
+explicitly. Example: sign up → complete core task → provide feedback. Deliverables: prioritized
+backlog, prototype, scoped release and learning plan. Security fundamentals cannot be deferred
+merely because the product is an MVP. Timeline drivers include recruitment for testing and
+stakeholder decisions. FAQs: prototype versus MVP; scope cuts; future rebuilding; success measures.
+CTA: “Plan Your MVP.” Related: UI/UX, Technical Consulting, SaaS. Meta: “Define and build a focused
+MVP with clear user journeys, release boundaries, learning goals and a practical path to the next
+version.”
+AI Development
+Opening: “Assess where AI can improve a defined task, then test the result against realistic examples.
+Plan data access, evaluation, human review and operating cost before adding AI to a production
+workflow.” Sections: Task suitability; Data and evaluation; Human review; Production monitoring.
+Cover retrieval, classification and assisted drafting only if offered. Define quality thresholds, baseline
+comparison, latency and cost ceilings. Example: retrieve authorized documents → generate draft →
+cite evidence → human approves. Security: prompt injection, tenant boundaries, tool permissions and
+sensitive-data controls. Deliverables: evaluation set, documented limitations, implementation and
+fallback. Do not imply deterministic accuracy. FAQs: model choice; private data; failure handling;
+ongoing evaluation. CTA: “Assess Your AI Use Case.” Related: AI Integration, Automation, Cloud. Meta:
+“Evaluate AI application development with task-specific testing, data controls, human review,
+monitoring and practical cost boundaries.”
+AI Integration
+Opening: “Connect AI capabilities to an existing product without losing control of its data or workflow.
+Define the integration boundary, permissions and fallback before choosing a provider.” Sections:
+Existing system assessment; Provider abstraction; Data flow; Reliability. Distinguish integration from
+training a proprietary model. Cover API adapters, quotas, retries, model changes and output
+validation. Example: inbound request → data minimization → model call → schema validation → user
+review. Deliverables: integration contract, test cases, usage reporting and operational playbook.
+Security: no secrets in prompts, restricted tool execution and verified vendor terms. FAQs: provider
+switching; data use; downtime; cost limits. CTA: “Discuss an AI Integration.” Related: API Integration,
+AI Development, Maintenance. Meta: “Add AI to existing software with explicit data flows, provider
+boundaries, validation, cost controls and fallback behavior.”
+
+-- 18 of 68 --
+
+Software Development Company Website | PRD v1.0 19
+Automation Development
+Opening: “Automate a repeatable process while keeping exceptions visible. Map triggers, decisions
+and handoffs so the workflow remains understandable when something goes wrong.” Sections:
+Process mapping; Trigger and action design; Exception queues; Operational ownership. Cover
+approvals, retries, scheduling, reconciliation and audit records. Example: order received → validation
+→ approval → system updates → reconciliation. Architecture: idempotent steps, durable execution and
+compensation. Security: scoped integration accounts and approval before consequential actions.
+Deliverables: workflow map, automation, exception guide and handover. FAQs: what should stay
+manual; duplicate actions; failed runs; account ownership. CTA: “Review Your Automation
+Opportunity.” Related: API Integration, Internal Tools, QA. Meta: “Plan business automation with
+reliable triggers, approvals, exception handling, audit records and clear operational ownership.”
+Cloud Development
+Opening: “Design application infrastructure around the workload and the team operating it. Make
+deployment, observability, recovery and cost management part of the architecture.” Sections:
+Workload needs; Managed services; Reliability decisions; Cost visibility. Cover environments, data
+stores, queues, object storage and infrastructure configuration. Prefer simpler managed components
+where they meet requirements. Example: build → deploy to staging → verify → release → monitor.
+Deliverables: infrastructure definitions, runbooks, cost assumptions and restore procedure. Security:
+private resources, service identities and secrets. FAQs: cloud choice; account ownership; scaling;
+recovery targets. CTA: “Discuss Your Cloud Architecture.” Related: DevOps, SaaS, Modernization.
+Meta: “Explore cloud application development with deployment planning, managed infrastructure,
+monitoring, recovery and cost-aware architecture.”
+DevOps Services
+Opening: “Make software releases repeatable and observable. Review how changes move from source
+control to production, and define the checks and recovery steps needed along the way.” Sections:
+Delivery pipeline; Environment management; Release controls; Incident readiness. Cover CI/CD,
+infrastructure as code, dependency scanning, logs, metrics and rollback. Example: pull request →
+checks → preview → approval → deployment → health verification. Deliverables: pipeline configuration,
+access map and operating runbook. Security: trusted build sources, least-privileged credentials and
+protected releases. FAQs: existing pipelines; deployment access; rollback; monitoring ownership. CTA:
+“Review Your Delivery Pipeline.” Related: Cloud, QA, Maintenance. Meta: “Improve development and
+release workflows with CI/CD, environment controls, monitoring, infrastructure configuration and
+rollback procedures.”
+API Development and Integration
+Opening: “Connect systems through interfaces that are explicit about data, permissions and failure.
+Define the contract before implementing the exchange.” Sections: API contracts; Authentication; Data
+mapping; Failure and reconciliation. Include REST or event-driven designs as appropriate, pagination,
+versioning, webhooks and third-party limits. Example: CRM change → signed event → deduplicated
+update → reconciliation. Deliverables: OpenAPI contract, integration tests, sandbox setup and
+ownership map. Security: authorization, signing, replay protection and SSRF defenses for outbound
+integrations. FAQs: vendor limitations; sync frequency; duplicates; API version changes. CTA: “Discuss
+Your Integrations.” Related: Web Development, Automation, Backend technologies. Meta: “Plan APIs
+and integrations with clear data contracts, authentication, versioning, retries and reconciliation
+between business systems.”
+
+-- 19 of 68 --
+
+Software Development Company Website | PRD v1.0 20
+Dedicated Development Teams
+Opening: “Add delivery capacity with defined roles, responsibilities and communication. Agree how
+work is prioritized, reviewed and handed over before a team starts.” Sections: Role requirements;
+Selection and onboarding; Delivery governance; Continuity. Distinguish managed dedicated team
+from staff augmentation, where the client directs day-to-day work. Publish only verified skills and
+actual availability. Deliverables: staffing plan, responsibilities, onboarding checklist and agreed
+reporting. Security: client-approved access and offboarding. FAQs: management responsibility;
+time-zone overlap; replacement; billing for absence. CTA: “Discuss Your Team Requirements.”
+Related: Engagement Models, QA, Technical Consulting. Meta: “Explore dedicated development and
+staff augmentation models, including role selection, onboarding, communication, billing and
+continuity.”
+UI and UX Design
+Opening: “Design the workflows before polishing the screens. Understand users, test key interactions
+and create interface patterns that development teams can implement consistently.” Sections:
+Research; Information architecture; Prototyping; Design system and handoff. Cover interviews, task
+flows, wireframes, content, accessibility and usability findings. Example: research → task map →
+prototype → test → revision → component specification. Deliverables: design files, tokens, interaction
+states and annotated acceptance criteria. Security: realistic data handling in prototypes; no
+production customer records. FAQs: research access; design-only projects; accessibility; developer
+handoff. CTA: “Plan Product Design.” Related: MVP, Web Development, QA. Meta: “Explore product UI
+and UX design, from research and workflows to tested prototypes, accessible components and
+developer handoff.”
+QA and Software Testing
+Opening: “Make release confidence depend on evidence. Define the important user journeys, failure
+modes and non-functional requirements, then test them against agreed acceptance criteria.”
+Sections: Risk-based test plan; Automation; Cross-platform coverage; Release evidence. Cover
+functional, integration, regression, accessibility and performance testing; specialist penetration
+testing only if genuinely provided. Example: requirement → test → execution → defect → fix verification
+→ release report. Deliverables: test strategy, cases, automation where appropriate and residual-risk
+report. FAQs: automation scope; existing codebases; security testing boundaries; release decisions.
+CTA: “Discuss Software Quality.” Related: DevOps, Web Development, Maintenance. Meta: “Plan
+software testing around business risk, critical journeys, regression coverage and clear evidence for
+release decisions.”
+Software Maintenance
+Opening: “Keep an existing application understandable and operable after release. Define
+responsibility for defects, dependencies, infrastructure and changes rather than treating every
+request as the same type of support.” Sections: Takeover assessment; Maintenance scope; Triage;
+Planned upgrades. Include patching, backups, logs, dependency upgrades and small changes only as
+contracted. Example: ticket → classification → assessment → approval → fix → verification → release.
+Deliverables: service inventory, runbook, backlog and support terms. FAQs: inherited applications;
+defect versus enhancement; coverage hours; third-party outages. CTA: “Discuss Maintenance.”
+Related: Support, Legacy Modernization, DevOps. Meta: “Explore software maintenance for existing
+applications, including assessment, defect handling, dependency updates and agreed support
+coverage.”
+
+-- 20 of 68 --
+
+Software Development Company Website | PRD v1.0 21
+Legacy Software Modernization
+Opening: “Improve an existing system without assuming everything must be replaced. Identify
+business-critical behavior, integration dependencies and the safest sequence of change.” Sections:
+Assessment; Preserve or replace; Data migration; Incremental cutover. Compare refactoring,
+replatforming and replacement. Example: characterize current behavior → isolate module → test
+replacement → migrate cohort → monitor → retire old path. Deliverables: assessment, risk register,
+migration plan and rollback criteria. Security: unsupported dependencies, historical access and data
+retention. FAQs: rewrite versus improve; downtime; undocumented code; data verification. CTA:
+“Review Your Existing System.” Related: Cloud, QA, Technical Consulting. Meta: “Plan legacy software
+modernization through assessment, incremental change, migration verification and documented
+rollback decisions.”
+E-commerce Development
+Opening: “Build commerce workflows around products, orders and operations. Decide which platform
+capabilities to use and where custom development is justified.” Sections: Platform choice; Catalog and
+checkout; Operations integrations; Release testing. Include inventory, tax-provider integration,
+fulfilment, returns and subscriptions as scoped. Example: cart → hosted payment → verified webhook
+→ order → fulfilment. Never store raw card data on the marketing website; client-project payment
+scope needs separate review. Deliverables: storefront or commerce application, integrations and
+operating guidance. FAQs: platform versus custom; payment provider; inventory sync; ongoing fees.
+CTA: “Discuss Your Commerce Project.” Related: APIs, UI/UX, QA. Meta: “Explore e-commerce
+development for catalog, checkout, inventory and fulfilment workflows, with clear integration and
+operating responsibilities.”
+Enterprise Software Development
+Opening: “Develop business software within the constraints of your wider technology environment.
+Plan identity, integration, change control and operational handover alongside the application itself.”
+Sections: Stakeholder alignment; System boundaries; Governance; Phased adoption. Include SSO,
+permission models, auditing, procurement and migration dependencies. Example: requirements
+approval → architecture review → staged delivery → UAT → controlled rollout. Deliverables:
+governance plan, architecture records, tested software and support handover. FAQs: procurement
+information; existing standards; access controls; rollout sequencing. CTA: “Discuss Enterprise
+Delivery.” Related: APIs, Dedicated Teams, Modernization. Meta: “Plan enterprise software with
+stakeholder governance, identity integration, acceptance testing and controlled operational
+handover.”
+Technical Consulting
+Opening: “Get a structured view of a software decision before committing to implementation. Review
+the context, compare options and document the consequences of each approach.” Sections: Decision
+scope; Technical assessment; Options and trade-offs; Actionable recommendations. Include discovery,
+architecture assessment, build-versus-buy and roadmap planning only when offered. Example:
+questions → access and interviews → assessment → options workshop → written decision.
+Deliverables: findings, assumptions, prioritized risks and next steps. Security: scoped read-only access
+and confidential report distribution. FAQs: fixed consulting scope; access required; independent
+recommendations; implementation follow-on. CTA: “Plan a Technical Review.” Related: MVP,
+Modernization, Technology Approach. Meta: “Explore technical consulting for software architecture,
+discovery, modernization and build-versus-buy decisions with documented recommendations.”
+
+-- 21 of 68 --
+
+Software Development Company Website | PRD v1.0 22
+15 Solutions Pages
+All solution pages use a business workflow hero, current-state pain, proposed system boundaries, user
+roles, a sample flow, essential modules, integrations, data/security decisions, rollout and adoption
+plan, related services, FAQs and CTA. H1s below also supply title text followed by “ | [BRAND]”. Each
+meta description uses the supplied opening condensed to 140-165 characters without a hard
+truncation rule. SEO editor must preview the actual result. No results or industry experience are
+implied by illustrative use cases.
+Startup Product Development. Opening: “Turn a product idea into a sequence of decisions,
+prototypes and releases that can be evaluated by real users.” H2s: Identify the first user; Decide the
+first release; Test the core journey; Plan the next investment. Define founder inputs, discovery
+deliverables and learning criteria. FAQs: what to validate first; who supplies content. CTA: “Plan Your
+First Release.” Links: MVP, UI/UX, Engagement Models.
+Digital Transformation. Opening: “Start with the business process that needs to change, then plan
+the systems, data and adoption work around it.” H2s: Map current operations; Prioritize changes;
+Connect systems; Introduce change in stages. Require current/future process diagrams, dependencies
+and training owner. FAQs: where to start; how to avoid disruption. CTA: “Map Your Transformation.”
+Links: Enterprise, Modernization, Consulting.
+Business Automation. Opening: “Identify repetitive work that can be standardized and reduce
+manual handoffs without hiding exceptions.” H2s: Find repeatable tasks; Define rules; Connect
+departments; Measure process health. Explain orchestration across departments versus the narrower
+workflow page. FAQs: suitability; exception ownership. CTA: “Review Your Business Process.” Links:
+Automation Development, Internal Tools, API Integration.
+Customer Portals. Opening: “Give customers a clear place to submit requests, review progress and
+access the information they are authorized to see.” H2s: Customer journeys; Account permissions;
+Documents and requests; Support handoff. Include invitations, authorization, document access and
+notifications. FAQs: login options; customer data isolation. CTA: “Plan a Customer Portal.” Links: Web
+Development, UI/UX, Security.
+Internal Business Tools. Opening: “Replace a fragmented operational workflow with a tool built
+around the people responsible for the work.” H2s: Staff tasks; Role permissions; Data entry and
+validation; Reporting and training. Include accessibility, bulk actions with confirmation and export
+permissions. FAQs: spreadsheet migration; administrator ownership. CTA: “Discuss an Internal Tool.”
+Links: Custom Software, Automation, QA.
+CRM Solutions. Opening: “Organize customer relationships around your actual sales and service
+process, using configuration, integration or custom development where each is justified.” H2s:
+Pipeline design; Data quality; Integrations; Reporting and adoption. Include deduplication, consent
+status, activity history and import reconciliation. FAQs: existing CRM reuse; migration. CTA: “Review
+Your CRM Requirements.” Links: API Integration, Custom Software, Consulting.
+ERP Solutions. Opening: “Connect business operations through a defined model for records,
+approvals and responsibilities.” H2s: Process boundaries; Master data; Module integration; Phased
+rollout. Distinguish custom modules from replacing a complete ERP. Identify accounting, inventory
+and permissions dependencies; qualified client experts approve financial rules. FAQs: integration with
+existing ERP; phased scope. CTA: “Discuss Your ERP Scope.” Links: Enterprise, APIs, Modernization.
+SaaS Platforms. Opening: “Plan the complete subscription journey, from onboarding and access to
+administration and support.” H2s: Account lifecycle; Tenant boundaries; Subscription operations;
+Product administration. Focus on solution modules; link to SaaS service for implementation detail
+
+-- 22 of 68 --
+
+Software Development Company Website | PRD v1.0 23
+rather than duplicating it. FAQs: product operations; plan changes. CTA: “Plan Your SaaS Platform.”
+Links: SaaS Development, Cloud, Engagement Models.
+Marketplace Development. Opening: “Define how buyers, sellers and operators interact before
+building the marketplace interface.” H2s: Participant roles; Listings and discovery; Transactions and
+disputes; Operator controls. Document payment-provider boundaries, moderation and dispute
+ownership. No promise to hold funds or provide financial services. FAQs: payment flows; moderation.
+CTA: “Discuss Your Marketplace.” Links: Web Development, APIs, E-commerce.
+AI Powered Applications. Opening: “Place AI inside a useful workflow with clear limits, review
+points and a reliable path when the model cannot complete the task.” H2s: Task and evidence; User
+controls; Evaluation; Operating limits. Require labelled output, feedback and human review for
+consequential actions. FAQs: incorrect outputs; private information. CTA: “Assess an AI Application.”
+Links: AI Development, AI Integration, Security.
+Analytics Dashboards. Opening: “Bring agreed business metrics into a dashboard whose definitions
+and data sources are visible.” H2s: Metric definitions; Source systems; Data freshness; Decisions and
+exports. Explain lineage, permissions, timezone, aggregation and stale-data indicators. FAQs:
+inconsistent source data; refresh frequency. CTA: “Plan Your Dashboard.” Links: Custom Software,
+APIs, Databases.
+Workflow Automation. Opening: “Make one recurring workflow repeatable, observable and
+recoverable.” H2s: Trigger and inputs; Rules and approvals; Exceptions; Audit and recovery. Show a
+concrete illustrative request → approval → action workflow; map retry, duplicate and cancellation
+behavior. FAQs: failed steps; manual override. CTA: “Map Your Workflow.” Links: Automation
+Development, API Integration, Maintenance.
+Solutions hub H1: “Software solutions for the work you need to do.” Opening: “Explore common
+systems and workflows, then examine the services and engineering decisions needed to deliver
+them.” H2s: Build a product; Connect operations; Serve customers; Modernize systems. CTA: “Discuss
+Your Requirements.” SEO title: “Business Software Solutions | [BRAND]”. Meta: “Explore customer
+portals, internal tools, SaaS platforms, automation and business systems, with practical delivery and
+integration considerations.” FAQ: how solutions differ from services; how scope is selected. Links: all
+published solution pages, Services and How We Work.
+16 Industry Pages
+Industry pages are P1 unless genuine sector capability makes one central at launch. Use H1 “[Sector]
+Software Development”, title “[Sector] Software Development | [BRAND]”, and a meta description
+summarizing the actual workflows listed below. Sections: sector workflows; common system types;
+integration/data constraints; user roles; delivery considerations; approved relevant work; related
+services; FAQs; CTA “Discuss Your [Sector] Project”. No claim of past sector clients without evidence.
+Sector Suggested opening copy Unique content and FAQ directions
+Technology “Plan software that fits your product
+architecture and the engineering team
+maintaining it.”
+SDK/API contracts, developer workflows,
+release coordination; ask about existing
+standards and handover
+SaaS “Design the workflows behind onboarding,
+permissions and subscription operations.”
+Tenant lifecycle, support access and product
+analytics; ask about isolation and
+subscriptions
+
+-- 23 of 68 --
+
+Software Development Company Website | PRD v1.0 24
+Sector Suggested opening copy Unique content and FAQ directions
+E-commerce “Connect storefront experiences with the
+systems that manage products, orders and
+fulfilment.”
+Inventory reconciliation, payment events
+and returns; ask about platform fit and
+integration limits
+Professional Services “Organize client intake, project work and
+approvals around your delivery process.”
+Client portals, time records, permissions and
+document handling; ask about
+confidentiality and workflow migration
+FinTech “Define the software, data and integration
+boundaries of a financial workflow before
+implementation.”
+Ledger boundaries, identity providers, audit
+records and reconciliation; client compliance
+team approves regulated flows
+Education “Build learning and administration
+workflows around the people using them.”
+Teacher/student roles, content permissions,
+accessibility and age-appropriate data
+collection; ask about minors and institutional
+systems
+Healthcare Technology “Plan healthcare software around
+authorized access, workflow needs and the
+sensitivity of the information involved.”
+Data minimization, access trails, integrations
+and clinical boundaries; determine
+applicable obligations before scope approval
+Real Estate “Connect property information, enquiries
+and transaction administration in a clear
+operational workflow.”
+Listing freshness, document permissions and
+CRM sync; ask about source ownership and
+updates
+Logistics “Make shipment, dispatch and exception
+information visible to the people
+responsible for action.”
+Carrier APIs, location permissions, offline
+operations and event reconciliation; ask
+about stale tracking and connectivity
+Travel “Coordinate booking information and
+operational updates across customer and
+supplier systems.”
+Availability, timezones, cancellation and
+vendor failures; ask about inventory
+consistency and refunds ownership
+Media “Organize content workflows, access and
+distribution around your publishing model.”
+Rights metadata, moderation, media
+processing and distribution; ask about
+licensing and retention
+Retail “Connect store and online operations
+through consistent product and transaction
+information.”
+POS integration, inventory, staff roles and
+reconciliation; ask about offline needs and
+stock conflicts
+Manufacturing “Build tools that support production
+planning, quality records and operational
+visibility.”
+ERP/MES boundaries, traceability and
+disconnected facilities; ask about
+safety-critical separation and source
+systems
+FinTech, healthcare and education pages must state: “Project requirements, data obligations and any
+regulatory responsibilities depend on the use case and jurisdictions involved. These must be assessed
+with your qualified advisers before scope and architecture are agreed.” This is proposed neutral scope
+copy, not an assertion of certification or regulatory approval. Do not advertise clinical
+decision-making, medical device capabilities or regulated financial operations without appropriate
+expert review and real delivery capability.
+Industries hub H1: “Software in the context of your industry.” Opening: “Review the workflows and
+system constraints relevant to your sector, then discuss the requirements specific to your
+
+-- 24 of 68 --
+
+Software Development Company Website | PRD v1.0 25
+organization.” H2s: Customer-facing products; Operational systems; Sector constraints. FAQ: sector
+experience; regulatory responsibility. CTA: “Discuss Your Requirements.” Meta: “Explore
+sector-specific software workflows, integrations and delivery considerations across the industries
+relevant to our services.” Link sectors only when their content is substantive and approved.
+17 Technology Pages
+Hub H1: “Technology chosen for the product and the team.” Opening: “Architecture decisions should
+reflect the workload, existing systems, security requirements and the people who will maintain the
+software. Compare choices in context rather than selecting a stack from a list of logos.” H2s: Selection
+criteria; Application layers; Operations; Integration boundaries. CTA: “Discuss Your Architecture.”
+Title: “Technology and Engineering Approach | [BRAND]”. Meta: “Review how software technologies
+are selected across frontend, backend, data, cloud, automation and integrations.” FAQs: existing
+stack compatibility; vendor choice; long-term maintenance.
+Every category page includes the opening below, selection criteria, appropriate uses, trade-offs,
+interoperability, testing and maintenance considerations, verified capability records, related service
+links and two FAQs. Title uses the category H1 followed by brand; meta copy is the short opening plus
+the relevant selection criteria. No individual vendor keyword pages are required at launch.
+H1 Opening copy Examples to verify and decisions to
+document
+Frontend Engineering “Choose an interface approach that
+supports your users, content and
+interaction requirements.”
+React, Next.js, TypeScript; rendering,
+accessibility, browser support, CMS and
+analytics; FAQs about SSR and design
+systems
+Backend Engineering “Design application logic and interfaces
+around explicit responsibilities and data
+boundaries.”
+Node.js, Python, Java, .NET, PHP/Laravel;
+throughput, hiring, libraries, API versioning
+and background tasks; FAQs about
+monoliths and integrations
+Mobile Engineering “Select a mobile stack around device
+requirements, release constraints and
+maintenance.”
+Flutter, React Native or verified native
+capability; offline sync, device APIs, store
+review; FAQs about shared code and testing
+Database Engineering “Model information around consistency,
+access patterns and recovery
+requirements.”
+PostgreSQL, MySQL, MongoDB, Redis;
+transactions, document structure, cache
+invalidation and retention; FAQs about
+migration and backup
+Cloud Platforms “Choose cloud services that meet the
+workload without creating unnecessary
+operational burden.”
+AWS, Azure, Google Cloud; data region,
+managed services, portability and cost;
+FAQs about ownership and vendor lock-in
+DevOps Tooling “Make build, test and release behavior
+repeatable across environments.”
+Docker, Kubernetes only where justified, CI
+platforms; configuration, secrets and
+observability; FAQs about container need
+and rollback
+AI and ML Engineering “Select models and supporting systems
+against a defined evaluation task.”
+Verified model/provider capabilities;
+retrieval, evaluation, data use, latency and
+human control; FAQs about quality and
+model updates
+
+-- 25 of 68 --
+
+Software Development Company Website | PRD v1.0 26
+H1 Opening copy Examples to verify and decisions to
+document
+Automation Platforms “Match workflow tools to the reliability,
+integration and governance the process
+requires.”
+Verify supported orchestration tools;
+triggers, permissions, retries and human
+approvals; FAQs about failure handling and
+portability
+Third Party Integrations “Treat each external service as an explicit
+dependency with limits and an owner.”
+Payments, authentication, communication
+APIs, analytics and CMS; quotas, webhooks,
+data processing and outage behavior; FAQs
+about credentials and vendor change
+Technology records require status (verified/currently offered/retired), internal capability owner,
+evidence reference and last review date. Evidence can be a real delivery record or internal capability
+assessment; it need not be publicly disclosed. Vendor trademarks are descriptive, not partnership
+claims.
+18 Case Study System
+Case-study listing H1: “Software projects in context.” Opening: “Examine the problem, the decisions
+and the delivered work behind each approved project.” Title: “Software Development Case Studies |
+[BRAND]”. Meta: “Read approved software project stories covering requirements, architecture,
+delivery and verified outcomes.” Filters: service, industry and technology; AND across categories and
+OR within a category. Default order: editorial featured then publication date. Pagination: 12 per page.
+Empty filter result: “No projects match these filters. Clear filters or discuss your requirements.” No
+approved work means the public listing and inbound links are withheld, not a fake project gallery.
+Detail structure: breadcrumb; verified project title; summary; client name or approved anonymized
+label; industry; company-size band if permitted; project type; duration; team roles; challenge;
+business objective; original constraints; discovery findings; solution; architecture; design; stack;
+development sequence; integrations; testing; security; deployment; obstacles and response;
+outcome; approved metrics; client feedback; screenshots; related services; CTA “Discuss a Similar
+Project”. FAQ suggestions: applicability to another context; delivery differences; what remains
+confidential. SEO title: “[PROJECT TITLE] Case Study | [BRAND]”; meta: “[APPROVED PROBLEM AND
+APPROACH SUMMARY]”.
+Authoring copy: “The project addressed [VERIFIED PROBLEM] for [APPROVED CLIENT DESCRIPTION].
+The agreed scope covered [ACTUAL SCOPE]. The team selected [ACTUAL APPROACH] because
+[DOCUMENTED REASON].” Outcome: “[INSERT VERIFIED RESULT]”. These are editorial placeholders
+and cannot pass publication validation.
+Metrics require value, unit, baseline, measurement window, method, evidence owner and permission.
+If no numerical evidence exists, describe verified delivered functionality without implying financial
+benefit. Anonymization requires client permission and removal of identifiable screenshots and
+metadata. Consent withdrawal unpublishes the story and purges CDN/search caches. Never equate a
+prototype with a production customer project. Demo work may be separately identified as an
+“Illustrative internal demonstration” outside the case-study collection.
+
+-- 26 of 68 --
+
+Software Development Company Website | PRD v1.0 27
+19 Company Pages
+Company page
+H1: “A software partner you can understand before you engage.” Opening: “[BRAND NAME] provides
+[VERIFIED SERVICES] through [ACTUAL DELIVERY MODEL]. This page explains who operates the
+business, how work is organized and where to find company and contact information.” Sections: What
+we build; Mission; Vision; Operating model; Values in practice; Engineering culture; Actual history;
+Leadership and team; Locations; Business information; Careers.
+Proposed mission: “Help organizations turn practical requirements into maintainable software.”
+Proposed vision: “Make software delivery easier to understand, evaluate and operate.” Values copy:
+“Make decisions explicit. Document the scope. Review the work. Respect customer information.”
+Owner approval is required before adopting these as company statements.
+Team fields: [ADD ACTUAL TEAM MEMBER], role, approved biography, real photograph or neutral
+initials, location if approved and genuine profile link. Identify contractors or partners accurately; do
+not imply all contributors are employees. History and timeline appear only with verified dates and
+milestones. Show a registered address as registered, not as a staffed office. No stock office
+photography presented as an actual workplace.
+CTA: “Discuss Your Project”; secondary “View Company Information”. FAQs: operating locations; who
+manages work; delivery model. Title: “About [BRAND] | Software Development Company”. Meta:
+“Learn about [BRAND], its verified services, operating model, engineering principles and company
+contact information.”
+Business information page
+H1: “Company and contact information.” Opening: “Find the legal identity and contact details of the
+business responsible for this website and its services.” Fields: legal name, trading name, jurisdiction,
+registration number where appropriate, registered address, separately labelled operating address,
+domain, business email, support email and phone. Include last verified date and contact for
+corrections. Do not publish personal identity documents, private owner residential details or tax
+documents unnecessarily.
+Title: “Business Information | [BRAND]”. Meta: “Find verified company identity, jurisdiction and
+business contact information for [BRAND].” CTA: “Contact the Company.” Links: Terms, Privacy,
+Engagement Models, Support. FAQ: contracting entity; registered versus operating address. Store this
+information once in CMS settings and reuse it everywhere.
+How We Work page
+H1: “A defined process from the first discussion to ongoing support.” Opening: “Software delivery
+works best when scope, responsibilities and review points are visible. Each engagement should state
+what is being built, how decisions are made and what your team receives.” Title: “Software
+Development Process | [BRAND]”. Meta: “Review the software delivery process from discovery and
+design to development, testing, deployment, documentation and support.” CTA: “Discuss Your
+Project.” FAQs: cadence; changing priorities; acceptance; delays. Links: Engagement Models, Security,
+relevant services.
+Stages and outputs: consultation establishes fit and restrictions; discovery maps stakeholders and
+workflows; requirements produce acceptance criteria; specification describes functional and
+non-functional behavior; wireframes establish layout and journeys; UI design defines components and
+states; architecture records system boundaries; planning prioritizes the backlog; development
+
+-- 27 of 68 --
+
+Software Development Company Website | PRD v1.0 28
+produces reviewed code; QA records test evidence; UAT confirms agreed criteria; security review
+checks scoped controls; deployment follows a release plan; documentation and training support
+handover; maintenance and optimization follow the signed agreement.
+Proposed cadence: weekly progress update and risk log; demonstrations at agreed sprint intervals;
+client decisions recorded in the project system. Scrum, Kanban or another method is selected for the
+work, not claimed simultaneously. Name the business owner, product owner and technical owner. An
+accepted milestone must identify approver, date and evidence. A change request states description,
+reason, cost/time effect and approval before implementation.
+Engagement Models page
+H1: “Choose how the work is scoped, managed and billed.” Opening: “The right engagement depends
+on how much is known, how quickly priorities may change and who manages day-to-day delivery.
+Compare the responsibilities and limits before requesting a proposal.” Title: “Software Development
+Engagement Models | [BRAND]”. Meta: “Compare fixed scope, time and materials, dedicated teams,
+discovery and maintenance, including billing, changes and project responsibilities.” CTA: “Discuss an
+Engagement.” FAQs: estimate versus quote; IP ownership; deposits; cancellation; third-party fees.
+Links: How We Work, Contact, Terms, Support.
+Model Best fit and billing Advantages and limits Change control and documents
+Fixed
+scope
+Defined outcomes; agreed
+milestone invoices
+Clear scope baseline; new
+work changes price/timing
+Signed statement of work,
+acceptance checklist, written change
+orders
+Time and
+materials
+Evolving backlog; agreed rates
+and approved time
+Flexible priorities; final cost
+depends on effort
+Timesheets or agreed effort records,
+budget cap alerts, backlog approvals
+Dedicated
+team
+Sustained delivery; monthly
+capacity agreement
+Continuity; capacity does not
+guarantee fixed output
+Role plan, availability, management
+responsibilities and replacement
+terms
+Staff augm
+entation
+Client-managed delivery;
+time/capacity billing
+Specific skills; client owns
+prioritization and supervision
+Role scope, access rules, interview
+process, offboarding and time
+approval
+Discovery
+sprint
+Unknown scope; agreed
+discovery fee
+Reduces uncertainty; does
+not include full build
+Agenda, research access, findings,
+prototype or specification as
+contracted
+Retainer Ongoing improvement;
+reserved time or service scope
+Predictable access; unused
+capacity rules matter
+Monthly scope, approval limits,
+rollover rules and reporting
+Maintenan
+ce
+Operating application; agreed
+coverage fee
+Defined support
+responsibilities; not unlimited
+enhancement
+Service inventory, hours, priorities,
+exclusions, escalation and renewal
+terms
+Commercial copy: “A proposal identifies the contracting entity, scope, payment schedule, taxes where
+applicable, third-party costs and acceptance process. Ownership of newly developed work,
+pre-existing tools and licensed components is defined in the signed agreement. An estimate is not a
+fixed-price commitment.” Publish actual deposit, refund, cancellation and dispute rules only after
+contract and counsel review. Client infrastructure and vendor charges should be identifiable; avoid
+unexplained payments to unrelated entities.
+
+-- 28 of 68 --
+
+Software Development Company Website | PRD v1.0 29
+Support page
+H1: “Know what support covers after release.” Opening: “Support begins with a shared understanding
+of the application, its dependencies and the responsibilities in your agreement. Distinguish a defect,
+an operational incident and a request for new functionality.” Title: “Software Support and Maintenance
+| [BRAND]”. Meta: “Understand post-launch support, maintenance scope, issue triage, updates,
+infrastructure responsibilities and escalation.” CTA: “Discuss Maintenance”; existing customers
+receive “Contact Support” using a verified channel.
+Sections: Handover; Defect reporting; Dependency updates; Infrastructure and backups; Planned
+enhancements; Coverage and escalation. Proposed tiers are descriptive until contracted: Essential
+maintenance, Managed operations, Continuous improvement. Do not display response or resolution
+commitments without staffing and contractual support. State [SUPPORTED HOURS AND TIMEZONE],
+[SUPPORT EMAIL], [ESCALATION CONTACT], [DEFECT PERIOD IF ANY]. Emergency support appears
+only if actually operated. FAQs: bug versus enhancement; vendor outage; outside-hours request;
+inherited software. Link Maintenance service, Security and Engagement Models.
+20 Contact and Lead Generation
+REQ-LEAD-01 P0. H1: “Tell us about your project.” Opening: “Share the problem you want to solve, the
+stage of your project and any important constraints. A short summary is enough to begin. Please do
+not send passwords, payment details or confidential customer data.” Title: “Discuss Your Software
+Project | [BRAND]”. Meta: “Contact [BRAND] to discuss software requirements, project scope,
+integrations, timelines and engagement options.” CTA: “Submit Project Inquiry.” H2s: Project details;
+Your contact details; What happens next; Other ways to reach us. FAQs: information needed;
+confidentiality; response process. Links: Privacy, Engagement Models, How We Work.
+Use two logical groups with a clear progress indicator if displayed as steps. Keep required fields from
+the brief, but provide “Not decided” and “Not applicable” where a prospect cannot reasonably know
+the answer. Phone, existing-product URL and attachment remain optional. Do not silently turn every
+unknown into a guessed value.
+Field Required and validation UI behavior
+First and last name Yes; 1-100 Unicode characters each Support international names; no Latin-only
+regex
+Business email Yes; valid syntax, max 254 Accept personal domains for founders; do
+not require a corporate domain
+Phone No; max 32, normalized if possible Country prefix helper; no phone required for
+email contact
+Company Yes; 1-160 Accept “Pre-launch” as an explicit answer
+Company website Yes response; HTTPS URL or “No website
+yet”
+Separate checkbox makes absence valid;
+never fetch submitted URL server-side
+Country Yes; configured country code Do not infer citizenship or eligibility
+Service needed Yes; published service ID or “Not sure” Multi-select capped at 5
+
+-- 29 of 68 --
+
+Software Development Company Website | PRD v1.0 30
+Field Required and validation UI behavior
+Budget Yes answer; configured range or “Need
+guidance”
+Include currency; ranges editable without
+code
+Expected timeline Yes; configured choice or “Flexible” No implied scheduling promise
+Project summary Yes; 30-5000 characters Counter and examples; preserve line breaks
+as plain text
+Existing product URL No; URL max 2048 Store as data, never crawl automatically
+Attachment No; up to 3 approved files, 10 MB each PDF, DOCX, PNG, JPG; visible limit; scanning
+required
+Preferred contact Yes; email or phone if supplied Scheduling link is optional, not a forced
+third-party embed
+Privacy acknowledgment Yes; unchecked Link notice; no bundled marketing consent
+Checkbox copy: “I have read the Privacy Policy and understand how my enquiry will be handled.” If
+counsel requires consent for this processing, change wording and lawful-basis records accordingly; do
+not mislabel all processing as consent. Optional newsletter consent, if offered, is separate and
+unchecked.
+State flow: idle → validating → submitting → saved/success or recoverable error. Disable repeated
+submission while pending; preserve form values on error. Success only follows durable database
+commit. Copy: “Your enquiry has been received. Reference: [REFERENCE]. We will review the
+information and contact you using your preferred method.” Follow with three steps: review fit; clarify
+requirements; agree next discussion. A response target appears only after operational approval.
+Alternative contacts: [BUSINESS EMAIL], [BUSINESS PHONE], [ACCURATELY LABELLED ADDRESS]. A
+blocked bot challenge must offer an accessible alternative contact method. Do not auto-enrol
+enquiries in marketing or upload their attachments to public media storage.
+21 Quote and Estimation Flow
+REQ-QUOTE-01 P1. This is a guided enquiry, not an instant price calculator. H1: “Outline the project
+you want to build.” Opening: “Answer a few questions to prepare a useful project discussion. The final
+scope, schedule and price require review.” Title: “Request a Software Project Quote | [BRAND]”. Meta:
+“Outline your software type, stage, features, budget and timing to request a scoped project
+discussion.” FAQs: whether price is binding; editing answers; confidential requirements. Links:
+Engagement Models, Privacy, Contact.
+Steps: 1 product type (website, web application, mobile, SaaS, AI, automation, existing improvement,
+other); 2 stage (idea, requirements, design, existing product, modernization); 3 features
+(authentication, payments, dashboard, API, AI, administration, marketplace, subscriptions, mobile,
+analytics, other); 4 budget with currency and “Need guidance”; 5 timing; 6 contact details using the
+contact schema; 7 review and edit; 8 submit and acknowledgement. The eighth step is submission,
+not an additional questionnaire.
+Show “Step X of 7” during input, then a confirmation screen. Back retains answers, including browser
+back within the flow. Change to a parent answer invalidates incompatible hidden answers explicitly.
+
+-- 30 of 68 --
+
+Software Development Company Website | PRD v1.0 31
+Validate only the current step until final review, then validate the complete payload server-side. No
+automatic price appears. If indicative ranges are added later, version the assumptions and label them
+non-binding before display.
+Keep P0 contact available even if this feature is delayed. Store no PII in localStorage or URLs.
+In-memory state is the default; refreshing warns about unsaved answers. P1 optional sessionStorage
+may store only non-personal choices for 24 hours with a visible clear control. Do not store contact
+details or attachments there. Partial answers are not leads. A unique idempotency key prevents
+duplicate complete enquiries.
+22 Resource Center
+H1: “Resources for better software decisions.” Opening: “Explore practical explanations of planning,
+designing, building and operating software. Use these guides to prepare questions and evaluate
+trade-offs.” Title: “Software Development Resources | [BRAND]”. Meta: “Read practical software
+development guides and engineering articles on product planning, architecture, delivery, security and
+maintenance.” CTA: “Discuss Your Project.” H2s: Planning a product; Engineering decisions; Operating
+software; Glossary and FAQs. FAQ: who writes resources; how articles are reviewed. Links: relevant
+services and technology categories.
+Blog listing H1: “Software engineering and product insights.” Opening: “Practical notes on decisions
+that affect how software is built and maintained.” Title: “Software Engineering Blog | [BRAND]”. Meta:
+“Explore articles on software development, SaaS, AI, cloud, testing and product design.” Filter by the
+13 requested categories; show only categories with published posts. Search matches title, summary
+and body, excludes drafts, and preserves filter state in non-sensitive query parameters. Twelve results
+per page; no infinite-scroll-only access.
+Article fields: title, slug, summary, author reference, reviewer when used, category, tags, body blocks,
+hero, alt text, source links, published and updated dates, related services, SEO and review due date.
+Article H1 is the actual title; opening states the decision the article helps with. Layout: summary, jump
+links, explanation, examples, trade-offs, checklist, sources, related content and contextual CTA. No
+invented author or credential; organization attribution is allowed where accurate. FAQs only when
+useful. Individual meta description is written from the article’s actual contents.
+Initial editorial backlog: How to write a software project brief; Fixed scope versus time and materials;
+What an MVP should include; How to plan an API integration; What to ask about software ownership;
+Preparing for a legacy system assessment; Choosing between custom software and an existing tool; A
+practical software handover checklist; How to evaluate an AI feature; Understanding software
+maintenance costs; What a customer portal needs; Planning accessible product interfaces. These are
+proposed topics, not already published articles. Release at least three reviewed pieces before showing
+the homepage Insights module; then target two substantive pieces per month subject to editorial
+capacity.
+
+-- 31 of 68 --
+
+Software Development Company Website | PRD v1.0 32
+23 Careers
+H1: “Work on software with clear expectations.” Opening: “Learn how work is organized at [BRAND]
+and review the roles currently open.” Company-specific culture, benefits, employment type, remote
+policy and locations require verification. Title: “Careers at [BRAND]”. Meta: “Explore verified openings
+at [BRAND], the hiring process and expectations for working with the team.” CTA: “View Open Roles.”
+Secondary contact appears only if recruiting enquiries are supported. H2s: Working here; Engineering
+principles; Hiring process; Open roles; Internships. FAQs: remote eligibility; interview stages;
+applications without an opening.
+No openings state: “There are no open roles listed at the moment.” Do not collect speculative CVs
+unless an approved process and retention policy exist. Benefits must not be decorative promises.
+Job template: H1 “[ROLE]”; opening states real mission and team context; sections Responsibilities,
+Required skills, Helpful experience, Employment type, Location/remote eligibility, Compensation
+where required/approved, Hiring stages, Accessibility adjustments, Apply. Title: “[ROLE] Careers |
+[BRAND]”; meta derived from real role and location. Fields: job ID, status, hiring owner, location,
+valid-through date, employment type, responsibilities, requirements and application endpoint. CTA:
+“Apply for This Role.” Application fields: name, email, job ID, CV, optional portfolio URL and
+role-specific questions; no unnecessary demographic fields. Record privacy notice version. Closed
+roles disable applications and remove JobPosting markup; show closure and link other openings.
+Existing applications are retained according to approved policy.
+24 Trust and Security
+Trust hub H1: “Information for evaluating how we work.” Opening: “Find company information,
+policies and the security practices relevant to our services. Project-specific requirements should be
+confirmed during scoping.” Title: “Trust and Company Policies | [BRAND]”. Meta: “Find company
+information, privacy, security and data-handling resources for evaluating [BRAND].” H2s: Business
+identity; Security; Data handling; Policies; Questions. CTA: “Ask a Security Question.” FAQ:
+documentation availability; certifications; project-specific requirements. Link Business Information,
+Privacy, Security, Data Processing, Terms and Support. Do not expose confidential audits or internal
+infrastructure details publicly.
+Security page H1: “Security practices and project responsibilities.” Opening: “Security requirements
+depend on the application, its users and the data involved. This page describes verified company
+practices and how project-specific requirements are agreed.” Title: “Security Practices | [BRAND]”.
+Meta: “Review verified security practices, project responsibilities, data handling and the process for
+reporting a security concern.” CTA: “Contact the Security Team” only if an actual monitored contact
+exists; otherwise “Contact Us About Security”.
+Sections: secure development lifecycle; source control and review; authentication and authorization;
+encryption and secrets; infrastructure and environments; backup and recovery; logging and
+monitoring; dependencies and vulnerabilities; employee/customer access; third-party services; data
+minimization; continuity; incident response; responsible disclosure. Each claim includes an internal
+evidence owner, last verified date and scope. Website controls required in section 44 are build
+requirements; they are not proof the company applies the same controls to all client projects.
+Sample conditional copy: “Access to [VERIFIED SYSTEMS] is limited to authorized roles and reviewed
+[ACTUAL CADENCE].” “Backups cover [ACTUAL DATA] with [ACTUAL RETENTION]; restoration is tested
+[ACTUAL CADENCE].” These placeholders must be resolved before publication or replaced with
+narrower approved statements. No SOC 2, ISO 27001, HIPAA or PCI DSS claims without appropriate
+
+-- 32 of 68 --
+
+Software Development Company Website | PRD v1.0 33
+evidence and scope.
+Disclosure copy: “If you believe you have found a security issue affecting this website, contact
+[SECURITY EMAIL] with a description and the affected URL. Please do not include unnecessary
+personal data.” Counsel and security owner must approve scope, safe-harbor language if any and
+response expectations. Do not invent a bug bounty or public availability history.
+25 Legal and Compliance
+Legal content must match the real entity, markets, processors, business model and contracts. The
+following is a content specification, not a ready-to-publish legal opinion. Appoint qualified counsel for
+applicable jurisdictions before publication. Avoid importing unrelated policy text from competitors.
+Page and H1 Proposed introductory copy Required sections and publication
+inputs
+Privacy Policy “This notice explains how [LEGAL NAME]
+handles personal information collected
+through this website and project
+enquiries.”
+Controller identity, data categories,
+purposes, applicable legal bases, recipients,
+transfers, retention, rights, contact, notice
+version and effective date
+Website Terms “These terms describe the conditions for
+using this website. Software project
+services are governed by a separate signed
+agreement.”
+Operator, permitted use, website IP,
+third-party links, disclaimers, liability subject
+to law, dispute route, applicable law
+approved by counsel
+Cookie Policy “This page explains the storage and
+tracking technologies used on this website
+and how to change your preferences.”
+Actual inventory, provider, purpose,
+category, duration, first/third party, controls
+and withdrawal
+Accessibility Statement “We aim to make this website usable by
+people with different access needs and
+provide a way to report barriers.”
+Evaluated scope, target, testing date, known
+limitations, contact and remediation; no
+unsupported conformance claim
+Data Processing
+Information
+“Project data-handling responsibilities are
+agreed according to the services provided
+and the parties’ roles.”
+Controller/processor roles, DPA availability
+where relevant, approved subprocessors,
+data regions, deletion/return, incident
+cooperation and contact
+Each policy title is “[PAGE NAME] | [BRAND]”; meta description briefly states that policy’s purpose.
+H2s follow the required sections above. CTA: “Contact Us About This Policy.” FAQ suggestions: scope,
+contacting the responsible team and version changes; do not add speculative legal answers.
+Cross-link company identity, relevant related policies and contact. Policy text must be readable
+without accepting optional cookies.
+The Engagement Models page contains non-binding summaries of contracts, IP ownership, third-party
+licences, payment schedules, refund/cancellation rules and escalation. If public purchasing is
+introduced, reassess dedicated service terms, refunds, consumer rights, tax and AUP requirements.
+No universal “no refunds” statement or blanket claim of legal compliance.
+
+-- 33 of 68 --
+
+Software Development Company Website | PRD v1.0 34
+26 Content Strategy
+REQ-CONTENT-01 P0. All content follows draft → factual review → editorial review → approval →
+scheduled/published → review due → archived. Business-specific claims reference an evidence record.
+A reviewer distinct from the author approves claims when staffing permits; restricted fields always
+require publisher authority.
+Publishing gate: required content complete; service actually offered; company identity reconciled;
+permissions attached for logos, people and customer material; facts approved; links resolve;
+metadata and alt text complete; no bracket placeholders, lorem ipsum, dummy counters or stale job
+data. Regex detection is a helper, not the whole review: detect ADD, VERIFIED, INSERT and common
+dummy content in customer-visible fields. Block placeholder publication rather than merely hiding text
+in CSS. Also exclude blocked records from APIs, search and structured data.
+Write explanatory paragraphs and decision-oriented examples. Use original diagrams labelled
+illustrative when appropriate. Do not portray stock images as staff, offices or delivered products.
+Exact company contact details come from one settings record. Review contact and legal fields
+monthly, service capability quarterly and technical articles every six months or after material product
+changes. Review dates are internal workflow dates; do not change an article’s public updated date
+without a real edit.
+Hub copy standards: Services H1 “Software development services from planning to support”; opening
+“Explore the work involved in defining, building and operating a software product. Choose a service to
+review scope, deliverables and typical decisions.” H2s are the five service groups. CTA “Discuss Your
+Project”. FAQs address choosing services and combining engagements. Title “Software Development
+Services | [BRAND]”; meta “Explore custom software, product design, application development,
+integration, testing and support services with clear delivery information.” Links point to published
+individual service pages and Engagement Models.
+27 SEO Strategy
+Map intent before assigning keywords. Commercial service intent belongs to Services; system intent
+to Solutions; sector workflow intent to Industries; implementation evaluation to Technologies;
+informational questions to Resources. Do not generate all service × industry × city permutations.
+Search volumes and competitive ranking difficulty have not been measured here and must not be
+fabricated.
+Intent cluster Primary destination Supporting content and links
+Custom software
+development company
+Custom Software service Build-versus-buy guide → service → enquiry
+SaaS development
+services
+SaaS service Tenant model guide and SaaS solution →
+service
+MVP development MVP service Scope and product brief guides → discovery
+CTA
+API integration services API service Webhook/reconciliation articles → service
+Legacy modernization Modernization service Assessment checklist → consulting and
+modernization
+
+-- 34 of 68 --
+
+Software Development Company Website | PRD v1.0 35
+Intent cluster Primary destination Supporting content and links
+Customer portal
+development
+Customer Portals solution Permissions guide → web application service
+Industry software Relevant approved industry page Workflow article and approved case →
+appropriate service
+React or cloud
+architecture
+Technology category Technical comparison → relevant delivery
+service
+Each commercial page links its parent, two or three genuinely related services/solutions and a
+relevant article or approved case. Articles link to a useful service only where relevant. Avoid
+exact-match keyword repetition. H1 describes the page; H2s reflect questions and decisions. Page
+titles and meta descriptions are editorially unique; snippet lengths are guidelines, not ranking
+guarantees.
+Current research check on 4 October 2026: Google’s official documentation update log states FAQ rich
+results stopped appearing from 7 May 2026 and the documentation was removed in June. Keep visible
+FAQ content for users; omit FAQPage as an SEO deliverable unless a separate semantic need is
+justified. Recheck implementation guidance before release. Sources and research limitations appear
+in section 28.
+28 Design Direction
+Use an editorial technology-company aesthetic: a mostly light canvas, strong dark typography, an
+occasional dark engineering section, precise diagrams and asymmetric layouts that support reading
+order. Avoid large animated particle backgrounds, logo carpets without context, automatic carousels
+and decorative code that does not mean anything.
+Current competitive research
+Research date: 4 October 2026. The following official sites were reviewed through their retrievable
+page content and navigation. This supports information architecture, content depth and CTA
+observations. It is not a rendered mobile, measured typography, visual pixel or performance audit.
+The type scale, spacing and mobile behavior in this PRD are original recommendations, to be
+validated in design and browser QA.
+Reference Observed pattern Selected application
+thoughtbot homepage Services grouped into development,
+design, product and team/process areas;
+prominent contact path and case/resource
+access
+Group capabilities around decisions and
+work types; keep one clear enquiry CTA
+thoughtbot Distribute
+case study
+Case narrative connects early product work
+with discovery and design
+Explain what was learned and why choices
+were made, rather than showing
+screenshots alone
+Netguru services Broad offer divided into specific service
+families and linked detail pages
+Use a navigable service taxonomy with
+substantial leaf pages
+
+-- 35 of 68 --
+
+Software Development Company Website | PRD v1.0 36
+Reference Observed pattern Selected application
+Netguru bespoke
+development
+Business-use-case explanations and a
+content outline support a deep service
+page
+Use anchored page contents and
+scope-specific explanations for long pages
+Thoughtworks client
+stories
+Industry and capability links connect
+portfolio exploration with relevant work
+Use meaningful case filters and contextual
+cross-links, with real evidence only
+These references illustrate patterns, not an endorsement ranking or permission to reuse their copy,
+marks, photos or results. Do not borrow their claims about scale, experience or customers.
+Research references
+S1 thoughtbot homepage - https://thoughtbot.com/ - navigation, service grouping and contact paths.
+S2 thoughtbot Distribute case study - https://thoughtbot.com/case-studies/distribute - narrative case
+structure.
+S3 Netguru services - https://www.netguru.com/services - service categorization.
+S4 Netguru bespoke development - https://www.netguru.com/services/bespoke-software-development
+- deep commercial page structure.
+S5 Thoughtworks clients - https://www.thoughtworks.com/clients - industry/capability discovery.
+S6 W3C WCAG 2.2 - https://www.w3.org/TR/WCAG22/ - accessibility reference for section 32.
+S7 Google Web Vitals - https://web.dev/articles/vitals - field-performance thresholds in section 46.
+S8 Google Search documentation updates - https://developers.google.com/search/updates - FAQ
+feature retirement and current SEO verification.
+S9 Next.js Server and Client Components -
+https://nextjs.org/docs/app/getting-started/server-and-client-components - component boundary
+guidance.
+S10 OWASP File Upload Cheat Sheet -
+https://cheatsheetseries.owasp.org/cheatsheets/File_Upload_Cheat_Sheet.html - upload risk controls.
+S11 ICO Cookies and similar technologies - https://ico.org.uk/for-organisations/direct-marketing-and-p
+rivacy-and-electronic-communications/guide-to-pecr/cookies-and-similar-technologies/ - UK-specific
+privacy reference, not a substitute for jurisdiction review.
+All references accessed 4 October 2026. Numerical product targets, retention defaults and
+deployment decisions in this PRD are proposed requirements, not competitor benchmarks or universal
+legal requirements.
+
+-- 36 of 68 --
+
+Software Development Company Website | PRD v1.0 37
+29 Design System
+Token group Specification
+Brand colors Primary #1D4ED8; hover #1E40AF; dark anchor #0F172A; restrained secondary teal
+#0F766E
+Surfaces and text Canvas #FFFFFF; alternate #F8FAFC; text #0F172A; secondary #475569; decorative
+border #CBD5E1; input boundary #64748B
+Semantic states Success #166534 on #F0FDF4; warning #92400E on #FFFBEB; error #B91C1C on
+#FEF2F2; information #1E40AF on #EFF6FF; always include text/icon
+Typography Inter if licensed/self-hosted; system sans fallback. Code uses a licensed monospace. Body
+18/28 desktop and 16/26 mobile; small 14/22; avoid body smaller than 16
+Headings H1 56/64 desktop, 36/42 mobile; H2 40/48 and 28/36; H3 24/32 and 22/30; weights
+600-700; test actual wrapping
+Spacing 4, 8, 12, 16, 24, 32, 48, 64, 88, 112px; text paragraphs 16px; section heading to content
+32px
+Layout Max width 1200px; reading width 720px; desktop 12-column grid with 24px gap; cards
+24-32px padding
+Shape Buttons/inputs 8px radius; cards 12px; chips fully rounded only when short; no excessive
+pills
+Elevation Default flat border; raised hover shadow 0 8px 24px rgba(15,23,42,.08); dialogs stronger
+scrim and shadow
+Controls Minimum designed target 44×44px; buttons 48px high; inputs 48-52px; textarea at least
+144px
+Focus Visible 2px high-contrast outline with 3px offset; test against each actual surface; never
+remove without replacement
+Motion 120-180ms for hover/focus, up to 240ms disclosure; transform/opacity only when useful;
+reduced-motion removes nonessential transitions
+Buttons: primary filled, secondary outline, tertiary text, destructive explicit label. Define default,
+hover, focus, pressed, disabled and loading. Disabled contrast may be muted but label remains
+readable; loading shows text and progress, never an unlabeled spinner. Inputs define empty, filled,
+focus, invalid, disabled and read-only. Error text sits next to the field and is linked by aria-describedby.
+Cards vary by content type; avoid identical decorative cards for every paragraph. Navigation uses
+clear active state. Modal uses labelled dialog, focus trap, Escape, inert background and focus return.
+Accordion uses button and expanded state. Tabs use keyboard navigation only when implementing
+genuine tab panels; prefer links for navigation. Tooltips cannot contain essential instructions. Tables
+retain headers and a labelled scroll region when necessary. Pagination exposes current page and real
+links. Skeletons preserve dimensions without implying successful data loading. Toasts supplement
+durable in-page messages, never replace submission confirmation.
+
+-- 37 of 68 --
+
+Software Development Company Website | PRD v1.0 38
+30 Component Library
+Component family Required inputs and states Acceptance focus
+Header, mega menu,
+mobile menu
+Published navigation tree, active path, CTA;
+open/closed
+Keyboard, focus return, no dead links
+Announcement,
+breadcrumb, footer
+Approved text, link targets, canonical
+hierarchy, identity settings
+Hidden if empty; consistent identity
+Hero, split section, CTA
+banner
+H1, lead, media, CTA labels/targets One H1, mobile order, no text baked into
+images
+Service, solution,
+industry, technology
+cards
+Record reference, title, summary, optional
+icon
+One primary card link, readable focus
+Case, team, article cards Verified record, image/alt, metadata Suppress unapproved records everywhere
+Testimonial, logo cloud,
+statistics
+Claim evidence and publication permission Cannot render with missing evidence
+Process timeline and
+journey
+Ordered steps, descriptions, optional
+artifacts
+Logical reading order; no horizontal trap
+FAQ, tabs, modal, tooltip Accessible labels, content, state Keyboard and screen-reader behavior
+Forms and uploads Schema, labels, options, validation, errors Server validation, retry, privacy and
+scanning
+Search, filters,
+pagination
+Query, allowed facets, counts, page Accessible state, no draft leakage, URL
+persistence
+Cookie controls Categories, consent version, current choice Equal access to reject/manage, scripts
+blocked correctly
+Empty, loading, success,
+error
+Context-specific message and recovery
+action
+No blank surface, stack trace or false
+success
+Maintain a component catalogue with variants, spacing, props, keyboard behavior, screenshots and
+test stories. CMS blocks use an allowlisted component map. No arbitrary HTML, scripts, custom styles
+or unreviewed embeds from the marketing editor.
+
+-- 38 of 68 --
+
+Software Development Company Website | PRD v1.0 39
+31 Responsive Design
+Viewport Required behavior
+320px 16px gutters; single-column text/forms; wrap long email/URLs; no clipped CTAs; visual
+headings may reduce to 32px
+375px Standard compact mobile; cards stack; buttons full-width when two labels cannot fit
+390px Verify common phone layout, sticky header offsets and software keyboard behavior
+430px Preserve mobile navigation; avoid stretching line lengths or small two-column forms
+768px tablet 24px gutters; two-column cards where content fits; forms remain primarily one column
+1024px laptop Collapse crowded nav; two/three-column grids; no label wrapping in navigation
+1280-1440px desktop Full navigation when it fits; 1200px container, 12-column editorial layouts
+1920px and wider Center capped container; background may extend; do not stretch paragraphs across
+screen
+Test 200% text zoom and reflow at 320 CSS pixels. Avoid fixed card heights. Forms use input
+types/autocomplete for mobile keyboards. Sticky CTA is optional and must not obscure errors,
+keyboard focus, cookie controls or content; default is no sticky bottom CTA. Horizontal scrolling is
+limited to genuine wide data/code, with clear labeling and keyboard access. Do not hide substantive
+content on mobile to reduce page height.
+32 Accessibility
+REQ-A11Y-01 P0 targets WCAG 2.2 AA using the W3C reference S6. Provide landmarks, skip link, one
+logical H1, ordered headings, visible labels, meaningful link names, appropriate image alternatives
+and keyboard access. Normal text contrast target is at least 4.5:1; large text 3:1; meaningful UI
+boundaries 3:1. AA target-size minimum is 24×24 CSS pixels with specified exceptions; this project
+chooses 44×44 for primary controls as a stronger usability target.
+Focus must not be obscured by sticky elements. Avoid drag-only interactions. Authentication must
+support password managers and paste. Forms identify errors in text, associate messages with inputs
+and move focus to an error summary after invalid submit. Dynamic result counts and submission
+status use restrained live announcements. Respect reduced motion. Provide captions and appropriate
+alternatives for meaningful media. Do not use an accessibility overlay as a substitute for
+implementation.
+QA must combine automated scans with keyboard and screen-reader journeys: navigation, consent,
+form validation, successful enquiry, filtering and job application. Record tested combinations and
+unresolved limitations. Claim conformance publicly only after a scoped assessment; the launch target
+itself is not a certification.
+
+-- 39 of 68 --
+
+Software Development Company Website | PRD v1.0 40
+33 Functional Requirements
+ID Priority Requirement and verification
+REQ-NAV-01 P0 Every visible navigation item resolves to a
+published page or valid anchor; crawl and
+keyboard test
+REQ-CONTENT-01 P0 CMS review and evidence gate controls
+publication; invalid record cannot publish
+REQ-LEAD-01 P0 Valid enquiries persist once before success
+and enter the operational queue
+REQ-UPLOAD-01 P0 if uploads enabled Private quarantined upload, scanning,
+authorization and expiry; otherwise remove
+attachment UI
+REQ-EMAIL-01 P0 Confirmation and internal notification
+processed independently with retry and
+delivery status
+REQ-CRM-01 P0 queue, P1 external CRM Durable lead handling survives CRM
+downtime without duplication
+REQ-SEO-01 P0 Published canonical pages produce
+server-rendered content, metadata and valid
+sitemap entries
+REQ-A11Y-01 P0 Core journeys meet scoped WCAG 2.2 AA
+acceptance assessment
+REQ-PRIV-01 P0 Privacy notice, preference controls, retention
+and deletion operate as specified
+REQ-SEC-01 P0 Authorization, rate limiting, secrets, backups
+and monitoring pass security tests
+REQ-CMS-01 P0 Editors can update standard content without
+code and cannot grant their own privileges
+REQ-WORK-01 P0 template, conditional content Only approved actual case studies appear in
+page, API, feed and search
+REQ-JOBS-01 P0 conditional Genuine openings accept applications;
+closed jobs reject new applications
+REQ-QUOTE-01 P1 Guided enquiry retains step state and
+submits an idempotent complete record
+REQ-SEARCH-01 P1 Search and filters return only published,
+permitted content
+REQ-NEWS-01 P1 Newsletter double opt-in and unsubscribe;
+no implicit subscription
+
+-- 40 of 68 --
+
+Software Development Company Website | PRD v1.0 41
+ID Priority Requirement and verification
+REQ-PORTAL-01 P2 Separately scoped authenticated client
+portal with tenant isolation
+MVP is the complete public-site platform and approved content, not all future business functions. No
+custom chat system, booking engine, billing system or public checkout is necessary at launch. If
+Careers is visible without vacancies it provides the truthful empty state. Case-study and resource
+modules with insufficient evidence remain unpublished.
+P2 portal scope: client login, project overview, milestones, deliverables, contracts, invoices,
+documents, messages, tickets, status, meeting notes, files, approvals and support requests. Use a
+separate application boundary and authenticated routes. Every object requires tenant and project
+membership checks; never rely on unguessable IDs. Add immutable approval records, file scanning,
+audit events, notification preferences and retention policies. Reuse a suitable existing platform before
+commissioning this subsystem. It needs its own threat model, schema and acceptance plan before
+development.
+34 CMS
+Use a managed headless CMS with structured content and an approved component library.
+Procurement must verify roles, revisions, draft preview, auditability, export, data region and webhook
+support before selecting a vendor. Next.js is the presentation layer; the CMS is authoritative for
+marketing content; the operational PostgreSQL database is authoritative for enquiries and
+applications. Do not maintain two editable copies of the same content.
+Content types: Page, Service, Solution, Industry, TechnologyCategory, Technology, CaseStudy, Post,
+Author, TeamMember, Job, FAQ, Testimonial, Navigation, SiteSettings, SEO and Evidence. Each record
+has stable ID, slug where routed, status, locale, author/editor, created/updated/published timestamps,
+revision, reviewer and review due date. Content relationships use IDs, not duplicated titles. Evidence
+contains claim, source reference, owner, verification date, permission status and expiry if applicable;
+sensitive evidence remains restricted.
+P0 workflow: save draft → preview through signed short-lived access → review → publisher approval →
+publish webhook → invalidate affected page, hub, sitemap and search index → verify live version.
+Publish and unpublish webhooks are signed and replay-protected. Draft mode is authenticated,
+no-store and noindex. Public APIs never expose draft data. Delete a referenced item only after
+resolving incoming links or creating an appropriate redirect.
+Block library: text, image, heading, cards, process, FAQ, evidence quotation, verified statistics,
+comparison table and CTA. Allow rich text with a controlled element set; disallow script, iframe and
+arbitrary event attributes. Media includes rights, source, alt text, dimensions and focal point. CMS
+marks missing alt text unless the asset is explicitly decorative.
+35 Admin Dashboard
+Prefer the CMS’s own content interface plus a small protected lead console. Avoid recreating a full
+CMS. If the chosen CRM already provides the needed secure lead workflow, it may replace the custom
+lead console, but local durable intake and reconciliation remain required.
+
+-- 41 of 68 --
+
+Software Development Company Website | PRD v1.0 42
+Role Allowed operations Explicit restrictions
+Editor Draft pages, posts, metadata and media No publish, identity/legal edits or lead
+access by default
+Publisher Review and publish approved content Cannot bypass required evidence or change
+user roles
+Sales Read assigned/all leads as approved, add
+notes, change status
+No careers data, content publishing or
+credentials
+Recruiter Read assigned jobs/applications, update
+hiring status
+No sales exports or candidate marketing
+enrollment
+Operations admin Manage integrations, roles and system
+settings
+Sensitive actions require reauthentication
+and audit
+Auditor Read approved audit views No mutation and no unnecessary
+attachment access
+Dashboard modules: enquiry totals/status, integration failures, content awaiting review and jobs
+needing closure. Leads show filters, assignment, status history and audit trail. Content management
+includes services, cases, posts, team, jobs, media, SEO, navigation and settings through CMS. Audit
+records include actor, action, target, timestamp and safe change summary; do not log full enquiry
+payloads or secrets. Export is separately permissioned, logged and protected against CSV formula
+injection. Bulk destructive actions require explicit confirmation and recoverable soft deletion where
+appropriate.
+Authentication uses managed identity with MFA and invite-only staff accounts. No public staff signup.
+Session expiry and revocation must take effect on server actions, not only UI. If self-hosted passwords
+are unavoidable, use a current supported password-hashing library and tuned Argon2id configuration,
+recovery protections and no plaintext password storage.
+36 CRM and Lead Flow
+The server accepts a validated enquiry, writes submission and lead plus outbox events in one
+database transaction, then returns success. Background workers send confirmation, create internal
+notifications and synchronize CRM independently. Email or CRM failure cannot erase a saved lead or
+cause the browser to submit a second lead.
+Flow: visitor → validation and abuse controls → durable intake transaction → response; outbox
+independently fans out to confirmation, internal alert and CRM sync. A reconciliation job compares
+queued/sent/failed states and retries recoverable failures. Dashboard shows failed tasks with
+reference IDs and safe retry actions. Internal alerts contain a short summary and protected lead link,
+not attachments or full sensitive narratives.
+Lead statuses: New → Contacted → Qualified → Proposal → Won or Lost. New/Contacted/Qualified may
+move to Spam after review. Reopen Lost to Contacted with reason. Record every transition, actor and
+timestamp. Automation never marks Won based solely on a form submission. Lead assignment uses
+configured service ownership or a fallback inbox; unassigned leads appear in a visible queue.
+Use the submission UUID as external CRM idempotency identifier. A later genuine enquiry from the
+same email is a new submission, optionally related to an existing lead after review. Do not merge
+solely on shared company domain. Source fields are allowlisted UTM values and a clean landing path;
+
+-- 42 of 68 --
+
+Software Development Company Website | PRD v1.0 43
+strip arbitrary URL query strings, email addresses and tokens. Preserve an unknown-source state
+when consent or blockers prevent attribution.
+Internal target proposals: review new non-spam leads each business day; escalate unassigned records
+older than one business day. These are operating recommendations, not public response guarantees
+until staffing is confirmed.
+37 Email Architecture
+Use a transactional provider with verified sending domain, SPF, DKIM and an appropriate monitored
+DMARC rollout. Keep transactional and marketing streams separate. Use consistent legal sender
+identity, reply-to address and support link. Branded HTML must be readable with images blocked;
+provide equivalent plain text. Escape all user data. Do not include confidential summaries in email by
+default.
+Template Subject Suggested body and action
+Contact confirmation Your project enquiry has been received “Hello [FIRST NAME], thank you for
+contacting [BRAND]. Your reference is
+[REFERENCE]. We will review your enquiry
+and contact you using your preferred
+method. Reply to this email if you need to
+correct a detail.” Link process; no
+unsupported SLA
+Quote confirmation Your project outline has been received “Thank you for sharing your project outline.
+Reference [REFERENCE]. The next step is to
+review the scope and clarify any open
+questions. This acknowledgement is not a
+project quote or agreement.”
+Internal new lead New project enquiry [REFERENCE] “Service: [SAFE SERVICE]. Source: [SAFE
+SOURCE]. Assigned to:
+[OWNER/UNASSIGNED]. Review this enquiry
+in the secure dashboard.” Protected link only
+Career confirmation Application received for [ROLE] “Thank you for applying for [ROLE] at
+[BRAND]. Your reference is [REFERENCE].
+The hiring team will review your application
+according to the role’s process.” No promise
+of interview
+Newsletter verification Confirm your subscription to [BRAND] “Confirm that you want to receive [ACTUAL
+CONTENT TYPE]. If you did not request this,
+ignore this email.” One-use signed token,
+24-hour expiry; no subscription before
+confirmation
+Support
+acknowledgement
+Support request received [REFERENCE] “We have received your request. Its priority
+and next steps will be reviewed under your
+support agreement. For the agreed
+escalation route, see [SUPPORT LINK].”
+Provider events are signed webhooks. Track queued, sent, delivered, bounced and failed; delivery
+does not prove reading. Retry transient failures at 1, 5, 30 and 120 minutes then daily until 72 hours,
+with a capped attempt count and dead-letter queue. Permanent bounces stop retries and surface to
+
+-- 43 of 68 --
+
+Software Development Company Website | PRD v1.0 44
+the owner. A contact form must not become an email-bombing relay: rate limit confirmations and
+repeated recipient addresses, use fixed templates and never echo arbitrary links.
+38 Analytics
+REQ-ANALYTICS-01 P0. Use one approved analytics platform; tag manager is optional and
+access-controlled. Disable session replay and keystroke capture by default. Do not send names, email,
+phone, summaries, file names, candidate information, raw URLs or full IPs as custom analytics
+properties. Operational lead records and anonymous analytics have different purposes and retention.
+Events Trigger and allowed properties
+page_view On consented initial view and route transition once; page_id, page_type, clean path
+service_view,
+case_study_view,
+blog_view, job_view
+Once per relevant view; public content ID and category
+cta_click Intentional activation; cta_id, placement, destination_type, page_id
+contact_started First field interaction once per form session; form_version
+contact_submitted After durable accepted response; random event_id for deduplication, form_version; no
+lead PII
+quote_started,
+quote_step_completed
+First step and valid completed step; step_id, flow_version; no free text
+quote_submitted After accepted response; event_id, flow_version
+phone_click, email_click,
+calendar_click
+Click only; channel and placement, not actual address/number
+newsletter_subscribed After verified opt-in; event_id, content preference category if allowed
+job_application_started,
+job_application_submitted
+Start and accepted response; public job_id only
+Consent-eligible common fields: source, medium, campaign, landing page, device category, coarse
+country only where appropriate and privacy-reviewed. Allowlist lengths and characters; reject
+unexpected properties. Do not persist marketing identifiers when consent is refused. Country need
+not be inferred for a useful launch dashboard.
+Dashboards: landing page → commercial page → enquiry start → accepted enquiry; quote step
+abandonment; source quality based on separately reviewed CRM aggregates; content-assisted
+journeys within consent limits; job funnel; API failure and delivery metrics from operational
+monitoring. A CTA click is not a lead. Use server counts for actual accepted submissions and annotate
+differences from consented analytics. Newsletter conversion counts confirmation, not merely the
+request.
+
+-- 44 of 68 --
+
+Software Development Company Website | PRD v1.0 45
+39 Integrations
+Integration Priority and boundary Failure behavior
+CMS P0; server read token and signed webhook Serve previously published cached content;
+alert stale content
+Transactional email P0; server-only credentials Durable outbox retry; enquiry remains saved
+Object storage and
+scanner
+P0 if uploads enabled Quarantine; disable file access until clean;
+accept enquiry without file if user chooses
+CRM P1 or P0 when existing operation needs it Retry/deduplicate; local inbox remains
+source of intake truth
+Analytics P0 approved minimum Consent-gated; never block site or form
+Search Console P0 setup Ownership verification and indexing
+reporting; no user data transfer from forms
+Scheduling P1 External link or consent-aware embed; show
+email fallback
+Monitoring P0 Scrub PII before export; alert delivery tested
+Bot prevention P0 adaptive controls Accessible fallback; do not trust client token
+without verification
+Internal Slack
+notification
+P1 Limited metadata and protected link;
+authorized workspace only
+Newsletter P1 Separate opt-in, unsubscribe and
+suppression synchronization
+Maintain vendor inventory: owner, purpose, transferred fields, processing region, contract/DPA status,
+retention, secret location, webhook validation and outage runbook. No secret is placed in
+NEXT_PUBLIC variables or CMS public content. Environment files are not committed. The website may
+link to real LinkedIn, GitHub, X, YouTube or Instagram accounts; hide missing or inactive placeholder
+URLs.
+40 Frontend Architecture
+Use current stable, mutually compatible Next.js App Router, React and TypeScript versions selected
+and locked during implementation. Tailwind implements design tokens; shadcn/ui primitives may be
+adapted and tested rather than assumed accessible. Motion library use is optional and limited to
+meaningful interactions. No version number in this PRD should be treated as a dependency lock.
+Server Components render content, metadata and CMS reads; small Client Components handle
+menus, consent, forms, filters and interactive state, consistent with official Next.js guidance S9. Use
+static rendering/revalidation for marketing content and dynamic server endpoints for intake. Keep
+authenticated and preview responses no-store. Avoid turning the root layout into a client component.
+Suggested structure: app/(marketing) for public routes; app/(admin) for protected operations; app/api
+for route handlers; components/ui for primitives; components/blocks for editorial sections; lib/content
+
+-- 45 of 68 --
+
+Software Development Company Website | PRD v1.0 46
+for CMS adapters; lib/validation for shared schemas; lib/auth for permission checks; lib/analytics for
+consent-aware events; lib/server for database and integrations. Enforce server-only boundaries in
+imports.
+Route metadata reads published records and produces title, description, canonical and social preview.
+Cache tags include record ID and affected hub IDs. Unpublishing must invalidate details, references
+and sitemap; preview cookies cannot contaminate public cache. Public forms have progressive
+enhancement where feasible; core reading/navigation works without client JavaScript. Unknown
+routes call genuine not-found handling.
+41 Backend Architecture
+Use Next.js route handlers as a modular backend for intake, authorization, CMS webhooks and read
+APIs where required. Do not introduce NestJS and microservices merely to support a corporate
+website. A separate worker/job service processes durable outbox tasks because short-lived web
+requests must not assume background execution continues after response.
+Use managed PostgreSQL for operational records, a supported ORM/migration tool such as Prisma if
+selected, private object storage and a transactional email provider. The marketing site does not need
+its own copy of CMS data tables. API schemas, business services and repository adapters remain
+separate so provider changes are manageable.
+Write sequence for intake: parse bounded body; verify origin/bot token as applicable; rate-limit;
+validate normalized values; verify clean upload tokens; transactionally insert submission, lead and
+outbox; commit; respond. Workers lock jobs safely, record attempts and idempotency, perform side
+effects and persist results. Failed jobs remain visible. Database unavailable means return a retryable
+error, not a success screen or an email-only lead.
+42 Database Architecture
+Operational database
+Use UUID primary keys, timestamptz UTC timestamps and foreign keys. Store enums through checked
+values or reference tables. Encrypt at rest through the managed platform; application-level encryption
+may be added for selected fields after key-management review. Avoid storing request bodies in logs.
+Soft deletion is not sufficient for privacy erasure; the purge process removes data according to the
+approved schedule.
+Table Important fields and relationships
+users id, identity_provider_subject unique, email, display_name, active, last_login_at; no
+password when external identity used
+roles, permissions id, key unique, description; user_roles and role_permissions are many-to-many joins
+leads id, owner_user_id nullable FK, status, company, normalized_email, source_summary,
+created_at, updated_at, closed_at; status indexed
+contact_submissions id, lead_id FK, first_name, last_name, email, phone nullable, company, website nullable,
+no_website boolean, country, service_ids JSON array, budget_code, currency,
+timeline_code, summary, preferred_contact, notice_version, acknowledgment_at, source
+fields, created_at
+
+-- 46 of 68 --
+
+Software Development Company Website | PRD v1.0 47
+Table Important fields and relationships
+quote_requests id, lead_id FK, submission_id optional FK, flow_version, product_type, stage, features
+JSON array, budget_code, currency, timeline_code, contact fields or FK to contact record,
+final_summary, notice_version, submitted_at; no abandoned contact drafts
+lead_status_history id, lead_id FK, from_status, to_status, actor_user_id, reason, changed_at
+lead_notes id, lead_id FK, author_user_id FK, body_plaintext, created_at; access restricted to sales
+upload_objects id, submission/application association nullable until claim, object_key unique,
+original_name restricted, mime, byte_size, checksum, scan_status, expires_at,
+created_at; purpose enum enquiry/CV
+applications id, cms_job_id, job_version, name, email, portfolio_url nullable, resume_upload_id FK,
+answers JSON, status, assigned_recruiter_id, notice_version, submitted_at
+newsletter_subscribers id, normalized_email unique, state pending/active/unsubscribed, token_hash,
+token_expires_at, confirmed_at, unsubscribed_at, consent_version; marketing-only
+purpose
+consent_receipts id, anonymous_receipt_id, policy_version, categories JSON, captured_at, expires_at; store
+no contact identity unless needed and approved
+outbox_events id, aggregate_type, aggregate_id, kind, payload_ref, status, attempt_count,
+next_attempt_at, locked_until, provider_id, last_error_code; ready-job composite index
+idempotency_keys scope, key unique within scope, request_hash, result_reference, response_code,
+created_at, expires_at; 24-hour default
+integration_events id, provider, external_event_id unique per provider, event_type, received_at,
+processed_at, processing_status; bounded payload retention
+audit_logs id, actor_id, action, entity_type, entity_id, safe_diff JSON, request_id, created_at;
+append-only application permissions
+settings key unique, value JSON, version, updated_by; operational settings only, not duplicate
+editable corporate identity
+retention_jobs id, entity_type, entity_id, due_at, legal_hold boolean, purge_status, completed_at;
+restricted legal hold changes
+Relationships: users receive roles through user_roles; leads have many submissions, notes, status
+events and outbox tasks; submissions reference zero or more private upload objects; applications
+reference a published CMS job ID and a CV object; each outbox event refers to its aggregate without
+embedding unrestricted PII. Referential checks prevent attachment reassignment across anonymous
+upload sessions or staff scopes.
+Deduplication: unique idempotency key for retries, not unique lead email. Index normalized email for
+authorized search; add created_at/status/owner indexes for queues. Do not index free-text summaries
+broadly. Use transaction boundaries around submission + lead + outbox writes. Migration scripts use
+expand/contract changes and verify rollback compatibility.
+
+-- 47 of 68 --
+
+Software Development Company Website | PRD v1.0 48
+CMS model and optional custom CMS mapping
+CMS entities include services, solutions, industries, technologies, case_studies, posts, authors,
+categories, tags, faqs, testimonials, team_members, jobs, media, seo_metadata and navigation. Each
+routed record references SEO and structured body blocks. Case studies relate many-to-many to
+technologies, services and industries. Posts relate to author, categories, tags and related commercial
+records. Jobs have publication status, expiry and hiring-owner metadata; applications remain outside
+the public CMS.
+If custom CMS is approved later, implement corresponding tables and join tables such as
+case_study_technologies, post_tags, post_categories and record_faqs. Include content_versions,
+publication_reviews, claim_evidence, redirects and media_rights. Only one system may edit each
+record. A separate analytics_events table is optional for self-hosted consented analytics, with
+event_id, name, page_id, allowlisted properties and expiry; do not copy analytics events into the
+enquiries schema by default.
+43 API Design
+All endpoints require HTTPS, bounded payloads, strict schemas and consistent error envelopes. Public
+mutation requests accept JSON only except controlled upload transfer. Unknown fields are rejected or
+explicitly stripped. No endpoint accepts an arbitrary external URL to fetch. Rate limits below are
+proposed starting settings, tuned for shared networks and abuse telemetry; they are not security
+guarantees.
+Endpoint Contract Access and initial limit
+POST /api/contact Contact schema, clean upload tokens,
+notice version, idempotency key; returns
+reference
+Public; 5 attempts per 15 min/IP plus
+recipient and global abuse controls
+POST /api/quote Versioned complete quote schema; returns
+reference
+Public; 5/15 min/IP, same deduplication
+semantics
+POST /api/uploads/init Purpose, MIME, bytes, checksum; returns
+short-lived scoped upload token
+Public abuse-controlled; 3 files/session, 10
+MB each; 10/hour/IP
+POST
+/api/uploads/complete
+Owned token and checksum; returns
+pending/clean/rejected status
+Token-bound; 30/min/session; never makes
+object public
+GET /api/uploads/{token
+}/status
+Scan state only, no file bytes Session/token-bound; polling backoff, max
+30/min
+POST /api/newsletter Email and explicit preference; generic 202
+to prevent enumeration
+P1; 3/hour/recipient plus IP controls
+POST
+/api/newsletter/confirm
+One-use token P1; token hash/expiry checked; idempotent
+POST /api/newsletter/uns
+ubscribe
+Signed token or authenticated preference
+flow
+P1; easy opt-out; no login required with valid
+token
+GET /api/services Published list; optional allowed
+category/cursor
+60/min/IP, cached; omit if frontend reads
+CMS server-side only
+
+-- 48 of 68 --
+
+Software Development Company Website | PRD v1.0 49
+Endpoint Contract Access and initial limit
+GET /api/case-studies Published filters and cursor, max 24 results Cached; no unpublished evidence or
+client-private fields
+GET /api/blog Published category/tag/query/cursor Cached; bounded query length and no
+expensive wildcard search
+GET /api/jobs Active public jobs only Cached with expiry-aware invalidation
+POST
+/api/jobs/{id}/apply
+Active job check, candidate schema, clean
+CV token
+5/hour/IP and job/email abuse controls;
+closed job returns 409
+POST /api/support Request and contact reference Only if support intake enabled; verify
+authorization for private project details
+POST /api/webhooks/cms Signed event ID, timestamp, record ID and
+action
+Signature plus replay protection; queues
+invalidation
+POST
+/api/webhooks/email
+Signed delivery event Provider verification and unique external
+event ID
+GET /api/admin/leads Paginated authorized lead list Staff authentication, sales permission,
+no-store
+PATCH
+/api/admin/leads/{id}
+Allowed status/assignment with version Permission and optimistic concurrency; audit
+required
+GET /api/admin/uploads/
+{id}/download
+Authorized clean object access Short-lived signed download after scope
+check; no public caching
+Success example: {"ok":true,"data":{"reference":"ENQ-[OPAQUE
+ID]","status":"received"},"requestId":"[UUID]"}. Validation error:
+{"ok":false,"error":{"code":"VALIDATION_ERROR","message":"Please check the highlighted
+fields.","fields":{"email":"Enter a valid email address."}},"requestId":"[UUID]"}. Opaque references
+must not encode email or company name.
+Status codes: 201 new durable record; 200 identical idempotent replay; 202 newsletter request or
+queued scan; 400 malformed payload; 401 unauthenticated; 403 unauthorized; 404 unknown public
+record; 409 conflicting idempotency payload, version conflict or closed job; 413 oversized payload;
+415 unsupported type; 422 valid JSON with invalid field values; 429 limit with Retry-After; 503
+temporary storage/dependency failure preventing intake. Do not expose stack traces or provider
+secrets. Same key and same request returns original success; same key and different payload returns
+409. Expired key allows a new request but UI should not silently resend later.
+44 Security Requirements
+REQ-SEC-01 P0. Maintain a threat model covering spam/email bombing, injection, CSRF, XSS,
+credential theft, IDOR, malicious uploads, leaked drafts, preview-cache contamination, forged
+webhooks, exfiltration through analytics and unauthorized exports. Appoint control owners; verify
+implementation rather than displaying a security badge.
+Transport and browser controls: HTTPS redirect; secure TLS from managed provider; HSTS after
+domain/subdomain readiness review; Content-Security-Policy with tested explicit sources,
+
+-- 49 of 68 --
+
+Software Development Company Website | PRD v1.0 50
+frame-ancestors and report-only rollout before enforcement; X-Content-Type-Options nosniff;
+appropriate Referrer-Policy and Permissions-Policy. Do not use broad unsafe-eval or arbitrary script
+origins for convenience. Separate public caching from personalized responses.
+Validation and session controls: server-side schemas and length limits; parameterized database
+access; safe rendering/sanitization of rich text; authorization for every staff action; CSRF token/origin
+defenses for cookie-authenticated mutations; strict CORS where applicable; HttpOnly, Secure and
+appropriate SameSite cookies; rotate sessions after login, revoke on offboarding, rate-limit
+authentication. Public forms also validate allowed origin and abuse signals, while recognizing that
+origin headers alone do not stop non-browser bots.
+File controls based on OWASP S10: extension/MIME/signature checks, randomized object keys,
+size/count limits, private quarantine, malware scanning and authorization on access. Reject
+executable, archive and macro-enabled formats. DOCX is allowed only with appropriate
+inspection/scanning; never execute embedded content. Decode/re-encode images and strip metadata
+where practical. Serve approved downloads as attachments from an isolated storage origin. Scan
+outage keeps file quarantined; the visitor can submit without it. Expire unclaimed files after 24 hours.
+Use short-lived download links, default 5 minutes, and log authorized downloads without content.
+Secrets and operations: managed secret store, environment separation, least-privilege service
+identities, no production data in previews, encrypted backups, tested restores, dependency and
+secret scanning in CI. Security patches follow a documented triage process; propose urgent
+critical-risk triage within one working day, with deployment timing based on exposure and test results.
+This is an internal target unless actually staffed and contracted. Incident playbook names owner,
+containment steps, investigation records, communication decision maker and legal review of any
+notification obligation. Never invent a universal breach-notification deadline.
+45 Privacy Requirements
+REQ-PRIV-01 P0. Maintain a data map from browser through application, database, email, CRM, file
+storage and monitoring. Establish applicable privacy rules with counsel using actual markets and
+entity details. The cookie reference S11 is UK-specific; do not apply it as a universal legal conclusion.
+Product default: necessary-only operation until optional tracking choices are saved. Provide equally
+discoverable Accept all, Reject non-essential and Manage preferences. Categories: Necessary always
+on, Analytics off, Marketing off. Explain purposes plainly; no prechecked optional categories. Persist a
+versioned receipt in a first-party necessary preference mechanism. Withdrawal is available from the
+footer, blocks future optional calls and clears relevant first-party identifiers where feasible. Tag
+loading and embedded media must respect the choice, not just the visual banner.
+Proposed retention schedule, subject to owner/counsel approval: enquiries with no ongoing
+relationship 12 months after last meaningful activity; unsuccessful applications 6 months after closure
+unless lawful separate agreement; quarantined/unclaimed uploads 24 hours; operational request logs
+30 days; audit metadata 12 months; analytics 6 months; pending newsletter tokens 24 hours and
+unconfirmed records 7 days; subscribed records until withdrawal plus minimal lawful suppression
+evidence. Contract/client records follow a separately approved business retention schedule. Record
+legal holds explicitly and restrict who can apply them.
+Deletion workflow: verify requester proportionately → identify relevant records → check applicable
+retention/hold → delete or anonymize live data and vendor copies → log minimal completion evidence
+→ ensure restoration does not revive erased data. Backups expire on schedule; after restore replay
+the deletion ledger before resuming operations. Do not promise immediate physical deletion from
+immutable backups. Candidate data is never used for sales marketing. Staff access and vendor
+
+-- 50 of 68 --
+
+Software Development Company Website | PRD v1.0 51
+exports are limited to purpose.
+46 Performance Requirements
+Field targets from Google Web Vitals S7: 75th-percentile LCP ≤2.5 seconds, INP ≤200 milliseconds
+and CLS ≤0.1, evaluated separately for mobile and desktop where sample size is adequate. A new
+website may lack sufficient field data; prelaunch lab tests are a proxy, not proof of field compliance.
+Proposed budgets: key marketing page initial compressed JavaScript ≤180 KB excluding explicitly
+activated third-party tools; initial page transfer ≤1.2 MB on representative pages; hero image ideally
+≤250 KB at common desktop size and ≤120 KB mobile; no autoplay hero video; API intake p95 ≤1.5
+seconds excluding file scanning under expected load; cached page TTFB target ≤800ms in target
+regions. Measure the actual build and document exceptions with impact and owner.
+Use responsive AVIF/WebP with fallback, explicit image dimensions, lazy load below-fold media,
+preload only critical resources, self-host limited font weights, subset fonts where licensing permits,
+avoid render-blocking external scripts and split interactive code by route/component. Cache published
+CMS responses with explicit invalidation. Compress responses and serve static assets through CDN.
+Lighthouse mobile performance target ≥90 is a useful regression signal under a recorded test
+configuration; it does not replace CWV or accessibility assessment.
+47 SEO Technical Requirements
+REQ-SEO-01 P0. Use lowercase descriptive hyphenated routes with one trailing-slash policy, one
+canonical HTTPS hostname and permanent redirects for alternate forms. Each indexable page has a
+200 response, unique metadata, one descriptive H1, crawlable links and absolute self-canonical.
+Canonicalize tracking parameters to the clean page; do not canonicalize unique pagination pages all
+to page one.
+Generate XML sitemap from published indexable records only, using actual material-change lastmod
+dates. Exclude drafts, previews, admin, search results, thank-you pages and private files. Robots.txt
+points to the sitemap. Noindex is not access control; protect private surfaces with authentication. Do
+not block crawling of a URL that must be seen for its noindex to work. Stage/preview environments
+require access protection and noindex as a second layer; production deployment tests must reject
+accidental global noindex.
+Structured data: Organization on the real entity with verified URLs/contact details; BreadcrumbList on
+canonical hierarchy; Article/BlogPosting for articles; Person only for real approved people; JobPosting
+only for genuine active roles and current eligibility; case studies may use Article/CreativeWork
+semantics matching visible content. ProfessionalService only if semantically appropriate after
+validating the type and actual business representation. Do not add self-serving review stars or
+unsupported AggregateRating. FAQPage is not a Google rich-result objective under the checked
+current guidance.
+Provide Open Graph and X card title, description and correctly sized approved image, with no private
+preview URLs. Alt text describes image purpose, not keyword lists. Listing pagination uses real links
+and stable order. Filter/search results default noindex when they create duplicate combinations;
+valuable curated landing pages get their own approved content. Broken routes return 404;
+temporarily failed resources return appropriate error statuses rather than soft-404 200 pages.
+Redirect only to a relevant replacement, never blanket-redirect every removed page to Home.
+Maintain redirects in a reviewed registry and avoid chains.
+
+-- 51 of 68 --
+
+Software Development Company Website | PRD v1.0 52
+48 DevOps
+Use Git with protected main and short-lived branches. Pull requests require review, type checking,
+linting, targeted unit/integration tests, security/dependency checks and build verification. Changes to
+schema, privacy, auth or intake require explicit tests for affected risks. Do not write tests that merely
+assert static copy equals itself.
+Environments: local development with synthetic data; authenticated previews per PR using
+non-production secrets; staging with production-like configuration and synthetic fixtures; production.
+Never send staging emails to actual prospects. Use provider sandbox or recipient allowlist. Test
+integrations against sandboxes or controlled accounts.
+CI/CD builds an immutable versioned artifact, runs migrations through an authorized job, deploys to
+staging, executes smoke tests, then releases with an accountable approver. Store build SHA,
+dependency lockfile and migration version. Rollback application code independently where
+compatible; use expand/contract migrations to avoid destructive coupling. Back up before risky data
+operations. Document emergency rollback and rehearse it before launch.
+49 Deployment
+Recommended baseline: managed Next.js hosting such as Vercel, managed PostgreSQL in an
+approved nearby region, managed headless CMS, private S3-compatible object storage, a durable job
+service, transactional email and error/uptime monitoring. This is a product architecture
+recommendation, not a price comparison. Procurement must validate current cost, regional
+availability, runtime limits and contracts before selection. Cloudflare or AWS can substitute only after
+checking framework/runtime compatibility and operational ownership.
+Deployment responsibilities: business owns domain and billing accounts; engineering manages
+scoped access; operations owns uptime and recovery; marketing owns approved content. Configure
+apex/www canonical routing, DNS verification, certificate renewal, sender DNS, storage policies and
+environment-specific endpoints. Record domains and vendor account ownership in handover. Do not
+place all production services in a developer’s personal account.
+Release procedure: freeze reviewed content → backup → deploy immutable build → run migrations if
+compatible → warm critical cached routes → validate forms, policy links, email queue and monitoring
+→ enable indexing only after checks → observe error rate and rollback if critical paths fail. Site
+publication itself is outside this PRD deliverable; the development team executes it under its release
+process.
+50 Monitoring
+Monitor public availability every minute from at least two regions; critical page response/content; API
+failure rate; database connections/storage; outbox oldest age; email bounces; webhook failures;
+worker health; scan queue; certificate expiry; dependency alerts and content publish failures.
+Synthetic tests must use a clearly tagged test enquiry and never pollute sales metrics.
+Proposed alert thresholds: two consecutive multi-region availability failures; intake 5xx >2% over 10
+minutes with minimum 20 requests; any failed synthetic intake; oldest pending outbox >15 minutes;
+repeated scan failures; database capacity >80%; certificate expiry under 14 days if not automatically
+resolved. Low-traffic sites also use absolute failure alerts because percentages alone are unreliable.
+
+-- 52 of 68 --
+
+Software Development Company Website | PRD v1.0 53
+Alert routing has a primary and backup owner and an acknowledgement/escalation procedure. Error
+monitoring scrubs form fields, tokens and file names before export. Record request ID, release version
+and safe endpoint name. Uptime or SLA claims must not be published merely because monitoring
+exists.
+51 Backup and Recovery
+Proposed internal targets: operational database RPO ≤1 hour and RTO ≤4 hours, contingent on the
+selected platform and staffing. Enable point-in-time recovery if supported and test the targets. Daily
+snapshots alone do not satisfy a one-hour RPO. If the vendor cannot meet the target, revise
+architecture or approve a clearly documented target change before launch.
+Daily encrypted snapshots retained 30 days; object versioning and recovery retention aligned with
+privacy policy; CMS revisions plus scheduled content exports; infrastructure and configuration stored
+in version control without secrets. Backup credentials are separate from application write credentials.
+Restrict deletion of backups and alert failures. Backups should survive a single application credential
+compromise.
+Restore monthly into an isolated environment: recover database to a chosen time, restore required
+media, reconcile CMS references, verify row counts and representative records, replay deletion
+records, test intake and permissions, measure elapsed time and document result. During real
+recovery, reconcile provider/CRM side effects using idempotency IDs before re-running jobs. Runbook
+states who declares an incident and who authorizes reopening production.
+
+-- 53 of 68 --
+
+Software Development Company Website | PRD v1.0 54
+52 Testing Strategy
+Area Required evidence
+Functional Contact/quote/job happy paths and invalid input, duplicate retry, back/refresh, outage
+and closed-job cases
+CMS Draft isolation, role restrictions, publication gates, unpublish invalidation, redirects and
+rollback to a content revision
+Responsive Screens at all section 31 widths, long text, missing media, software keyboard and zoom
+Accessibility Automated scan plus keyboard, NVDA/Firefox or equivalent, VoiceOver/Safari; critical
+journey notes
+Performance Recorded mobile lab setup, representative routes, image/JS budgets and postlaunch field
+plan
+Security Permission boundary, IDOR, CSRF, stored/reflected XSS, injection, webhook replay, secret
+scanning and upload tests
+SEO Crawl, canonicals, statuses, metadata, headings, sitemap, robots, schema, pagination
+and redirects
+Integrations Email retry/bounce, CRM duplicate prevention, scanner outage, CMS outage and token
+rotation
+Privacy Reject-all network inspection, category selection, withdrawal, no PII in analytics/logs,
+retention/deletion rehearsal
+Recovery Database/media restore with measured recovery targets and deletion replay
+Automate high-risk validation, authorization, idempotency and rendering tests. Use end-to-end tests
+for core journeys. Manual review remains necessary for content truth, visual layout, screen-reader
+usefulness and policy scope. Test environment fixtures must be clearly synthetic and not publishable.
+Release gate: no open critical or high-risk defects affecting data security, intake, accessibility of core
+journeys or false public claims; accepted lower-risk issues have owner and due date.
+53 Browser Compatibility
+Support current and previous major releases of Chrome, Edge, Firefox and Safari at implementation
+freeze, plus current and previous supported Mobile Safari/iOS and Chrome Android combinations
+feasible for the target audience. Record exact versions and devices in QA; “current” must not remain
+an untested assumption. Include a real iPhone/Safari and Android/Chrome check, not only desktop
+emulation.
+Core content must remain readable when optional scripts are blocked. Test browser autofill, password
+managers for admin, date/input differences, focus behavior and file upload. Older unsupported
+browsers receive graceful content and a contact alternative, not a blank page. Define any minimum
+OS support after audience evidence and platform support review.
+
+-- 54 of 68 --
+
+Software Development Company Website | PRD v1.0 55
+54 Wireframes
+Homepage wireframes are embedded section by section in section 13. Shared page shell: full-width
+header; 1200px main container; breadcrumb above title; 720px maximum long-form reading width;
+final CTA and footer. Each layout uses semantic reading order first. Designer supplies desktop 1440,
+tablet 768 and mobile 390 designs plus 320px stress checks and interactive states.
+Service page
+Desktop: breadcrumb → 7/5 hero text and meaningful visual → 8/4 body and sticky anchor list →
+alternating full-width capability/process blocks → evidence → FAQ → CTA. Anchor list contains
+Problems, Scope, Delivery, Architecture, Engagement and Questions; its width is about 260px. Mobile:
+hero stacks, contents becomes a disclosure above body, capabilities become single-column cards.
+Spacing 80px between major groups, 32px inside groups, 48px section spacing mobile. Primary CTA
+appears in hero, after scope and at end; no sticky obstructive sales overlay.
+Case study
+Desktop: title/summary full width; factual metadata strip; large approved screenshot; 8/4 narrative
+and project facts; architecture figure with caption; outcome and evidence; related services. Mobile:
+metadata becomes definition list and narrative precedes secondary facts. 16:10 screenshots, text
+alternatives for diagrams, no tiny text embedded in images. CTA “Discuss a Similar Project” after the
+outcome. Hide absent metrics/quotation modules without leaving space.
+About page
+Desktop: intro 7/5 with real photo only if available; mission/operating model two columns; values as
+short editorial rows; verified timeline; real team grid; labelled locations; legal information link; careers
+CTA. Mobile: one column, timeline linear, team cards 1-2 columns based on fit. Company facts are
+text, not decorative counters. 80px group spacing desktop and 48px mobile.
+Contact page
+Desktop: 8-column form and 4-column next steps/contact sidebar. Labels above controls; first/last
+name may share a row, other fields full width or logical pairs. Mobile: one column; explanatory intro,
+form, then alternative contact. Error summary immediately above form, successful receipt replaces
+form with reference and next steps. Keep legal notice next to submission. 24px between field groups
+and 8px label spacing. Never place a large map before the form.
+Blog listing
+Desktop: H1 and intro → category links/search → featured article if editorially selected → three-column
+cards → pagination. Mobile: stacked search and category disclosure, one-column cards, explicit page
+links. Count and empty state appear after filters. Keep search/filter state in URL and maintain focus
+after update. Card hierarchy: category, title, excerpt, real author/date.
+Blog article
+Desktop: category/breadcrumb → title and summary → real author/reviewer/date → optional hero →
+720px body with 240px contents sidebar when space allows → sources → related articles/service CTA.
+Mobile: contents disclosure above body; code/tables have labelled overflow; headings wrap. Body
+18/30 desktop, 16/26 mobile. No sales popup interrupts reading.
+
+-- 55 of 68 --
+
+Software Development Company Website | PRD v1.0 56
+Careers listing
+Desktop: introduction and work principles → verified policies/benefits → hiring process → role filters
+and list rows. Mobile: all stacked; job rows show title, location and employment type without
+truncation. Empty state replaces only role list; no fake roles or “Apply” button without a real
+destination. FAQ and accommodation contact remain visible.
+Job page
+Desktop: role header and metadata → 8-column description plus 4-column application summary; full
+application below or linked to same-page anchor. Mobile: job text then application. Closed banner
+replaces application controls immediately; keyboard focus must not land on removed input. CV upload
+shows progress, scanning and rejection states separately.
+Security page
+Desktop: narrow introductory text → anchor list beside factual practice sections → policy links →
+security contact. No decorative shields that imply certification. Mobile: contents disclosure and
+readable full-width sections. Include last reviewed date only when accurate. Sensitive evidence is
+requested through contact, not downloadable from public cards.
+
+-- 56 of 68 --
+
+Software Development Company Website | PRD v1.0 57
+55 User Stories
+Story ID User need Requirement and completion evidence
+US01 As a prospect, I want to understand
+services so I can judge fit
+Service content and navigation; AC01, AC02
+US02 As a CTO, I want architecture and practices
+so I can assess compatibility
+Technologies, Security, How We Work; AC03
+US03 As a founder, I want commercial options so
+I can plan an engagement
+Engagement Models and honest estimate
+boundaries; AC04
+US04 As a reviewer, I want consistent company
+identity and policies
+Single-source identity; AC05
+US05 As a visitor, I want an accessible way to
+make an enquiry
+REQ-LEAD-01; AC06-AC10
+US06 As a returning visitor, I want submission
+retries not to create duplicates
+Intake idempotency; AC08
+US07 As a privacy-conscious visitor, I want to
+reject optional tracking
+REQ-PRIV-01; AC15-AC16
+US08 As a buyer, I want real project evidence
+with context
+REQ-WORK-01; AC02, AC18
+US09 As a job seeker, I want only genuine
+current roles
+REQ-JOBS-01; AC12
+US10 As a candidate, I want my CV private and
+acknowledged
+Uploads/application flow; AC11-AC13
+US11 As an editor, I want reusable content blocks
+without code access
+REQ-CMS-01; AC19
+US12 As a publisher, I want unverified claims
+blocked
+REQ-CONTENT-01; AC02
+US13 As a sales owner, I want every accepted
+enquiry recoverable during an outage
+REQ-CRM-01; AC09
+US14 As a recruiter, I want role-specific access
+without unrelated sales data
+RBAC; AC14
+US15 As a reader, I want to search and filter
+published resources
+REQ-SEARCH-01; AC20
+US16 As a mobile visitor, I want forms and menus
+usable at small widths
+REQ-A11Y-01 and responsive; AC17
+US17 As an operator, I want an alert when intake
+fails
+Monitoring; AC23
+US18 As an owner, I want a verified recovery
+procedure
+Backup requirements; AC24
+
+-- 57 of 68 --
+
+Software Development Company Website | PRD v1.0 58
+Story ID User need Requirement and completion evidence
+US19 As a subscriber, I want to confirm and later
+stop newsletters
+REQ-NEWS-01; AC25
+US20 As an SEO editor, I want accurate indexable
+URLs and metadata
+REQ-SEO-01; AC21-AC22
+US21 As a buyer, I want to understand support
+and software ownership
+Engagement/Support content; AC04
+US22 As a security reporter, I want a real
+monitored contact
+Security page and escalation test; AC23
+US23 As an administrator, I want exports and role
+changes audited
+Admin requirements; AC14
+US24 As a quote requester, I want to review
+answers before submitting
+REQ-QUOTE-01; AC10
+56 Acceptance Criteria
+AC01 Navigation. Given published destinations, when a visitor uses desktop or mobile navigation by
+keyboard, then every displayed link works, the menu can be dismissed and focus returns predictably.
+With no approved work, the Work link and associated CTA are omitted or replaced by Process, not
+routed to an empty gallery.
+AC02 Publication truth. Given a record containing an unresolved placeholder, unapproved claim or
+missing customer permission, when publication is attempted, then the CMS blocks it and explains the
+missing approval. It cannot appear in public HTML, API, sitemap, search or schema. Given permission
+withdrawal, unpublishing removes all references and cached public versions within the configured
+invalidation target of five minutes.
+AC03 Technical evaluation. Given a CTO evaluation task, when the visitor opens a service and follows
+relevant links, then architecture decisions, testing, deployment and maintenance boundaries are
+available in no more than three navigation choices. The page names only verified capabilities.
+AC04 Commercial clarity. Given a proposed engagement, when the visitor reads Engagement Models,
+then billing basis, scope handling, change approval, ownership boundaries and support references are
+explicit, and no unapproved price or binding promise appears.
+AC05 Company consistency. Given a verified legal name/address/contact change, when settings are
+published, then footer, contact, company information and structured data use the new approved
+value, and policy references are reviewed for consistency. Registered and operating addresses retain
+correct labels.
+AC06 Valid enquiry. Given valid required fields and acknowledgment, when Submit is activated, then
+one durable submission, related lead and outbox jobs are committed before a receipt is shown. The
+receipt contains a non-sensitive reference and next steps.
+AC07 Invalid enquiry. Given missing or invalid values, when Submit is activated, then no lead is saved,
+focus reaches an accessible error summary, each error links to its field and valid entries remain
+present. Errors never require color recognition alone.
+
+-- 58 of 68 --
+
+Software Development Company Website | PRD v1.0 59
+AC08 Duplicate and timeout. Given a committed enquiry whose response was lost, when the same key
+and payload are retried within 24 hours, then the original receipt is returned with no additional lead or
+email jobs. Reusing the key with different content returns 409 and a recoverable message.
+AC09 Dependency failure. Given email or CRM outage, when an enquiry is committed, then success
+remains truthful, jobs retry and operations sees queue state. Given database failure before commit,
+then no success is shown and the form supports safe retry.
+AC10 Guided quote. Given a partially completed quote, when Back or Edit is used, then answers
+remain accurate; final review exposes all choices and incompatible hidden values are removed.
+Submission uses the full schema and returns no automatic binding price.
+AC11 Upload security. Given an oversized, disguised, infected or unscanned file, when
+upload/attachment is attempted, then the file cannot become downloadable or attached as clean. A
+clean file is accessible only to authorized staff with a short-lived URL. Another session cannot claim its
+token.
+AC12 Jobs. Given an active job, a valid application is accepted. Given a job closed during completion,
+when Submit is used, then the server rejects new applications with a clear closure message, preserves
+an optional non-sensitive recovery path and does not misstate acceptance. Expired jobs lose
+JobPosting markup.
+AC13 Application privacy. Given a candidate CV, when a sales-only user attempts access, then access
+is denied server-side. Confirmation email contains no CV attachment. Deletion removes candidate
+records and storage according to the approved retention process.
+AC14 Staff authorization. Given any staff role, when a forbidden route or object ID is requested
+directly, then access fails regardless of hidden UI. MFA, revoked sessions, role changes and exports
+are tested. Sensitive actions produce audit records without full PII payloads.
+AC15 Consent refusal. Given a new visitor, when no optional choice has been made or Reject
+non-essential is selected, then optional analytics/marketing scripts and events do not load or transmit.
+Core reading and enquiry submission still work.
+AC16 Consent withdrawal. Given Analytics permission, when the visitor withdraws it, then future
+analytics stops and relevant local identifiers are cleared where feasible. The receipt records the
+updated preference without storing contact identity unnecessarily.
+AC17 Mobile and accessibility. Given 320px width, 200% zoom, keyboard use or supported screen
+reader, when completing navigation and enquiry journeys, then no essential content/control is clipped
+or obscured, labels/errors are announced and focus order is logical. Intentional code/data overflow is
+labelled.
+AC18 Evidence and case filters. Given approved cases, when filters change, then results follow
+documented AND/OR logic and a clear empty result appears when appropriate. Every displayed metric
+has verification and permission; no fake clients fill an empty state.
+AC19 CMS operations. Given an editor, when content is drafted, previewed and submitted, then it
+remains private until publisher approval. Unpublish and revision restore update public caches
+correctly. Editors cannot grant themselves publish or administration permissions.
+AC20 Search. Given drafts, private records and published articles, when search runs, then only
+published allowed content is indexed and returned. Query length is bounded; no query is sent to
+analytics as raw free text. Keyboard selection and pagination work.
+
+-- 59 of 68 --
+
+Software Development Company Website | PRD v1.0 60
+AC21 SEO. Given a published page, when inspected without client hydration, then primary content,
+title, description, canonical and appropriate structured data are present. Sitemap contains only
+approved indexable 200 routes. Unknown pages return 404.
+AC22 Indexing safeguards. Given staging, it requires access control and is noindex. Given production
+release, automated checks fail deployment for accidental global noindex, broken canonical hostname,
+malformed sitemap or placeholder company schema.
+AC23 Monitoring and errors. Given a simulated intake failure or delayed queue, when alert thresholds
+are met, then the assigned owner receives an actionable alert with safe request ID. The user sees a
+recovery message without stack trace or false success. Security contact delivery is verified with an
+authorized internal test.
+AC24 Recovery. Given a restore rehearsal, when database and media are recovered in isolation, then
+the team measures RPO/RTO, checks representative records and permissions, reapplies deletions and
+reconciles pending side effects before reopening service.
+AC25 Newsletter. Given an unconfirmed email, when signup is requested, then no marketing is sent
+until the valid confirmation token is used. Expired/reused tokens are handled safely; unsubscribe
+prevents further campaigns and cannot be overridden by a later unrelated contact enquiry.
+AC26 Performance. Given the agreed mobile lab profile and representative pages, when performance
+tests run, then budgets pass or exceptions are documented before approval. After sufficient field data
+exists, review mobile and desktop 75th-percentile CWV separately.
+
+-- 60 of 68 --
+
+Software Development Company Website | PRD v1.0 61
+57 Edge Cases
+Situation Required behavior
+No client projects or
+testimonials
+Omit related sections and links; use process/detail content without fabricated
+replacements
+Unsupported service
+requested
+Accept “Other/Not sure”; route for review without claiming capability
+Founder has no company
+website
+Explicit “No website yet” option passes validation
+Slow network or lost
+response
+Retain inputs and idempotency key; allow safe retry
+Scan takes too long Explain pending status; allow removal and submission without attachment
+CMS unavailable Serve last approved cached content; intake remains independent
+Job closes while form open Recheck server-side; return clear closure message, not false receipt
+Consent revoked
+mid-session
+Stop subsequent optional transmissions; preserve necessary form operation
+Long names, Unicode or
+RTL text entered
+Validate by length/purpose, not ASCII-only assumptions; escape output
+External URL malicious or
+internal IP
+Store only allowed URL string; never fetch it automatically
+Email hard bounce Mark delivery issue; keep accepted lead visible for authorized follow-up
+Duplicate webhook Unique provider event ID makes processing idempotent
+Client removes testimonial
+permission
+Unpublish record and references, invalidate cache and search
+Staff leaves company Revoke identity/session, reassign records, rotate shared secrets if any
+Page renamed Reviewed permanent redirect and updated internal links; no chain
+Owner lacks security
+evidence
+Narrow/remove public claim; implement and verify website control separately
+Privacy erasure before
+backup restore
+Replay deletion ledger before serving restored data
+Analytics blocked No adverse effect on form; attribution marked unknown rather than guessed
+
+-- 61 of 68 --
+
+Software Development Company Website | PRD v1.0 62
+58 Error States
+404 copy: “We couldn’t find that page.” Supporting text: “The link may have changed. Explore our
+services or contact us if you need help.” Links: Home, Services, approved Case Studies, Contact and
+Search if implemented. Return actual 404 status.
+500 copy: “Something went wrong.” Supporting text: “Please try again. If the problem continues,
+contact [BUSINESS EMAIL] and include reference [SAFE REQUEST ID].” Action: “Try Again” and
+“Return Home.” Do not imply a form was received when persistence is uncertain; retry with
+idempotency key.
+Form error: “We couldn’t submit your enquiry yet. Your answers are still here. Please try again.” Rate
+limit: “There have been several attempts. Please wait [RETRY INTERVAL] or contact us by email.”
+Attachment rejection: “This file could not be accepted. Use a supported file type within the size limit,
+or continue without an attachment.” Search empty: “No results found. Try another term or clear
+filters.” Offline: “You appear to be offline. Reconnect to submit your enquiry.” Messages must remain
+visible long enough to act; do not rely on disappearing toasts.
+59 Development Roadmap
+Planning envelope: approximately 10-14 weeks for an experienced small team, assuming timely
+business inputs and a selected managed CMS. This is a scheduling assumption, not a supplier quote.
+Suggested roles: product/content owner, designer, frontend engineer, backend/full-stack engineer, QA
+and part-time security/DevOps. Some phases overlap; content verification runs throughout.
+Phase Goals and tasks Deliverables Dependencies and exit gate
+1
+Discovery
+and Requir
+ements
+Confirm entity, services,
+audience, systems and
+constraints
+Approved brief, fact register,
+risks, P0 list
+Business owner access; no
+unidentified launch owner
+2 Informati
+on Architec
+ture
+Map journeys, classify content,
+verify route scope
+79-slot plan adapted to real
+offer, navigation and URL
+register
+Phase 1; no duplicate-intent or
+empty destinations
+3 Brand
+and Design
+System
+Select typography, palette,
+tokens and content tone
+Tokens, component principles
+and sample UI
+Phase 1; contrast and licensing
+checks
+4 Wirefram
+es
+Design key task flows and
+page hierarchy
+Homepage and key-page
+wireframes, mobile variants
+Phase 2; task walkthrough passes
+5 High
+Fidelity UI
+Design real content and all
+critical states
+Responsive designs,
+prototypes, component
+variants
+Phases 3-4; accessible and
+owner-reviewed
+6 Frontend
+Foundation
+Implement shell, tokens,
+routing and components
+Reusable coded library and
+representative pages
+Phase 5; type/build and responsive
+checks
+7 Backend
+and CMS
+Configure models, permissions,
+preview, DB and jobs
+CMS, migrations, auth and
+outbox infrastructure
+Phases 1-2; role and draft-isolation
+tests
+
+-- 62 of 68 --
+
+Software Development Company Website | PRD v1.0 63
+Phase Goals and tasks Deliverables Dependencies and exit gate
+8 Core
+Pages
+Populate approved commercial
+and corporate content
+Publish-ready core pages and
+metadata
+Phases 6-7 plus facts; no
+placeholders
+9 Work and
+Content
+System
+Implement cases, posts, jobs
+and taxonomy
+Editorial templates, approved
+initial content
+Phase 7; evidence gate and empty
+states
+10 Forms
+and CRM
+Implement intake, uploads,
+email and routing
+Tested contact flow, secure
+queue, optional CRM
+Phase 7; idempotency and outage
+tests
+11 SEO Validate intent, metadata,
+schema, redirects and indexing
+Crawl report, sitemap, robots
+and Search Console plan
+Phases 8-9; technical SEO gate
+12 Security Threat review, hardening,
+privacy and recovery
+Security review, data map,
+restore evidence
+Phases 7-10; high-risk findings
+resolved
+13 QA Cross-browser, accessibility,
+performance and UAT
+Test matrix and signed
+release report
+Phases 8-12; critical acceptance
+criteria pass
+14
+Production
+Launch
+DNS, release, smoke tests and
+observation
+Live approved release,
+monitored intake
+All P0 gates; tested rollback ready
+15 Post
+Launch Opt
+imization
+Review real leads, field
+performance and content gaps
+Prioritized P1 backlog and
+30-day review
+Phase 14; use measured data, not
+assumed conversions
+Suggested sequence: weeks 1-2 discovery/IA; weeks 2-4 design/content; weeks 4-7 foundation/CMS;
+weeks 6-9 pages/intake; weeks 9-11 SEO/security/QA; weeks 11-14 release buffer and optimization.
+Real duration depends on verified content volume, integrations and review speed. P1
+quote/search/sector expansion may follow after launch; P2 portal and multilingual work require
+separate discovery.
+60 Launch Checklist
+Each item requires an owner, date and evidence link in the release tracker. Unchecked P0 items block
+launch unless formally re-scoped without leaving misleading UI.
+• [ ] Business owner approves legal name, brand, services, actual delivery model, locations and all
+public claims.
+• [ ] Every live route has meaningful approved content, a purpose, metadata, contextual links and a
+next step.
+• [ ] Placeholder/lorem-ipsum/dummy-counter audit is clean across HTML, CMS, public APIs, schema
+and social previews.
+• [ ] Real case studies, logos, testimonials, staff images and biographies have permission and
+evidence; absent sections are removed.
+• [ ] Navigation, breadcrumbs, anchor offsets, footer, social URLs and contextual CTAs resolve
+correctly.
+• [ ] Contact fields, optional values, validation, bot fallback, duplicate retry and success receipt pass
+end-to-end tests.
+
+-- 63 of 68 --
+
+Software Development Company Website | PRD v1.0 64
+• [ ] Attachments are private, scanned, bounded and authorized; unsupported upload functionality is
+hidden.
+• [ ] Email sender identity, SPF/DKIM, DMARC plan, reply-to, HTML/plain text, bounce handling and
+queue alerts work.
+• [ ] CRM failures/retries and fallback lead inbox have been exercised; lead owners know the review
+process.
+• [ ] Current jobs are real; closed/expired roles reject applications; candidate data permissions pass.
+• [ ] Consent rejection and withdrawal verified using browser network/storage inspection; no PII in
+analytics.
+• [ ] Event names and conversion definitions validated with test traffic excluded from business
+reporting.
+• [ ] Counsel approves applicable policies, contractual summaries, retention defaults and privacy
+wording.
+• [ ] Security contact, support routes and operating-hours statements match actual capability.
+• [ ] Responsive QA covers 320, 375, 390, 430, 768, 1024, 1440 and 1920 widths, long content and
+zoom.
+• [ ] Keyboard, focus, screen-reader, contrast, labels, error announcements and reduced-motion
+checks pass.
+• [ ] Browser/device matrix completed and exact versions recorded.
+• [ ] Content rendering and metadata work without client hydration; images have dimensions and
+meaningful alternatives.
+• [ ] Canonicals, redirects, real 404/500 handling, structured data, sitemap and robots are validated.
+• [ ] Production indexing is enabled intentionally; staging/private environments remain protected.
+• [ ] Performance budgets measured on representative homepage, service, article and form pages.
+• [ ] HTTPS, headers, CSP, staff MFA, permission checks, rate limits, dependency/secret scans and
+webhook verification pass.
+• [ ] Production secrets are isolated; no customer PII exists in previews or build artifacts.
+• [ ] Backups and point-in-time recovery configured; restore rehearsal measured and documented.
+• [ ] Monitoring detects synthetic intake failure and delayed jobs; primary/backup responders
+acknowledge test alerts.
+• [ ] DNS, canonical host, certificates, sender DNS, favicon, app icons and approved social preview
+images work.
+• [ ] Rollback procedure rehearsed and migration compatibility verified; release SHA recorded.
+• [ ] Domain, infrastructure, CMS and integration accounts are owned by the business and access is
+documented.
+• [ ] Business UAT and QA signoff recorded; known low-risk issues have owners and deadlines.
+61 Post Launch Checklist
+First day: test a tagged enquiry and permitted job flow; verify durable records, email, CRM and file
+access; inspect errors and queue age; validate real production metadata and canonical URLs; confirm
+no accidental optional tracking before consent; monitor certificates/DNS and 404 spikes.
+
+-- 64 of 68 --
+
+Software Development Company Website | PRD v1.0 65
+First week: verify Search Console ownership and sitemap processing; review indexing exclusions
+rather than assuming all pages should index; inspect lead routing and spam; validate analytics against
+accepted submission counts with consent caveats; fix broken links; verify backups actually ran and
+alerts reached owners.
+First month: review available field performance and lab regressions; analyze qualified leads by
+approved source aggregates; interview sales about missing buyer information; check privacy deletion
+process; review content and claim register; assess mobile task completion; confirm current jobs;
+publish the next substantive resources according to capacity.
+Recurring: weekly lead queue and integration review; monthly broken-link/company-contact/backup
+checks; quarterly security, service capability and permissions review; six-month article refresh review.
+Changes are prioritized from observed problems, not vanity traffic or speculative A/B tests on
+insufficient volume. Any experiment requires a stated hypothesis, primary metric, guardrails and
+adequate sample plan.
+62 Documentation Requirements
+Developer handover includes a README with project purpose, repository structure and commands;
+local setup and synthetic fixtures; architecture and trust boundaries; environment variable
+names/purpose/owner with no secret values; dependency/version policy; API/OpenAPI specification;
+database migrations and retention map; CMS content model and publishing guide; staff role guide;
+integration and webhook runbooks; deployment and rollback; backup and recovery; security
+configuration and incident procedure; monitoring/alert ownership; accessibility test notes; analytics
+dictionary and consent behavior; SEO/redirect guide; known limitations and maintenance backlog.
+Documentation must let a newly authorized engineer run the project, publish a reviewed content
+change, rotate an integration credential, diagnose a failed enquiry and restore service without relying
+on the original developer’s memory. Keep runbooks in the business-owned repository and provide
+nontechnical CMS training. Record acceptance of account/repository ownership and credential
+transfer through a secure channel.
+63 Website Due Diligence Readiness Checklist
+This is an accuracy and transparency check, not a bank-approval formula. Financial institutions and
+payment providers apply their own eligibility and risk decisions. Do not change the described business
+activity to conceal actual services.
+• [ ] Legal identity matches the actual contracting entity and approved registration evidence.
+• [ ] Trading name and legal name relationship is stated clearly where needed.
+• [ ] Registered jurisdiction and public registration details are verified and appropriate to disclose.
+• [ ] Registered/operating addresses are correctly labelled; no virtual address is portrayed as a staffed
+office.
+• [ ] Website, email domain, contact details, policy identity and genuine social profiles are consistent.
+• [ ] Services describe what the company actually sells and can deliver; no hidden contradictory
+business activity.
+• [ ] Engagement model explains who contracts, who pays, billing basis and identifiable third-party
+costs.
+
+-- 65 of 68 --
+
+Software Development Company Website | PRD v1.0 66
+• [ ] No fictitious history, clients, reviews, awards, employees, locations, GitHub activity or
+certifications.
+• [ ] Case metrics and customer logos are supported by evidence and permissions.
+• [ ] Contact, support and escalation paths work and are monitored.
+• [ ] Privacy, website terms and applicable cancellation/data-processing information are available and
+reviewed.
+• [ ] Public claims about access, security, support hours and recovery reflect verified actual practices.
+• [ ] Website does not imply regulated services, licences or sector certifications it does not possess.
+• [ ] Ownership and handover explanations align with the actual project agreement.
+• [ ] Private owner identity documents and unnecessary personal details are not publicly exposed.
+• [ ] Navigation and forms function; there are no empty template sections or broken company links.
+64 Content Required From Business Owner
+Launch blocking company facts
+• [ ] Official legal company name, brand/trading name and relationship between them.
+• [ ] Registration jurisdiction and appropriate public registration number with verification source.
+• [ ] Registered address and separately labelled genuine operating address, if any.
+• [ ] Domain, approved logo files, brand usage and real active social links.
+• [ ] Business email, sales/support contacts, phone and actual monitoring responsibility.
+• [ ] Exact services offered, delivery model, use of employees/contractors and supported
+locations/timezones.
+• [ ] Verified technology capabilities and an accountable internal reviewer for each.
+• [ ] Contracting entity, billing models, currencies, payment schedule rules and third-party cost
+treatment.
+• [ ] Actual process, communication cadence, change control, acceptance and handover practices.
+• [ ] IP ownership/licence position, confidentiality process, cancellation/refund terms and escalation
+route.
+• [ ] Support scope, coverage hours, defect period if any, maintenance options and incident
+responsibility.
+• [ ] Privacy owner, actual vendors, processing locations, retention and deletion responsibilities.
+• [ ] Applicable policy/counsel review and security practices supported by evidence.
+Evidence dependent content
+• [ ] Real founder and team names, roles, approved biographies, photographs and publication
+permission.
+• [ ] Verified company history and dates; omit timeline if there is nothing meaningful to publish.
+• [ ] Real projects with scope, role, duration, architecture, screenshots and client permission.
+• [ ] Verified outcomes with measurement method, baseline, period and evidence owner.
+• [ ] Genuine testimonials with exact wording and attribution permission.
+
+-- 66 of 68 --
+
+Software Development Company Website | PRD v1.0 67
+• [ ] Partner logos only with actual relationship evidence and permitted use.
+• [ ] Awards, certifications and security attestations only with current evidence and scope.
+• [ ] Actual open jobs, hiring owners, requirements, locations, benefits, compensation disclosures
+where applicable and recruitment process.
+• [ ] Three or more reviewed initial articles if the homepage resource module will appear.
+• [ ] Rights-cleared images, diagram source files and real screenshots with sensitive information
+removed.
+Operating access and decisions
+• [ ] Business-owned repository, hosting, database, storage, CMS, email and monitoring accounts.
+• [ ] Named product, content, sales, hiring, security and operations owners with backups.
+• [ ] CRM choice, intake assignment rules, email templates and approved response expectations.
+• [ ] Analytics choice, target markets, consent approach and meaningful qualification criteria.
+• [ ] Data region, recovery objectives, retention schedule and approved vendor contracts.
+• [ ] Final P0 service/industry scope and accepted P1/P2 roadmap.
+Track inputs in a register: item, owner, supplied date, evidence location, approved wording, approval
+date and review date. Missing information blocks only the affected claim or feature unless it is
+essential company identity, contact, privacy or operation. Bracketed placeholders remain in design
+drafts but never go live.
+65 Final Developer Handoff Checklist
+• [ ] All 65 PRD sections are mapped to design files, implementation tickets or explicit scope
+decisions.
+• [ ] The 79-route/template inventory is reconciled with the published scope; withheld pages have no
+dangling links.
+• [ ] P0 requirements have assigned owners and trace to AC tests; P1 and P2 are clearly outside
+launch unless promoted.
+• [ ] Page copy, metadata, FAQs, related links and responsive wireframes are available to the
+design/content team.
+• [ ] Design tokens and component variants include error, empty, loading, success, keyboard and
+mobile states.
+• [ ] CMS model, publication gates, evidence register and single-source corporate identity are
+implemented.
+• [ ] API contracts, schema constraints, role permissions, outbox/idempotency behavior and upload
+boundaries are agreed.
+• [ ] Lead ownership, email/CRM failure recovery, consent behavior and retention/deletion are
+operationally tested.
+• [ ] Security, privacy, accessibility, performance and SEO acceptance evidence accompanies the
+release.
+• [ ] Deployment, backup, restore, rollback and monitoring runbooks are complete and rehearsed.
+
+-- 67 of 68 --
+
+Software Development Company Website | PRD v1.0 68
+• [ ] The business owns accounts, repository, content and applicable deliverables according to the
+actual contract.
+• [ ] Business owner supplies and approves real facts; counsel approves applicable legal content.
+• [ ] No unsupported company facts from other projects or conversations are inserted into this
+website.
+• [ ] No claim of bank approval, search ranking, guaranteed revenue, certification or development
+outcome is made without appropriate basis.
+• [ ] Handoff meeting demonstrates content editing, a real controlled test enquiry, a failed-job retry,
+permission denial and recovery documentation.
+Final specification audit: the planned architecture covers all requested service groups, corporate
+and trust information, lead handling, content systems and careers. Every page family has content and
+navigation rules, and all critical dynamic functions have failure behavior and acceptance criteria.
+Remaining business-specific approvals are deliberately visible in section 64. The live website must
+prioritize truthful, complete content over the number of pages or appearance of company size.
+
+-- 68 of 68 --
+

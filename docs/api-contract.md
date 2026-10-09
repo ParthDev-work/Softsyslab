@@ -3,11 +3,12 @@
 Reference for every endpoint in PRD section 43 — what this build implements, and
 what the remaining endpoints must look like when they are built.
 
-One endpoint is live: `POST /api/contact/`. Everything else in section 43 is
-specified below but **not implemented**, because it depends on the database, CMS,
-object storage, upload scanning or staff authentication that this build
-deliberately does not have. Each is listed with its contract so that building it
-later is an implementation task rather than a design task.
+Three endpoints are live: `POST /api/contact/`, `GET /api/health/` and
+`POST /api/webhooks/cms/`. Everything else in section 43 is specified below but
+**not implemented**, because it depends on object storage, upload scanning or
+staff authentication that this build deliberately does not have. Each is listed
+with its contract so that building it later is an implementation task rather
+than a design task.
 
 ---
 
@@ -188,23 +189,33 @@ retry cannot create a second lead.
 
 Honest limits, each one a gap against the PRD rather than a design choice:
 
-- **Persistence is not durable.** The lead store appends to a local JSONL file.
-  On Vercel the filesystem is ephemeral, so a saved enquiry does not outlive the
-  instance. The contact page tells the visitor this rather than implying their
-  enquiry has been filed.
-- **Nothing is sent to anyone.** No confirmation email, no internal alert, no CRM
-  sync. The outbox described in section 36 does not exist.
+- **Persistence is durable once `DATABASE_URL` is set.** With it set,
+  `POST /api/contact/` writes through `PostgresLeadStore` to managed Postgres
+  (schema in `prisma/schema.prisma`, setup in `docs/database.md`) — a lead,
+  its submission and three outbox rows commit in one transaction, same as
+  before the rejection path, now backed by a real database instead of a
+  JSONL file. Without `DATABASE_URL` (or with `LEAD_STORE=file` forcing it),
+  the store is still the non-durable local JSONL file described below.
+- **Nothing is sent to anyone yet.** The outbox table (`send_confirmation_email`,
+  `notify_internal`, `crm_sync` rows) fills on every successful submission, but
+  no worker drains it. Section 36's fan-out — confirmation email, internal
+  alert, CRM sync — is a separate process the PRD describes and this build does
+  not implement. A row sitting in `outbox_events` is the honest state: queued,
+  not delivered.
 - **Rate limiting and idempotency are per-instance.** Both use in-memory maps, so
   a serverless deployment enforces them per cold instance. They raise the cost of
-  casual abuse; they are not the distributed controls section 43 describes.
+  casual abuse; they are not the distributed controls section 43 describes. (The
+  in-memory `idempotency_keys` shape matches the `IdempotencyKey` table in
+  `prisma/schema.prisma` exactly, so a Postgres-backed implementation behind the
+  same `lookup`/`remember` functions is a follow-up, not a redesign.)
 - **No bot prevention.** Section 39 lists adaptive controls with an accessible
   fallback as P0. The hook is unbuilt and no token is checked.
 
-### Replacing the lead store
+### The lead store, local file or Postgres
 
-`src/lib/server/leadStore.ts` defines the seam. Implement `LeadStore` against
-PostgreSQL to get the PRD's behaviour, and change the one line in `selectStore`.
-No call site changes.
+`src/lib/server/leadStore.ts` defines the seam described above and still holds
+both implementations plus the selection logic. No call site changed to add the
+second implementation.
 
 ```ts
 interface LeadStore {
@@ -214,10 +225,12 @@ interface LeadStore {
 }
 ```
 
-The Postgres implementation must write the submission, the lead and the outbox
-events **in one transaction** (section 41), and reject rather than resolve if any
-part fails. The route turns a rejection into `503`, so correctness at the
-boundary is already handled.
+`selectStore()` picks `PostgresLeadStore` when `DATABASE_URL` is set and no
+`LEAD_STORE` override is present; `LEAD_STORE=file` or `LEAD_STORE=none`, if
+set, always win over that auto-detection. `PostgresLeadStore` writes the
+submission, the lead and the outbox events **in one transaction** (section 41),
+and rejects rather than resolves if any part fails — the route turns that
+rejection into `503`, unchanged from before this store existed.
 
 ---
 
@@ -283,15 +296,21 @@ must verify authorisation before returning any private project detail.
 *Blocked on:* a monitored support channel and staff authentication. Section 19's
 support fields are all unverified.
 
-### `POST /api/webhooks/cms`
+### `POST /api/webhooks/cms` — implemented
 
-Signed event id, timestamp, record id and action. Signature verification **plus**
-replay protection; queues cache invalidation for the affected page, hub, sitemap
-and search index.
+Signed event id, timestamp, record id and action. Signature verification
+(`@sanity/webhook`'s `isValidSignature`) plus replay protection (the
+`IntegrationEvent` table's unique `(provider, externalEventId)` constraint
+rejects a redelivered event rather than reprocessing it), then
+`revalidateTag` for exactly the tags the affected document's queries were
+cached under — see src/app/api/webhooks/cms/route.ts for the exact webhook
+projection to configure in Sanity.
 
-*Blocked on:* CMS selection. Section 34 requires procurement to verify roles,
-revisions, draft preview, auditability, export, data region and webhook support
-before a vendor is chosen.
+Vendor: Sanity (`studio/` holds the schema; src/lib/content/sanitySource.ts
+is the `ContentSource` implementation — see PRD section 34's seam in
+src/lib/content/index.ts). No search index exists in this build, so that part
+of section 43's original wording does not apply yet; add it to this route's
+tag set if one is built later.
 
 ### `POST /api/webhooks/email`
 

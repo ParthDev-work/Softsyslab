@@ -7,6 +7,7 @@ import {
   SkipLink,
 } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
+import { BackToTop } from "@/components/layout/BackToTop";
 import { ConsentControls } from "@/components/layout/ConsentControls";
 import { UnverifiedFactsBanner } from "@/components/layout/UnverifiedFactsBanner";
 import { OrganizationJsonLd } from "@/lib/seo/JsonLd";
@@ -67,6 +68,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
           {children}
         </main>
         <Footer />
+        <BackToTop />
         <ConsentControls />
         <OrganizationJsonLd />
       </body>

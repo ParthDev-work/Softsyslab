@@ -96,12 +96,13 @@ export function NavGroup({ section }: { section: NavSection }) {
         aria-controls={panelId}
         onClick={() => setOpen((value) => !value)}
         className={cn(
-          "group flex min-h-11 items-center gap-1.5 px-2 text-body hover:text-brand",
+          "group relative flex min-h-11 items-center gap-1.5 px-2 text-body hover:text-brand",
           active ? "font-semibold text-brand" : "text-muted",
         )}
       >
         {section.label}
         {chevron}
+        <NavUnderline active={active} />
       </button>
       <ul
         id={panelId}
@@ -134,13 +135,36 @@ export function NavLink({
       href={href}
       aria-current={active ? "page" : undefined}
       className={cn(
-        "flex min-h-11 items-center rounded-control px-2 text-body hover:text-brand",
+        "group relative flex min-h-11 items-center rounded-control px-2 text-body hover:text-brand",
         inPanel && "hover:bg-surface",
         active ? "font-semibold text-brand" : "text-muted",
       )}
     >
       {label}
+      {/* The panel's own links (mobile list, dropdown list) read state by
+          position and hover background already; the underline is the
+          top-row treatment only. */}
+      {!inPanel ? <NavUnderline active={active} /> : null}
     </Link>
+  );
+}
+
+/**
+ * Animated active/hover indicator for the top-row nav controls. A scaled
+ * span rather than a border so it never shifts layout, and `scaleX` is a
+ * transform so the existing global reduced-motion block (which zeroes every
+ * transition duration) neutralises it for free.
+ */
+function NavUnderline({ active }: { active: boolean }) {
+  return (
+    <span
+      aria-hidden="true"
+      className={cn(
+        "pointer-events-none absolute inset-x-2 bottom-0.5 h-0.5 origin-left scale-x-0 rounded-full bg-brand transition-transform duration-150 motion-reduce:transition-none",
+        "group-hover:scale-x-100",
+        active && "scale-x-100",
+      )}
+    />
   );
 }
 

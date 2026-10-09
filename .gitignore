@@ -40,6 +40,10 @@ yarn-error.log*
 *.tsbuildinfo
 next-env.d.ts
 
+# prisma — the generated client lands under node_modules (already ignored
+# above) and needs no extra entry. Migrations under prisma/migrations/ ARE
+# committed (Prisma's own default), so nothing there is ignored either.
+
 # Local enquiry store — never committed (PRD section 45).
 .data/
 
@@ -53,3 +57,6 @@ next-env.d.ts
 !.env.example
 
 .vercel
+
+# lighthouse CI run artifacts
+.lighthouseci/

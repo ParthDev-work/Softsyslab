@@ -16,6 +16,7 @@
   --color-brand-hover: #1e40af;
   --color-anchor: #0f172a;
   --color-accent: #0f766e;
+  --color-accent-hover: #115e59;
 
   /* --- Surfaces and text ------------------------------------------------ */
   --color-canvas: #ffffff;
@@ -79,7 +80,7 @@
 
   /* --- Shape ------------------------------------------------------------ */
   --radius-chip: 6px;
-  --radius-control: 8px;
+  --radius-control: 10px;
   --radius-card: 12px;
 
   /* --- Elevation -------------------------------------------------------- */
@@ -153,9 +154,9 @@
    * read well without a fixed step at every breakpoint (section 31).
    */
   .type-display {
-    font-size: clamp(2.25rem, 5.6vw, 4rem);
-    line-height: 1.06;
-    letter-spacing: -0.03em;
+    font-size: clamp(2.875rem, 6.6vw, 5.5rem);
+    line-height: 0.98;
+    letter-spacing: -0.04em;
     font-weight: 600;
   }
 
@@ -206,13 +207,26 @@
     padding-inline: clamp(1rem, 3vw, 1.5rem);
   }
 
-  /* Section rhythm: 48px mobile to 88px desktop, 56-112px for major ones. */
+  /* Section rhythm: 48px mobile to 96px desktop, 56-112px for major ones. */
   .section-y {
-    padding-block: clamp(3rem, 8vw, 5.5rem);
+    padding-block: clamp(3rem, 8vw, 6rem);
   }
 
   .section-y-lg {
     padding-block: clamp(3.5rem, 9vw, 7rem);
+  }
+
+  /*
+   * Hero wash — a soft brand-tint gradient built from existing tokens only
+   * (no new colour introduced). Replaces the hero's flat canvas background
+   * with a subtle directional fade back to canvas.
+   */
+  .hero-wash {
+    background-image: linear-gradient(
+      165deg,
+      var(--color-tint) 0%,
+      var(--color-canvas) 55%
+    );
   }
 }
 

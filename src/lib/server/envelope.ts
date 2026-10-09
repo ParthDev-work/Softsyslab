@@ -22,7 +22,9 @@ export type ApiErrorCode =
   | "FORBIDDEN_ORIGIN"
   | "RATE_LIMITED"
   | "IDEMPOTENCY_CONFLICT"
-  | "STORAGE_UNAVAILABLE";
+  | "STORAGE_UNAVAILABLE"
+  | "UNAUTHORIZED"
+  | "NOT_CONFIGURED";
 
 export type ApiSuccess<T> = { ok: true; data: T; requestId: string };
 export type ApiFailure = {

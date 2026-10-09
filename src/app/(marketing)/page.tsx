@@ -18,10 +18,17 @@ import {
 } from "@/components/ui/Layout";
 import { FaqList } from "@/components/blocks/FaqList";
 import { CtaBanner } from "@/components/blocks/CtaBanner";
+import { JourneyTimeline } from "@/components/blocks/JourneyTimeline";
+import { DeliveryPrinciplesScroller } from "@/components/blocks/DeliveryPrinciplesScroller";
+import { ValuePropositionScroller } from "@/components/blocks/ValuePropositionScroller";
 import {
-  ProjectBriefFigure,
+  ProcessCurveFigure,
   SecurityBoundaryFigure,
-} from "@/components/blocks/Figure";
+} from "@/components/blocks/HeroFigures";
+import { Reveal } from "@/components/ui/Reveal";
+import { Stagger, StaggerItem } from "@/components/motion/Stagger";
+import { MagneticButton } from "@/components/motion/MagneticButton";
+import { SpotlightCard } from "@/components/motion/SpotlightCard";
 import { buildMetadata } from "@/lib/seo/metadata";
 import {
   capabilitySummary,
@@ -52,31 +59,51 @@ export const metadata: Metadata = buildMetadata(homepageSeo, "/");
  * says a module with no verified content is omitted, and section 26 says to
  * block placeholder publication rather than hide text in CSS.
  */
+/* The design's emphasis treatment for the hero headline: the final two
+   words are set in italic. Derived from the content string rather than
+   hardcoded so the copy in content/homepage.ts stays the only source of
+   truth for the words themselves. */
+const heroHeadingAccentWords = 2;
+const heroHeadingWords = hero.h1.split(" ");
+const heroHeadingLead = heroHeadingWords
+  .slice(0, -heroHeadingAccentWords)
+  .join(" ");
+const heroHeadingAccent = heroHeadingWords
+  .slice(-heroHeadingAccentWords)
+  .join(" ");
+
 export default function HomePage() {
   return (
     <>
-      {/* Module 3 — hero */}
-      <section aria-labelledby="hero-h" className="section-y-lg">
+      {/* Module 3 — hero. A subtle tint-to-canvas wash (section 29's tokens
+          only, nothing new) replaces the flat canvas background; the figure
+          beside it is markup, not a photo, so there is no image to clash
+          with. */}
+      <section aria-labelledby="hero-h" className="section-y-lg hero-wash">
         <Container>
-          <div className="flex flex-wrap items-center gap-x-[clamp(2.5rem,6vw,4.5rem)] gap-y-10">
+          <div className="flex flex-wrap items-center gap-x-[clamp(2.5rem,6vw,6rem)] gap-y-10">
             <div className="min-w-0 max-w-155 flex-7 basis-115">
-              <Eyebrow>Custom software development</Eyebrow>
-              <h1 id="hero-h" className="type-display mt-6 max-w-[11ch]">
-                {hero.h1}
+              <p className="type-eyebrow m-0">Custom software development</p>
+              <h1 id="hero-h" className="type-display mt-7">
+                {heroHeadingLead} <span className="italic">{heroHeadingAccent}</span>
               </h1>
               <p className="type-lead mt-7">{hero.body}</p>
 
               <div className="mt-9 flex flex-wrap gap-3">
-                <LinkButton href={hero.primaryCta.href} size="lg">
-                  {hero.primaryCta.label}
-                </LinkButton>
-                <LinkButton
-                  href={hero.secondaryCta.href}
-                  variant="outline"
-                  size="lg"
-                >
-                  {hero.secondaryCta.label}
-                </LinkButton>
+                <MagneticButton>
+                  <LinkButton href={hero.primaryCta.href} size="lg">
+                    {hero.primaryCta.label}
+                  </LinkButton>
+                </MagneticButton>
+                <MagneticButton>
+                  <LinkButton
+                    href={hero.secondaryCta.href}
+                    variant="outline"
+                    size="lg"
+                  >
+                    {hero.secondaryCta.label}
+                  </LinkButton>
+                </MagneticButton>
               </div>
 
               <p className="mt-7 max-w-[46ch] border-t border-hairline pt-5 text-small text-muted">
@@ -86,7 +113,7 @@ export default function HomePage() {
 
             {/* The LCP candidate is text, and this figure is markup rather than
                 an image, so there is nothing here to lazy-load or preload. */}
-            <ProjectBriefFigure />
+            <ProcessCurveFigure />
           </div>
         </Container>
       </section>
@@ -98,7 +125,7 @@ export default function HomePage() {
         className="pb-[clamp(3rem,7vw,5.5rem)]"
       >
         <Container>
-          <div className="flex flex-wrap gap-x-12 gap-y-6 border-t border-anchor pt-8">
+          <Reveal className="flex flex-wrap gap-x-12 gap-y-6 border-t border-anchor pt-8">
             <div className="max-w-95 flex-1 basis-70">
               <h2
                 id="cap-h"
@@ -110,18 +137,24 @@ export default function HomePage() {
                 {capabilitySummary.intro}
               </p>
             </div>
-            <ul
+            <Stagger
+              as="ul"
               className="grid flex-2 basis-130 list-none gap-x-6 p-0"
+              stagger={0.05}
               style={{
                 gridTemplateColumns:
                   "repeat(auto-fill, minmax(min(100%, 13.75rem), 1fr))",
               }}
             >
               {capabilitySummary.items.map((item, index) => (
-                <li key={item.href} className="border-b border-hairline">
+                <StaggerItem
+                  key={item.href}
+                  as="li"
+                  className="border-b border-hairline"
+                >
                   <Link
                     href={item.href}
-                    className="flex items-center justify-between gap-3 py-4 text-[1.0625rem] font-medium text-anchor transition-colors duration-150 hover:text-brand motion-reduce:transition-none"
+                    className="group flex items-center justify-between gap-3 py-4 text-[1.0625rem] font-medium text-anchor transition-colors duration-150 hover:text-brand motion-reduce:transition-none"
                   >
                     <span className="flex items-baseline gap-3.5">
                       <span
@@ -132,27 +165,37 @@ export default function HomePage() {
                       </span>
                       {item.label}
                     </span>
-                    <span aria-hidden="true" className="text-faint">
+                    <span
+                      aria-hidden="true"
+                      className="text-faint transition-transform duration-150 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 motion-reduce:transition-none"
+                    >
                       ↗
                     </span>
                   </Link>
-                </li>
+                </StaggerItem>
               ))}
-            </ul>
-          </div>
+            </Stagger>
+          </Reveal>
         </Container>
       </section>
 
-      {/* Module 5 — value proposition */}
+      {/* Module 5 — value proposition. The heading sits alone in its sticky
+          column (same reason module 12's does: a sticky sibling with other
+          normal-flow content next to it scrolls that content out from under
+          it) — body copy and the CTA moved into the scrolling column,
+          bracketing the panels, matching module 12's layout. */}
       <Section tone="surface" labelledBy="val-h">
-        <div className="flex flex-wrap gap-x-16 gap-y-12">
+        <Reveal className="flex flex-wrap gap-x-16 gap-y-12">
           <div className="min-w-0 flex-5 basis-85">
-            <SectionHeading id="val-h">
+            <SectionHeading id="val-h" className="lg:sticky lg:top-36">
               {valueProposition.heading}
             </SectionHeading>
-            <p className="mt-6 text-body-lg text-muted text-pretty">
+          </div>
+          <div className="min-w-0 flex-7 basis-110">
+            <p className="mb-6 text-body-lg text-muted text-pretty">
               {valueProposition.body}
             </p>
+            <ValuePropositionScroller panels={valueProposition.panels} />
             <LinkButton
               href={valueProposition.cta.href}
               variant="outline"
@@ -161,18 +204,7 @@ export default function HomePage() {
               {valueProposition.cta.label}
             </LinkButton>
           </div>
-          <ul className="grid min-w-0 flex-7 basis-110 list-none gap-3 p-0">
-            {valueProposition.panels.map((panel) => (
-              <li
-                key={panel.title}
-                className="grid grid-cols-1 gap-x-6 gap-y-2 rounded-card border border-hairline bg-canvas px-7 py-6 sm:grid-cols-[minmax(0,8.75rem)_minmax(0,1fr)]"
-              >
-                <h3 className="text-h4 font-semibold">{panel.title}</h3>
-                <p className="text-body text-muted">{panel.body}</p>
-              </li>
-            ))}
-          </ul>
-        </div>
+        </Reveal>
       </Section>
 
       {/* Module 6 — service groups */}
@@ -182,22 +214,29 @@ export default function HomePage() {
           heading="Choose the support your project needs."
           support="Five service groups, each with its own scope, deliverables and boundaries. Every service page states when it is the wrong choice as well as when it is the right one."
         />
-        <CardGrid min="20rem">
-          {serviceGroupCards.map((group, index) => (
-            <CardGridItem key={group.href}>
-              <LinkCard
-                href={group.href}
-                index={String(index + 1).padStart(2, "0")}
-                title={group.title}
-                body={group.body}
-                action="Explore"
-              />
-            </CardGridItem>
-          ))}
-        </CardGrid>
+        <Stagger as="div">
+          <CardGrid min="20rem">
+            {serviceGroupCards.map((group, index) => (
+              <CardGridItem key={group.href}>
+                <StaggerItem className="w-full">
+                  <SpotlightCard>
+                    <LinkCard
+                      href={group.href}
+                      index={String(index + 1).padStart(2, "0")}
+                      title={group.title}
+                      body={group.body}
+                      action="Explore"
+                    />
+                  </SpotlightCard>
+                </StaggerItem>
+              </CardGridItem>
+            ))}
+          </CardGrid>
+        </Stagger>
       </Section>
 
-      {/* Module 7 — delivery method */}
+      {/* Module 7 — delivery method. Each stage reveals in sequence rather
+          than all at once, via `Stagger`'s staggerChildren (section 10). */}
       <Section id="process" labelledBy="proc-h" divider>
         <SectionHeader
           id="proc-h"
@@ -205,23 +244,27 @@ export default function HomePage() {
           support={deliveryMethod.intro}
           className="mb-12"
         />
-        <RuledGrid min="20rem">
-          {deliveryMethod.stages.map((stage, index) => (
-            <RuledCell key={stage.name}>
-              <span
-                aria-hidden="true"
-                className="font-mono text-eyebrow text-brand"
-              >
-                {String(index + 1).padStart(2, "0")}
-              </span>
-              <h3 className="text-h3 font-semibold">{stage.name}</h3>
-              <p className="text-small text-muted">
-                <span className="text-dim">Artifact — </span>
-                <span className="text-anchor">{stage.artifact}</span>
-              </p>
-            </RuledCell>
-          ))}
-        </RuledGrid>
+        <Stagger as="div" stagger={0.06}>
+          <RuledGrid min="20rem">
+            {deliveryMethod.stages.map((stage, index) => (
+              <RuledCell key={stage.name}>
+                <StaggerItem className="grid content-start gap-2.5">
+                  <span
+                    aria-hidden="true"
+                    className="font-mono text-eyebrow text-brand"
+                  >
+                    {String(index + 1).padStart(2, "0")}
+                  </span>
+                  <h3 className="text-h3 font-semibold">{stage.name}</h3>
+                  <p className="text-small text-muted">
+                    <span className="text-dim">Artifact — </span>
+                    <span className="text-anchor">{stage.artifact}</span>
+                  </p>
+                </StaggerItem>
+              </RuledCell>
+            ))}
+          </RuledGrid>
+        </Stagger>
         <ArrowLink href={deliveryMethod.cta.href} className="mt-8">
           {deliveryMethod.cta.label}
         </ArrowLink>
@@ -230,7 +273,7 @@ export default function HomePage() {
       {/* Module 9 — technology choices. Copy publishes; the capability list
           does not, because no record has passed the section 17 review gate. */}
       <Section tone="surface" labelledBy="tech-h">
-        <div className="flex flex-wrap gap-x-16 gap-y-10">
+        <Reveal className="flex flex-wrap gap-x-16 gap-y-10">
           <div className="min-w-0 flex-5 basis-85">
             <SectionHeading id="tech-h">
               {technologyChoices.heading}
@@ -244,16 +287,17 @@ export default function HomePage() {
           </div>
           <div className="min-w-0 flex-7 basis-110">
             {publishableTechnologies.length > 0 ? (
-              <ul className="flex flex-wrap gap-2 p-0">
+              <Stagger as="ul" className="flex flex-wrap gap-2 p-0" stagger={0.03}>
                 {publishableTechnologies.map((technology) => (
-                  <li
+                  <StaggerItem
                     key={technology.name}
-                    className="rounded-full border border-line bg-canvas px-3 py-1 text-xs"
+                    as="li"
+                    className="rounded-full border border-line bg-canvas px-3 py-1 text-xs transition-[border-color,color] duration-150 hover:border-brand hover:text-brand motion-reduce:transition-none"
                   >
                     {technology.name}
-                  </li>
+                  </StaggerItem>
                 ))}
-              </ul>
+              </Stagger>
             ) : (
               <div className="rounded-card border border-dashed border-line bg-canvas p-7">
                 <p className="type-meta text-dim">Capability list withheld</p>
@@ -263,7 +307,7 @@ export default function HomePage() {
               </div>
             )}
           </div>
-        </div>
+        </Reveal>
       </Section>
 
       {/* Module 10 — workflow shapes, framed as examples rather than sectors */}
@@ -273,16 +317,22 @@ export default function HomePage() {
           heading={workflowExamples.heading}
           support={workflowExamples.intro}
         />
-        <CardGrid min="17rem">
-          {workflowExamples.cards.map((card) => (
-            <CardGridItem key={card.title}>
-              <Card className="w-full">
-                <h3 className="text-h4 font-semibold">{card.title}</h3>
-                <p className="mt-2 text-body text-muted">{card.body}</p>
-              </Card>
-            </CardGridItem>
-          ))}
-        </CardGrid>
+        <Stagger as="div">
+          <CardGrid min="17rem">
+            {workflowExamples.cards.map((card) => (
+              <CardGridItem key={card.title}>
+                <StaggerItem className="w-full">
+                  <SpotlightCard>
+                    <Card className="w-full">
+                      <h3 className="text-h4 font-semibold">{card.title}</h3>
+                      <p className="mt-2 text-body text-muted">{card.body}</p>
+                    </Card>
+                  </SpotlightCard>
+                </StaggerItem>
+              </CardGridItem>
+            ))}
+          </CardGrid>
+        </Stagger>
         <ArrowLink href={workflowExamples.cta.href} className="mt-8">
           {workflowExamples.cta.label}
         </ArrowLink>
@@ -295,15 +345,21 @@ export default function HomePage() {
           heading={engagementCards.heading}
           support={engagementCards.body}
         />
-        <CardGrid min="17rem">
-          {engagementCards.models.map((model) => (
-            <CardGridItem key={model}>
-              <Card className="w-full">
-                <h3 className="text-h4 font-semibold">{model}</h3>
-              </Card>
-            </CardGridItem>
-          ))}
-        </CardGrid>
+        <Stagger as="div">
+          <CardGrid min="17rem">
+            {engagementCards.models.map((model) => (
+              <CardGridItem key={model}>
+                <StaggerItem className="w-full">
+                  <SpotlightCard>
+                    <Card className="w-full">
+                      <h3 className="text-h4 font-semibold">{model}</h3>
+                    </Card>
+                  </SpotlightCard>
+                </StaggerItem>
+              </CardGridItem>
+            ))}
+          </CardGrid>
+        </Stagger>
         <ArrowLink href={engagementCards.cta.href} className="mt-8">
           {engagementCards.cta.label}
         </ArrowLink>
@@ -312,7 +368,7 @@ export default function HomePage() {
       {/* Module 12 — delivery principles, framed as what any agreement
           should set out, since section 13 marks them pending owner signoff. */}
       <Section labelledBy="prin-h" divider>
-        <div className="flex flex-wrap gap-x-16 gap-y-8">
+        <Reveal className="flex flex-wrap gap-x-16 gap-y-8">
           <div className="min-w-0 flex-4 basis-75">
             <SectionHeading id="prin-h" className="lg:sticky lg:top-36">
               {deliveryPrinciples.heading}
@@ -322,29 +378,19 @@ export default function HomePage() {
             <p className="mb-2 max-w-[60ch] text-body text-muted">
               {deliveryPrinciples.intro}
             </p>
-            <ul className="p-0">
-              {deliveryPrinciples.rows.map((row) => (
-                <li
-                  key={row.title}
-                  className="grid gap-x-8 gap-y-2 border-t border-line py-7 md:grid-cols-[minmax(0,1fr)_minmax(0,1.3fr)]"
-                >
-                  <h3 className="text-h3 font-semibold">{row.title}</h3>
-                  <p className="text-[1.0625rem]/7 text-muted">{row.body}</p>
-                </li>
-              ))}
-            </ul>
+            <DeliveryPrinciplesScroller rows={deliveryPrinciples.rows} />
             <div className="border-t border-line pt-6">
               <ArrowLink href={deliveryPrinciples.cta.href}>
                 {deliveryPrinciples.cta.label}
               </ArrowLink>
             </div>
           </div>
-        </div>
+        </Reveal>
       </Section>
 
       {/* Module 13 — security and quality */}
       <Section id="security" tone="ink" size="large" labelledBy="sec-h">
-        <div className="flex flex-wrap items-center gap-x-18 gap-y-12">
+        <Reveal className="flex flex-wrap items-center gap-x-18 gap-y-12">
           <div className="min-w-0 flex-1 basis-95">
             <Eyebrow className="text-faint">Security and quality</Eyebrow>
             <SectionHeading
@@ -365,7 +411,7 @@ export default function HomePage() {
             </LinkButton>
           </div>
           <SecurityBoundaryFigure caption="Illustrative boundary — controls are agreed per project" />
-        </div>
+        </Reveal>
       </Section>
 
       {/* Module 14 — client journey */}
@@ -375,38 +421,7 @@ export default function HomePage() {
           heading={clientJourney.heading}
           support={clientJourney.note}
         />
-        <ul
-          className="grid list-none gap-6 p-0"
-          style={{
-            gridTemplateColumns:
-              "repeat(auto-fit, minmax(min(100%, 27.5rem), 1fr))",
-          }}
-        >
-          {clientJourney.groups.map((group, groupIndex) => (
-            <li
-              key={group.title}
-              className="rounded-card border border-hairline bg-surface p-7"
-            >
-              <h3 className="mb-5 text-h3 font-semibold">{group.title}</h3>
-              <ol className="grid list-none gap-3 p-0">
-                {group.steps.map((step, stepIndex) => (
-                  <li
-                    key={step}
-                    className="grid grid-cols-[2rem_minmax(0,1fr)] items-baseline gap-3 text-body"
-                  >
-                    <span
-                      aria-hidden="true"
-                      className="font-mono text-eyebrow text-brand"
-                    >
-                      {String(groupIndex * 3 + stepIndex + 1).padStart(2, "0")}
-                    </span>
-                    <span className="text-muted">{step}</span>
-                  </li>
-                ))}
-              </ol>
-            </li>
-          ))}
-        </ul>
+        <JourneyTimeline groups={clientJourney.groups} />
         <LinkButton
           href={clientJourney.cta.href}
           variant="dark"
