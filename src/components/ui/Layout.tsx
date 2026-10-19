@@ -24,7 +24,7 @@ type SectionProps = {
   as?: ElementType;
   id?: string;
   labelledBy?: string;
-  tone?: "canvas" | "surface" | "ink";
+  tone?: "canvas" | "surface" | "paper" | "ink";
   size?: "default" | "large";
   /** Hairline above the section, the design's main divider between modules. */
   divider?: boolean;
@@ -35,6 +35,8 @@ type SectionProps = {
 const tones: Record<NonNullable<SectionProps["tone"]>, string> = {
   canvas: "bg-canvas text-text",
   surface: "bg-surface text-text",
+  /* Warm alternate to canvas/surface, for section-rhythm variety. */
+  paper: "bg-paper text-text",
   ink: "bg-ink text-surface",
 };
 

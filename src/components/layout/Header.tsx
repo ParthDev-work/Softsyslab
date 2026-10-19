@@ -7,7 +7,9 @@ import {
   NavGroup,
   NavLink,
 } from "@/components/layout/NavDisclosure";
-import { announcement } from "@/content/homepage";
+import { ScrollProgress } from "@/components/layout/ScrollProgress";
+import { SectionTracker } from "@/components/layout/SectionTracker";
+import { announcement, homeSectionTracker } from "@/content/homepage";
 
 /**
  * PRD section 12 and section 13 modules 1-2.
@@ -46,6 +48,7 @@ export function AnnouncementBar() {
 export function Header() {
   return (
     <header className="sticky top-0 z-40 border-b border-hairline bg-canvas/95 backdrop-blur-sm backdrop-saturate-150 supports-[backdrop-filter]:bg-canvas/90">
+      <ScrollProgress />
       <div className="relative">
         <Container>
           <div className="flex h-16 items-center justify-between gap-6 lg:h-20">
@@ -64,7 +67,7 @@ export function Header() {
             <div className="flex items-center gap-3">
               <Link
                 href={primaryCta.href}
-                className="hidden h-11 items-center rounded-control bg-anchor px-4.5 font-medium text-white transition-colors duration-150 hover:bg-brand motion-reduce:transition-none lg:inline-flex"
+                className="link-line hidden items-center pb-1 font-semibold text-anchor lg:inline-flex"
               >
                 {primaryCta.label}
               </Link>
@@ -78,21 +81,24 @@ export function Header() {
 
         <div className="hidden border-t border-hairline lg:block">
           <Container>
-            <nav aria-label="Utility">
-              <ul className="flex items-center justify-end gap-1">
-                {utilityNav.map((section) =>
-                  section.children && section.children.length > 0 ? (
-                    <li key={section.href}>
-                      <NavGroup section={section} />
-                    </li>
-                  ) : (
-                    <li key={section.href}>
-                      <NavLink href={section.href} label={section.label} />
-                    </li>
-                  ),
-                )}
-              </ul>
-            </nav>
+            <div className="grid grid-cols-[1fr_auto] items-center gap-4">
+              <SectionTracker sections={homeSectionTracker} />
+              <nav aria-label="Utility">
+                <ul className="flex items-center justify-end gap-1">
+                  {utilityNav.map((section) =>
+                    section.children && section.children.length > 0 ? (
+                      <li key={section.href}>
+                        <NavGroup section={section} />
+                      </li>
+                    ) : (
+                      <li key={section.href}>
+                        <NavLink href={section.href} label={section.label} />
+                      </li>
+                    ),
+                  )}
+                </ul>
+              </nav>
+            </div>
           </Container>
         </div>
       </div>

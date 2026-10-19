@@ -43,9 +43,11 @@ export function FaqItem({ faq }: { faq: Faq }) {
         className="flex cursor-pointer list-none items-center justify-between gap-6 py-5.5 text-[1.1875rem]/7 font-medium marker:content-none"
       >
         <span className="text-anchor">{faq.question}</span>
-        <span
+        <motion.span
           aria-hidden="true"
-          className="grid size-7 flex-none place-items-center rounded-chip border border-line text-muted transition-colors duration-150 group-hover:border-field motion-reduce:transition-none"
+          className="grid size-7 flex-none place-items-center rounded-chip border border-line text-muted transition-colors duration-150 group-hover:border-brand group-hover:text-brand motion-reduce:transition-none"
+          animate={{ rotate: enhanced && open ? 45 : 0 }}
+          transition={{ duration: 0.22, ease: REVEAL_EASE }}
         >
           <svg viewBox="0 0 16 16" className="size-4" fill="currentColor">
             <path
@@ -57,7 +59,7 @@ export function FaqItem({ faq }: { faq: Faq }) {
               d="M4 7.25h8a.75.75 0 0 1 0 1.5H4a.75.75 0 0 1 0-1.5Z"
             />
           </svg>
-        </span>
+        </motion.span>
       </summary>
 
       {enhanced ? (

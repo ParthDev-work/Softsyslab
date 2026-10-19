@@ -1,15 +1,13 @@
 import type { Metadata } from "next";
 import { Breadcrumb } from "@/components/ui/Breadcrumb";
-import { CardGrid, CardGridItem, LinkCard } from "@/components/ui/Card";
-import {
-  Container,
-  Eyebrow,
-  Lead,
-  Section,
-  SectionHeading,
-} from "@/components/ui/Layout";
+import { Container, Section } from "@/components/ui/Layout";
+import { EditorialContactBand } from "@/components/blocks/EditorialContactBand";
+import { EditorialPageHero } from "@/components/blocks/EditorialPageHero";
 import { FaqList } from "@/components/blocks/FaqList";
-import { CtaBanner } from "@/components/blocks/CtaBanner";
+import {
+  ServiceGroupsEditorial,
+  type EditorialServiceGroup,
+} from "@/components/blocks/ServiceGroupsEditorial";
 import { BreadcrumbJsonLd } from "@/lib/seo/JsonLd";
 import { buildMetadata } from "@/lib/seo/metadata";
 import { content } from "@/lib/content";
@@ -23,14 +21,6 @@ const trail = [
   { label: "Services", href: "/services/" },
 ];
 
-/**
- * PRD section 26's hub copy standards: the H2s are the five service groups.
- *
- * A group with no published service renders no heading — section 10 requires
- * every published page to have a useful onward path, and a group heading over
- * an empty list is the opposite of one. Cloud and modernization is currently
- * in that position, so it does not appear.
- */
 export default async function ServicesHubPage() {
   const services = await content.listServices();
 
@@ -41,6 +31,16 @@ export default async function ServicesHubPage() {
     }))
     .filter((group) => group.services.length > 0);
 
+  const editorialGroups: EditorialServiceGroup[] = populated.map((group) => ({
+    id: group.id,
+    title: group.title,
+    summary: group.summary,
+    items: group.services.map((service) => ({
+      label: service.h1,
+      href: `/services/${service.slug}/`,
+    })),
+  }));
+
   return (
     <>
       <BreadcrumbJsonLd trail={trail} />
@@ -49,51 +49,22 @@ export default async function ServicesHubPage() {
         <Breadcrumb trail={trail} />
       </Container>
 
-      <section aria-labelledby="hub-h" className="pb-[clamp(2.5rem,6vw,4rem)]">
-        <Container>
-          <Eyebrow>Services</Eyebrow>
-          <h1 id="hub-h" className="type-h1 mt-5 max-w-[18ch]">
-            {servicesHub.h1}
-          </h1>
-          <Lead className="mt-5">{servicesHub.lead}</Lead>
-        </Container>
-      </section>
+      <EditorialPageHero
+        eyebrow="Services"
+        headingId="hub-h"
+        heading={servicesHub.h1}
+        lead={servicesHub.lead}
+      />
 
-      {populated.map((group, index) => (
-        <Section
-          key={group.id}
-          id={group.id}
-          labelledBy={`${group.id}-h`}
-          tone={index % 2 === 1 ? "surface" : "canvas"}
-          divider={index === 0}
-        >
-          <div className="mb-8 flex flex-wrap items-baseline gap-x-6 gap-y-2">
-            <SectionHeading id={`${group.id}-h`}>{group.title}</SectionHeading>
-            <p className="text-body text-muted">{group.summary}</p>
-          </div>
-          <CardGrid min="20rem">
-            {group.services.map((service, serviceIndex) => (
-              <CardGridItem key={service.slug}>
-                <LinkCard
-                  href={`/services/${service.slug}/`}
-                  index={String(serviceIndex + 1).padStart(2, "0")}
-                  title={service.h1}
-                  body={service.seo.description}
-                  action="Review scope"
-                />
-              </CardGridItem>
-            ))}
-          </CardGrid>
-        </Section>
-      ))}
+      <ServiceGroupsEditorial groups={editorialGroups} />
 
       <Section labelledBy="services-faqs" divider>
         <FaqList faqs={[...servicesHub.faqs]} headingId="services-faqs" />
       </Section>
 
-      <CtaBanner
+      <EditorialContactBand
         heading="Not sure which service fits?"
-        body="Describe the problem rather than the solution. If another supplier or an existing product would serve you better, we will say so."
+        eyebrow="Describe the problem, not the label"
         label={servicesHub.cta.label}
       />
     </>

@@ -1,5 +1,9 @@
+"use client";
+
 import { LinkButton } from "@/components/ui/Button";
 import { Container } from "@/components/ui/Layout";
+import { InteractivePanel } from "@/components/ui/InteractivePanel";
+import { MagneticButton } from "@/components/motion/MagneticButton";
 
 /**
  * PRD section 13 module 18, in the design's treatment: a bordered surface panel
@@ -25,7 +29,9 @@ export function CtaBanner({
       className="pb-[clamp(3rem,8vw,5.5rem)]"
     >
       <Container>
-        <div className="rounded-card border border-hairline bg-surface px-[clamp(1.5rem,5vw,3rem)] py-[clamp(3rem,7vw,5rem)]">
+        <InteractivePanel
+          innerClassName="px-[clamp(1.5rem,5vw,3rem)] py-[clamp(3rem,7vw,5rem)]"
+        >
           <div className="mx-auto max-w-quote md:text-center">
             <h2
               id="page-cta"
@@ -39,16 +45,18 @@ export function CtaBanner({
               </p>
             ) : null}
             <div className="mt-8">
-              <LinkButton
-                href={href}
-                size="lg"
-                className="w-full justify-center md:w-auto"
-              >
-                {label}
-              </LinkButton>
+              <MagneticButton>
+                <LinkButton
+                  href={href}
+                  size="lg"
+                  className="w-full justify-center md:w-auto"
+                >
+                  {label}
+                </LinkButton>
+              </MagneticButton>
             </div>
           </div>
-        </div>
+        </InteractivePanel>
       </Container>
     </section>
   );

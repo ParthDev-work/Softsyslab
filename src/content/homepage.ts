@@ -82,6 +82,33 @@ export const valueProposition = {
     },
   ],
   cta: { label: "Plan Product Discovery", href: "/services/mvp-development/" },
+  /** Interactive approach band on the homepage (module 5 lead-in). */
+  approachPhases: [
+    {
+      title: "Discover",
+      hint: "Understand the work",
+      body:
+        "Map who uses the software, which workflows matter first, and what evidence would convince you the first release succeeded.",
+    },
+    {
+      title: "Define",
+      hint: "Decide scope and boundaries",
+      body:
+        "Name what the first release covers, what is explicitly deferred, and which system owns each record before build cost locks those choices in.",
+    },
+    {
+      title: "Design",
+      hint: "Make it usable and buildable",
+      body:
+        "Turn constraints into flows people can test, with components and states your team can implement without guesswork.",
+    },
+    {
+      title: "Deliver",
+      hint: "Ship with evidence",
+      body:
+        "Release against documented acceptance criteria, with a plan your team can operate, monitor and improve after go-live.",
+    },
+  ],
 } as const;
 
 /** Module 6. Five cards, each with one primary link and no nested controls. */
@@ -129,6 +156,8 @@ export const deliveryMethod = {
     { name: "Monitoring", artifact: "Alerts with a named owner and escalation" },
     { name: "Improvement", artifact: "Change requests with cost and approval" },
   ],
+  /** Three equal phases the nine stages are grouped under on the homepage rail. */
+  phases: ["Shape the product", "Build and verify", "Release and run"],
   cta: { label: "See How We Work", href: "/how-we-work/" },
 } as const;
 
@@ -152,14 +181,17 @@ export const workflowExamples = {
     {
       title: "SaaS",
       body: "Onboarding, permissions and subscription operations.",
+      flow: ["Onboarding", "Permissions", "Subscription"],
     },
     {
       title: "Professional services",
       body: "Client intake, approvals and reporting.",
+      flow: ["Intake", "Approval", "Reporting"],
     },
     {
       title: "E-commerce",
       body: "Product, inventory and order workflows.",
+      flow: ["Product", "Inventory", "Order"],
     },
   ],
   cta: { label: "Explore Solutions", href: "/solutions/" },
@@ -328,3 +360,22 @@ export const finalCta = {
   body: "Share the problem, the stage of your project and any important constraints. Start with a short summary; confidential files can wait until an appropriate sharing arrangement is in place.",
   cta: { label: "Discuss Your Project", href: "/contact/" },
 } as const;
+
+/**
+ * Header section tracker (desktop only). Pairs each homepage section id with
+ * a short label shown in the utility row while that section is in view — a
+ * "where am I" reading aid, not a navigation control. Order follows the
+ * page's actual section order; `useActiveSection` relies on that to resolve
+ * ties. Must stay a module-level constant (not recreated per render) since
+ * it's passed straight to an effect dependency array.
+ */
+export const homeSectionTracker = [
+  { id: "hero", label: "Start" },
+  { id: "approach", label: "Approach" },
+  { id: "capabilities", label: "Capabilities" },
+  { id: "services", label: "Services" },
+  { id: "process", label: "Process" },
+  { id: "journey", label: "Client Journey" },
+  { id: "faq", label: "FAQ" },
+  { id: "contact-cta", label: "Contact" },
+] as const;

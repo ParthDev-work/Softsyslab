@@ -7,8 +7,9 @@ import { cn } from "@/lib/cn";
 import type { NavItem, NavSection } from "@/components/layout/nav-model";
 
 /**
- * PRD section 12: click and keyboard activation are the contract and hover is
- * an enhancement; Escape closes and restores focus; Tab follows normal document
+ * PRD section 12: click and keyboard activation are the contract; hover opens
+ * dropdown groups on desktop as an enhancement. Escape closes and restores
+ * focus; Tab follows normal document
  * order; ordinary site navigation does not take application-menu ARIA roles.
  *
  * So this is a disclosure — a button with aria-expanded controlling a list of
@@ -78,7 +79,7 @@ const chevron = (
   </svg>
 );
 
-/** The Company group in the desktop utility row. */
+/** Dropdown groups in the desktop utility row (e.g. Company). */
 export function NavGroup({ section }: { section: NavSection }) {
   const { open, setOpen, containerRef, triggerRef } = useDisclosure();
   const panelId = useId();
@@ -88,7 +89,12 @@ export function NavGroup({ section }: { section: NavSection }) {
     (section.children?.some((child) => pathname === child.href) ?? false);
 
   return (
-    <div ref={containerRef} className="relative">
+    <div
+      ref={containerRef}
+      className="relative"
+      onMouseEnter={() => setOpen(true)}
+      onMouseLeave={() => setOpen(false)}
+    >
       <button
         ref={triggerRef}
         type="button"
@@ -98,26 +104,35 @@ export function NavGroup({ section }: { section: NavSection }) {
         className={cn(
           "group relative flex min-h-11 items-center gap-1.5 px-2 text-body hover:text-brand",
           active ? "font-semibold text-brand" : "text-muted",
+          open && "text-brand",
         )}
       >
         {section.label}
         {chevron}
-        <NavUnderline active={active} />
+        <NavUnderline active={active || open} />
       </button>
-      <ul
+      <div
         id={panelId}
         hidden={!open}
-        className="absolute right-0 top-full z-30 mt-1 w-64 rounded-card border border-line bg-canvas p-2 shadow-raised"
+        className="absolute right-0 top-full z-30 w-64 pt-1 before:absolute before:inset-x-0 before:-top-1 before:h-1 before:content-['']"
       >
-        <li>
-          <NavLink href={section.href} label={`${section.label} overview`} inPanel />
-        </li>
-        {section.children?.map((child) => (
-          <li key={child.href}>
-            <NavLink href={child.href} label={child.label} inPanel />
+        <ul
+          className="list-none rounded-card border border-line bg-canvas p-2 shadow-raised"
+        >
+          <li>
+            <NavLink
+              href={section.href}
+              label={`${section.label} overview`}
+              inPanel
+            />
           </li>
-        ))}
-      </ul>
+          {section.children?.map((child) => (
+            <li key={child.href}>
+              <NavLink href={child.href} label={child.label} inPanel />
+            </li>
+          ))}
+        </ul>
+      </div>
     </div>
   );
 }
