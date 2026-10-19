@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { IBM_Plex_Mono, Schibsted_Grotesk } from "next/font/google";
+import { IBM_Plex_Mono, Newsreader, Schibsted_Grotesk } from "next/font/google";
 import "./globals.css";
 import {
   AnnouncementBar,
@@ -17,7 +17,10 @@ import { siteSettings } from "@/lib/settings/siteSettings";
 /**
  * Typeface pairing from the supplied design. Section 29 allows Inter "if
  * licensed/self-hosted" and a licensed monospace for code; Schibsted Grotesk
- * and IBM Plex Mono are both SIL OFL, which clears that condition.
+ * and IBM Plex Mono are both SIL OFL, which clears that condition. Newsreader
+ * (also SIL OFL) adds one accent serif for display numerals and the hero's
+ * accent word only — the working sans/mono system still carries body copy,
+ * nav and UI chrome everywhere else.
  *
  * next/font downloads and serves them from this origin, so no request reaches
  * a font CDN at runtime — which matters for section 45 (no third-party call
@@ -40,6 +43,14 @@ const plexMono = IBM_Plex_Mono({
   variable: "--font-plex-mono",
 });
 
+const newsreader = Newsreader({
+  subsets: ["latin"],
+  weight: ["500", "600"],
+  style: ["normal", "italic"],
+  display: "swap",
+  variable: "--font-newsreader",
+});
+
 export const metadata: Metadata = {
   metadataBase: new URL(siteSettings.canonicalOrigin),
   title: {
@@ -57,7 +68,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
     <html
       lang="en"
-      className={`${grotesk.variable} ${plexMono.variable} h-full`}
+      className={`${grotesk.variable} ${plexMono.variable} ${newsreader.variable} h-full`}
     >
       <body className="flex min-h-full flex-col bg-canvas">
         <SkipLink />

@@ -3,14 +3,10 @@ import Link from "next/link";
 import { Breadcrumb } from "@/components/ui/Breadcrumb";
 import { Card } from "@/components/ui/Card";
 import { Notice } from "@/components/ui/Notice";
-import {
-  Container,
-  Eyebrow,
-  Lead,
-  Section,
-} from "@/components/ui/Layout";
+import { Container, Section } from "@/components/ui/Layout";
 import { ContactForm } from "@/components/blocks/ContactForm";
 import { FaqList } from "@/components/blocks/FaqList";
+import { EditorialPageHero } from "@/components/blocks/EditorialPageHero";
 import { BreadcrumbJsonLd } from "@/lib/seo/JsonLd";
 import { buildMetadata } from "@/lib/seo/metadata";
 import { contactPage } from "@/content/pages";
@@ -48,15 +44,12 @@ export default function ContactPage() {
         <Breadcrumb trail={trail} />
       </Container>
 
-      <section aria-labelledby="contact-h" className="pb-[clamp(2rem,5vw,3rem)]">
-        <Container>
-          <Eyebrow>Contact</Eyebrow>
-          <h1 id="contact-h" className="type-h1 mt-5 max-w-[14ch]">
-            {contactPage.h1}
-          </h1>
-          <Lead className="mt-5">{contactPage.lead}</Lead>
-        </Container>
-      </section>
+      <EditorialPageHero
+        eyebrow="Contact"
+        headingId="contact-h"
+        heading={contactPage.h1}
+        lead={contactPage.lead}
+      />
 
       <section className="pb-[clamp(3rem,8vw,5.5rem)]">
         <Container>

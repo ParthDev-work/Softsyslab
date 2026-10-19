@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { Container } from "@/components/ui/Layout";
+import { EditorialShell } from "@/components/blocks/editorial/EditorialShell";
 import { Logo } from "@/components/layout/Logo";
 import { routesInGroup } from "@/lib/content/routes";
 import {
@@ -39,12 +39,12 @@ export function Footer() {
   const year = new Date().getFullYear();
 
   return (
-    <footer className="mt-auto border-t border-hairline bg-canvas">
-      <Container>
+    <footer className="mt-auto border-t border-ink-border bg-ink text-surface">
+      <EditorialShell>
         <div className="flex flex-wrap gap-x-16 gap-y-10 pb-6 pt-[clamp(2.5rem,6vw,4rem)]">
           <div className="min-w-0 flex-2 basis-65">
             <Logo />
-            <p className="mt-3 max-w-[34ch] text-small text-muted">
+            <p className="mt-3 max-w-[34ch] text-small text-ink-line">
               Custom software, web, mobile and SaaS development — planned before
               it is built.
             </p>
@@ -54,7 +54,7 @@ export function Footer() {
                   <li key={channel.href}>
                     <a
                       href={channel.href}
-                      className="inline-block py-1.5 text-small text-anchor underline-offset-4 hover:text-brand hover:underline"
+                      className="link-line inline-block py-1.5 text-small text-surface"
                     >
                       {channel.value}
                     </a>
@@ -69,7 +69,7 @@ export function Footer() {
                     <a
                       href={social.url}
                       rel="noopener noreferrer"
-                      className="inline-flex items-center gap-1.5 text-small text-anchor underline underline-offset-4 hover:text-brand"
+                      className="link-line inline-flex items-center gap-1.5 text-small text-surface"
                     >
                       <SocialIcon label={social.label} />
                       {social.label}
@@ -86,13 +86,13 @@ export function Footer() {
               aria-label={column.title}
               className="min-w-0 flex-1 basis-40"
             >
-              <h2 className="type-meta mb-3.5 text-dim">{column.title}</h2>
+              <h2 className="type-meta mb-3.5 text-faint">{column.title}</h2>
               <ul className="grid gap-1 p-0">
                 {column.routes.map((route) => (
                   <li key={route.path}>
                     <Link
                       href={route.path}
-                      className="inline-block py-1.5 text-small text-anchor underline-offset-4 hover:text-brand hover:underline"
+                      className="link-line inline-block py-1.5 text-small text-surface"
                     >
                       {route.label}
                     </Link>
@@ -103,13 +103,13 @@ export function Footer() {
           ))}
 
           <nav aria-label="Legal" className="min-w-0 flex-1 basis-40">
-            <h2 className="type-meta mb-3.5 text-dim">Legal</h2>
+            <h2 className="type-meta mb-3.5 text-faint">Legal</h2>
             <ul className="grid gap-1 p-0">
               {legal.map((route) => (
                 <li key={route.path}>
                   <Link
                     href={route.path}
-                    className="inline-block py-1.5 text-small text-anchor underline-offset-4 hover:text-brand hover:underline"
+                    className="link-line inline-block py-1.5 text-small text-surface"
                   >
                     {route.label}
                   </Link>
@@ -119,7 +119,7 @@ export function Footer() {
           </nav>
         </div>
 
-        <div className="flex flex-wrap items-baseline justify-between gap-x-6 gap-y-3 border-t border-hairline py-5 text-xs text-muted">
+        <div className="flex flex-wrap items-baseline justify-between gap-x-6 gap-y-3 border-t border-ink-border py-5 text-xs text-ink-line">
           <p className="max-w-[70ch]">
             {siteSettings.verified && siteSettings.legalName ? (
               <>
@@ -134,7 +134,7 @@ export function Footer() {
                 registered address pending verification —{" "}
                 <Link
                   href="/company/business-information/"
-                  className="text-anchor underline underline-offset-4 hover:text-brand"
+                  className="link-line text-brand"
                 >
                   see their status
                 </Link>
@@ -144,7 +144,7 @@ export function Footer() {
           </p>
           <ConsentPreferencesLink />
         </div>
-      </Container>
+      </EditorialShell>
     </footer>
   );
 }
